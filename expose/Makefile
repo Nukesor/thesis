@@ -1,13 +1,10 @@
-.PHONY: clean all oneside twoside
+.PHONY: clean all expose
 
-all: oneside clean
+all: expose clean
 
-oneside:
-	rubber --unsafe -d oneside.tex
-	texcount main.tex
-
-twoside:
-	rubber --unsafe -d twoside.tex
+expose:
+	rubber --unsafe -d expose.tex
+	texcount expose.tex
 
 clean:
 	@rm -f *.aux
