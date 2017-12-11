@@ -1,0 +1,63 @@
+\chapter{Introduction}
+\section{Motivation}
+
+Git is a code version control system which is used by most programmers on a daily basis these days. According to the Eclipse Community Survey about 42.9\% of professional software developers used git in 2014 with an upward tendency~\footnote{Ian Skerret. Exclipse Community Survey 2014 Results.\ \url{https://ianskerrett.wordpress.com/2014/06/23/eclipse-community-survey-2014-results/} Retrieved Oct. 25, 2017}.
+It is deployed in many if not most commercial and private projects and generally valued by its users. It allows quick jumps between different versions of a project's code base and to manage and merge code from different sources to one upstream.
+
+Several million users send new commits to their Git repositories every day.
+On Github alone, the currently biggest open source platform, there exist about 25 million active repositories, a total of 67 million repositories and about 24 million users~\footnote{The State of the Octoverse 2017, Retrieved Oct. 25 2011, \url{https://octoverse.github.com/}}.
+
+Some well known projects and organizations use Git, for example Linux\footnote{\url{https://github.com/torvalds/linux}, Retrieved Nov. 24 2017}, Google\footnote{\url{https://github.com/google}, Retrieved Nov. 24 2017}, Adobe\footnote{\url{https://github.com/adobe}, Retrieved Nov. 24 2017} and Paypal\footnote{\url{https://github.com/paypal}, Retrieved Nov. 24 2017}.
+Every repository contains the complete contribution history of every contributing user.
+Each commit contains the full directory structure, a link to a blob for every file, a timestamp, a commit message from the author and more additional metadata.
+
+This raises the question how much information is hidden in the metadata of a Git repository and which attack vectors could be introduced by mining this information, regarding a contributer or the owner of the repository.
+
+The newly gained knowledge could be utilized by employers to spy on their employees.
+It could be used by an unknown attacker who aims to obtain sensitive information about a company and its employees trough their open-source projects.
+It is even possible that a privat person wants to monitor another person that regularly contributes to open-source repositories.
+
+
+As there have not been any papers published about this specific topic or at least no public paper and Git plays such a crucial role in todays information technology, I want to investigate and evaluate this potential threat.
+
+
+\section{Leading Questions and Goals}
+
+The ambition of this thesis is to find possible attack vectors for knowledge extracted from git metadata of a single or multiple git repositories and analyze the possible damage potential.
+For that purpose I will look at three realistic attacker models and try to get as much compromising and harmful knowledge for the objective of each specific model.
+
+In the following three different attacker models with potential goals are listed.
+Some goals will probably be extended, changed, added or removed during the research process.
+
+\begin{description}
+    \item[Employer]
+        The employer tries to get as much information about its employees with the intention of spying on them:
+        \begin{itemize}
+            \item Direct comparison of productivity between employees
+            \item Compliance of working hours
+            \item Check if employees work on external projects during working hours
+            \item Code quality between employees
+        \end{itemize}
+
+    \item[Industrial Espionage]
+        The attacker tries to get as much information from the public open-source projects of a company:
+        \begin{itemize}
+            \item Company members
+            \item History of all employees
+            \item Overall status of a project
+            \item A project's Code quality
+            \item Internal team structures
+        \end{itemize}
+
+    \item[Individual]
+        Somebody tries to get as much information about the personal life of a contributing individual:
+        \begin{itemize}
+            \item Sleeping rythm and daily routine
+            \item Interests
+            \item Programming languages and skills
+            \item Personal relationships between various programmers
+            \item Sick leave and holiday
+        \end{itemize}
+
+\end{description}
+
