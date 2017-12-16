@@ -25,12 +25,27 @@
 % force footnotes to the bottom
 \usepackage[bottom]{footmisc}
 
-\lstset{language=Python,keywordstyle={\bfseries \color{blue}}}
+\usepackage{color}
+\usepackage{tcolorbox}
+\definecolor{customgray}{RGB}{190,190,190}
+\newtcbox{\inlinecode}{
+    nobeforeafter,
+    colframe=customgray,
+    colback=customgray!10!white,
+    boxrule=0.5pt,
+    arc=4pt,
+    boxsep=0pt,
+    left=6pt,
+    right=6pt,
+    top=2pt,
+    bottom=2pt,
+    tcbox
+    raise
+    base
+}
 
 % Redefining the chapter heading styles
-
 % Numbered chapter heading style:
-
 \renewcommand{\@makechapterhead}[1]{%
   {\singlespacing
     \parindent \z@ \raggedright \normalfont
@@ -46,8 +61,8 @@
     \vskip 40\p@
   }}
 
-% Unnumbered chapter heading style:
 
+% Unnumbered chapter heading style:
 \renewcommand{\@makeschapterhead}[1]{%
   {\singlespacing
     \parindent \z@ \raggedright

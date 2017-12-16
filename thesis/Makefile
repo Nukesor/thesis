@@ -9,7 +9,7 @@ watch:
 	while true; do inotifywait -e close_write,moved_to,create **/*.tex $(DEPS); make thesis; make clean; done;
 
 thesis:
-	rubber --pdf thesis.tex
+	rubber --unsafe --pdf thesis.tex
 
 show:
 	evince thesis.pdf &
