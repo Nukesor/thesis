@@ -9,7 +9,7 @@ The main problem with this solution is, that the visualization and data mining c
 Real world data is noisy and inconsistent. Thereby the developed solution might have worked on the generated data, but would have probably failed on real world data.
 
 The second solution was to get real world data from somewhere. The most obvious choice was to mine data from open source projects.
-I chose Github for this purpose, as it hosts one of the biggest collection of open source projects and provides a great API for querying Github's meta data.
+I chose Github for this purpose, as it hosts one of the biggest collection of open source projects and provides a great \ac{api} for querying Github's meta data.
 A problem with this approach is that we don't have access to all important meta data, as for example the full list of members for organizations or the internal team structure of organizations.
 Another problem are old email addresses, which are not related to any account anymore.
 Even though some ground truth is missing, I decided to use this approach as it was still the most viable and promising way to gain as much ground truth and real world noise as possible.
@@ -17,10 +17,10 @@ Even though some ground truth is missing, I decided to use this approach as it w
 
 \section{Structure of the Data}
 
-Before we get to the data aggregator, I want to explain the internal git storage and meta data structure and mechanisms, which are important for the purpose of this thesis.
+Before we get to the data aggregator, I want to explain the internal git storage data structure and mechanisms, which are important for the purpose of this thesis~\cite{book:pro-git}.
 
-
-Test~\cite{book:pro-git}.
+Git, as most programmers know it, is a collection of tools to work with it's underlying file system (\ac{fs}) on a high abstraction level.
+Every file which is added to a git repository is internally saved in the \lstinline{.git/objects} under the respective SHA-1 of the file.
 
 
 \section{Problems}

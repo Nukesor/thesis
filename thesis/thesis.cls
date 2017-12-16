@@ -25,6 +25,8 @@
 % force footnotes to the bottom
 \usepackage[bottom]{footmisc}
 
+\lstset{language=Python,keywordstyle={\bfseries \color{blue}}}
+
 % Redefining the chapter heading styles
 
 % Numbered chapter heading style:

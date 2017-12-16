@@ -6,7 +6,7 @@ default: thesis clean show
 all:thesis.pdf presentation.pdf clean
 
 watch:
-	while true; do inotifywait -e close_write,moved_to,create thesis.tex $(DEPS); make thesis; make clean; done;
+	while true; do inotifywait -e close_write,moved_to,create **/*.tex $(DEPS); make thesis; make clean; done;
 
 thesis:
 	rubber --pdf thesis.tex
