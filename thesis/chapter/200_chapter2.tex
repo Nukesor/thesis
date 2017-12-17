@@ -21,11 +21,11 @@ Before we get to the data aggregator, I want to briefly explain the internal Git
 
 Git, as most programmers know it, is a collection of high level abstraction tools to work with it's underlying \ac{fs}.
 The most basic structure in Git is an \emph{blob} object.
-A \emph{blob} object is a file which has been added to a Git \ac{fs} and is compressed and saved in the \inlinecode{.git/objects} directory under the respective \ac{sha1} hash of the uncompressed file.
+A \emph{blob} object is a file, which has been added to a Git \ac{fs}. It is compressed and and saved in the \inlinecode{.git/objects} directory under the respective \ac{sha1} hash of the uncompressed file.
 The probability of a \ac{sha1} collision is really low, roughly $10^{-45}$, even though Google managed to force a collision in an controlled environment in 2017~\footnote{Announcing the first SHA1 collision:~\url{https://security.googleblog.com/2017/02/announcing-first-sha1-collision.html} Retrieved Dec. 16, 2017}.
 
 To represent a UNIX \ac{fs} or to simply bundle multiple Git \emph{blob} objects together, Git introduces the \emph{tree} object.
-A \emph{tree} object is a file which has a \ac{sha1} hash reference to all underlying \emph{blob} and \emph{tree} objects as well as their names and file permissions.
+A \emph{tree} object is a file, which has a \ac{sha1} hash reference to all underlying \emph{blob} and \emph{tree} objects as well as their names and file permissions.
 If a \emph{tree} holds a reference to another \emph{tree} it could be interpreted as a subdirectory.
 
 \begin{minted}[linenos]{text}
@@ -78,7 +78,7 @@ The Github \emph{api} doesn't provide a method to get all repositories a user ev
 With this feature it is possible to get some repositories a user contributed to, even though he doesn't own these repositories, as users tend to star repositories they contributed to (quote).
 
 Another feature is \emph{following}. Every user can \emph{follow} another user to get informed, if they do specific things like creating new repositories or \emph{starring} repositories.
-As user tend to (quote) \emph{follow} friends or colleagues, one can get repositories of some people which are somehow personally related or work together.
+As user tend to (quote) \emph{follow} friends or colleagues, repositories of people, which are somehow personally related or work together, can be located.
 
 The third feature are \emph{organizations}.
 An organization is used to host projects under an account which is not necessarily lead by a single natural person, but rather supports roles with different permissions and team structures.
@@ -87,16 +87,43 @@ Additionally team structures can only be examined, if one is a member of the org
 Despite not knowing all members of an organization, we still get some useful information to estimate the tendency of precision of our knowledge extraction algorithms.
 
 
+\section{Data structure}
+
+
 \section{The Aggregator}
 
-As mentioned in~\ref{data-aggregation}, I decided to get data from Github and wanted to utilize their \ac{api} for this purpose. In 200lol Github introduced the \emph{Github APIv3}.
-The \ac{api} is publicly available and can be used by anyone who is registered on Github.
+As mentioned in~\ref{data-aggregation}, I decided to get data from Github and wanted to utilize their \emph{Github APIv3} for this purpose.
+This \ac{api} is publicly available and can be used by anyone who is registered on Github.
 There is a rate limit of 5000 requests per user per hour.
 
-The program I wrote for this thesis is called \emph{gitalizer} and features data aggregation, preprocessing, knowledge extraction and visualization.
-The data aggregation module of \emph{gitalizer} combines querying the Github \ac{api} with cloning repositories and scanning them locally.
+The program I wrote for this thesis is named Gitalizer and features data aggregation, preprocessing, knowledge extraction and visualization.
+For interaction with the Github \ac{api} the \emph{pygithub} library is used, which provides a convenient abstraction layer for requests and automatically maps \ac{json} responses to python objects.
+The data aggregation module of Gitalizer is capable of several scanning methods.
 
-The aggregator
+\subsubsection{Stand-alone repository}\label{stand-alone-repository}
+Gitalizer can scan any git repository from a \ac{ssh} or \ac{http} \acs{url} as long as it has access to it.
+At first the repository is cloned into a local directory and when the cloning is don the scan process begins.
+During the scan, we checkout the \emph{HEAD} of the current default branch for this repository and walk down every commit of the Git history.
+The program saves all available meta data for each commit.
+The emails, timestamps and names of the committer as well as additions and deletions to the project in lines of code.
+
+After this scan we are still missing a lot of information.
+The unique identifier of an author or committer is their email address, as names may change or can be ambiguous.
+The problem with the simplicity of Git is that there exists no concept of a user.
+Thereby we cannot easily link email addresses to a specific contributer.
+
+\subsubsection{Github repository}
+To tackle the problem in~\ref{stand-alone-repository}, I used the Github \ac{api} to get some of the missing meta data.
+The general approach is the same as in the previous scan method. The repository is cloned and locally scanned.
+However, a request to Github is issued every time a new email is found that we do not already have linked to a contributer.
+Github allows to link multiple email addresses with a single user account and automatically references the respective user in their own \ac{api} commit representation.
+With this additional meta data we gain ground truth about the identity of an author or committer.
+Anyway this approach does not work, if the user of a commit removed the email used for the commit from his account, or if the user deleted his account.
+
+
+\subsubsection{Github user}
+
+
 
 
 \section{Problems}
