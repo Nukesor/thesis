@@ -1,4 +1,4 @@
-\chapter{Data Aggregation}
+\chapter{Data Aggregation}\label{data-aggregation}
 
 The biggest initial task for this thesis was the acquisition of data.
 The data should be as extensive as possible, feature a high conjunction between contributers over several repositories to verify a possible connection between those and have realistic meta data.
@@ -12,7 +12,7 @@ The second solution was to get real world data from somewhere. The most obvious 
 I chose Github for this purpose, as it hosts one of the biggest collection of open source projects and provides a great \ac{api} for querying Github's meta data.
 A problem with this approach is that we don't have access to all important meta data, as for example the full list of members for organizations or the internal team structure of organizations.
 Another problem are old email addresses, which are not related to any account anymore.
-Even though some ground truth is missing, I decided to use this approach as it was still the most viable and promising way to gain as much ground truth and real world noise as possible.
+Even though some ground truth is missing, I decided to use this approach as it was still the most viable and promising way to gather as much ground truth and real world noise as possible.
 
 
 \section{Structure of the Data}
@@ -67,21 +67,37 @@ With these simple methods Git manages to create a robust \ac{vcs}.
 Git also provides tools to easily switch between commits of a project (checkout), show the changes between two different commits (diff) and to resolve conflicts between two different commits and merge them together.
 There are a lot more features available, but those mentioned are the most important for this project.
 
-\section{The Aggregator}
+\section{Github Meta Data}\label{github-meta-data}
 
-As earlier mentioned I decided to get data from Github and wanted to utilize their \ac{api}. In 200lol Github introduced the \emph{Github APIv2}.
-The \ac{api} is publicly available and can be used by anyone who is registered on Github and has a rate limit of 5000 requests per user per hour.
-
-The data aggregator is written in Python and combines querying the Github \ac{api} with cloning repositories and scanning them locally.
+I decided to use Github as a data source, because it is not only convenient to find \acp{url} for cloning repositories, but also provides some other useful meta data, which can be used to evaluate the precision of extracted knowledge.
 
 Github offers some features, which are convenient to find repositories a specific user contributed to and to find other contributer which are likely related to each other.
+
 The first feature is \emph{starring}. Every user can \emph{star} a repository to show that he likes a project.
-The Github \emph{api} doesn't allow to get all repositories a user ever contributed to, it only allows to query the repositories owned by a user and the repositories \emph{starred} by a user.
-With this feature we can get some repositories a user contributed to, even though he doesn't own these repositories, as user tend to star repositories they contributed to (quote).
+The Github \emph{api} doesn't provide a method to get all repositories a user ever contributed to, it only allows to query the repositories owned by a user and the repositories \emph{starred} by a user.
+With this feature it is possible to get some repositories a user contributed to, even though he doesn't own these repositories, as users tend to star repositories they contributed to (quote).
 
-Another feature is \emph{following}. Every user can follow another user to get informed, if they do specific things like creating new repositories or \emph{starring} repositories. As user tend to (quote) follow friends or colleagues, we can get find repositories of people which are personally related or work together.
+Another feature is \emph{following}. Every user can \emph{follow} another user to get informed, if they do specific things like creating new repositories or \emph{starring} repositories.
+As user tend to (quote) \emph{follow} friends or colleagues, one can get repositories of some people which are somehow personally related or work together.
 
-The third feature is the \emph{organization}. An organization is used to host projects under an account
+The third feature are \emph{organizations}.
+An organization is used to host projects under an account which is not necessarily lead by a single natural person, but rather supports roles with different permissions and team structures.
+This feature provides us with some important ground truth, but sadly a lot of information is not visible, as users have to actively opt-in, if they want to be publicly displayed as a member of an organization.
+Additionally team structures can only be examined, if one is a member of the organization.
+Despite not knowing all members of an organization, we still get some useful information to estimate the tendency of precision of our knowledge extraction algorithms.
+
+
+\section{The Aggregator}
+
+As mentioned in~\ref{data-aggregation}, I decided to get data from Github and wanted to utilize their \ac{api} for this purpose. In 200lol Github introduced the \emph{Github APIv3}.
+The \ac{api} is publicly available and can be used by anyone who is registered on Github.
+There is a rate limit of 5000 requests per user per hour.
+
+The program I wrote for this thesis is called \emph{gitalizer} and features data aggregation, preprocessing, knowledge extraction and visualization.
+The data aggregation module of \emph{gitalizer} combines querying the Github \ac{api} with cloning repositories and scanning them locally.
+
+The aggregator
+
 
 \section{Problems}
 
