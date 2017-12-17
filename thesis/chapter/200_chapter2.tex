@@ -69,7 +69,7 @@ There are a lot more features available, but those mentioned are the most import
 
 \section{Github Meta Data}\label{github-meta-data}
 
-I decided to use Github as a data source, because it is not only convenient to find \acp{url} for cloning repositories, but also provides some other useful meta data, which can be used to evaluate the precision of extracted knowledge.
+I decided to use Github as a data source, as it is not only convenient to find \acp{url} for cloning repositories, but also provides some other useful meta data, which can be used to evaluate the precision of extracted knowledge.
 
 Github offers some features, which are convenient to find repositories a specific user contributed to and to find other contributer which are likely related to each other.
 
@@ -87,7 +87,7 @@ Additionally team structures can only be examined, if one is a member of the org
 Despite not knowing all members of an organization, we still get some useful information to estimate the tendency of precision of our knowledge extraction algorithms.
 
 
-\section{Data structure}
+\section{Data structure}\label{data-structure}
 
 
 \section{The Aggregator}
@@ -97,10 +97,11 @@ This \ac{api} is publicly available and can be used by anyone who is registered 
 There is a rate limit of 5000 requests per user per hour.
 
 The program I wrote for this thesis is named Gitalizer and features data aggregation, preprocessing, knowledge extraction and visualization.
+Gitalizer uses a PostgreSQL database for data storage and data consistency checks as described in~\ref{data-structure}.
 For interaction with the Github \ac{api} the \emph{pygithub} library is used, which provides a convenient abstraction layer for requests and automatically maps \ac{json} responses to python objects.
-The data aggregation module of Gitalizer is capable of several scanning methods.
+The data aggregation module of Gitalizer is capable of several scanning methods. In the following we will look at these approaches in detail.
 
-\subsubsection{Stand-alone repository}\label{stand-alone-repository}
+\subsection{Stand-alone Repository}\label{stand-alone-repository-scan}
 Gitalizer can scan any git repository from a \ac{ssh} or \ac{http} \acs{url} as long as it has access to it.
 At first the repository is cloned into a local directory and when the cloning is don the scan process begins.
 During the scan, we checkout the \emph{HEAD} of the current default branch for this repository and walk down every commit of the Git history.
@@ -112,18 +113,39 @@ The unique identifier of an author or committer is their email address, as names
 The problem with the simplicity of Git is that there exists no concept of a user.
 Thereby we cannot easily link email addresses to a specific contributer.
 
-\subsubsection{Github repository}
-To tackle the problem in~\ref{stand-alone-repository}, I used the Github \ac{api} to get some of the missing meta data.
+
+\subsection{Github Repository}\label{github-repo-scan}
+To tackle the problems in~\ref{stand-alone-repository-scan}, I used the Github \ac{api} to get some of the missing meta data.
 The general approach is the same as in the previous scan method. The repository is cloned and locally scanned.
 However, a request to Github is issued every time a new email is found that we do not already have linked to a contributer.
 Github allows to link multiple email addresses with a single user account and automatically references the respective user in their own \ac{api} commit representation.
 With this additional meta data we gain ground truth about the identity of an author or committer.
+
 Anyway this approach does not work, if the user of a commit removed the email used for the commit from his account, or if the user deleted his account.
+In this case there is nothing that can be done and these commits need to be handled later on in the preprocessing of the data.
 
 
-\subsubsection{Github user}
+\subsection{Github User}\label{github-user-scan}
+To get all repositories of a specific user, I implemented a new functionality utilizing the Github \ac{api}.
+At first several requests are issued to get all repositories of the specified user, as well as all \emph{starred} repositories of this user.
+For each \emph{starred} repository we check if the user contributed to this repository, which is quite easy as the \ac{api} provides an endpoint for this query.
+During the repository exploration, every relevant repository is added to a shared queue, lets call it ``repo-queue'', which is then processed by a multiprocessing pool of workers.
+Each worker process scans a single repository as described in~\ref{github-repo-scan}.
 
 
+\subsection{Github User and Remotes}\label{github-user-remote-scan}
+For detection and analysis of connections between contributers in a big amount of repositories, I needed to get repositories of related users.
+Gitalizer is able to achieve this by not just scanning a single user, but rather scanning the repositories of the specific user, as well as the repositories of all \emph{following} and \emph{followed} users.
+For this task two different worker pools are utilized.
+The user pool is initialized with a shared queue, lets call it ``user-queue'', of all users we need to look at.
+This pool simply searches for relevant repositories of a single user and passes them to a second shared queue.
+The scan pool then processes the ``repo-queue'' as described in~\ref{github-repo-scan}.
+
+
+\subsection{Github Organization}
+This approach works nearly as the scan in~\ref{github-user-remote-scan}.
+Initially all repositories, which are owned by the organization, are added to the ``repo-queue''.
+All publicly visible organization members are then added to the ``user-queue''.
 
 
 \section{Problems}
