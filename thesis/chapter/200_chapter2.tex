@@ -81,7 +81,7 @@ Another feature is \emph{following}. Every user can \emph{follow} another user t
 As user tend to (quote) \emph{follow} friends or colleagues, repositories of people, which are somehow personally related or work together, can be located.
 
 The third feature are \emph{organizations}.
-An organization is used to host projects under an account which is not necessarily lead by a single natural person, but rather supports roles with different permissions and team structures.
+An organization is used to host projects under an account which is not necessarily led by a single natural person, but rather supports roles with different permissions and team structures.
 This feature provides us with some important ground truth, but sadly a lot of information is not visible, as users have to actively opt-in, if they want to be publicly displayed as a member of an organization.
 Additionally team structures can only be examined, if one is a member of the organization.
 Despite not knowing all members of an organization, we still get some useful information to estimate the tendency of precision of our knowledge extraction algorithms.
@@ -149,4 +149,17 @@ All publicly visible organization members are then added to the ``user-queue''.
 
 
 \section{Problems}
+During the development of the data aggregator I experienced a few problems and edge cases which needed to be handled.
+The earliest and most delaying problem was the rate limit of the Github \ac{api}.
+The first version of the aggregator didn't clone and scan the repository locally, but rather gathered all information from the Github \ac{api} endpoints.
+This approach worked well until the aggregator hit the official repository of Nmap, which has about 11.000 commits and took over three hours to scan.
+Soon I realized that this would severely slow down my research and I then started to continuously minimize the amount \ac{api} calls.
+A user and remote scan of myself led to about 600.000 commits, to provide you with a reference.
 
+After implementing the worker pools I managed to hit the rate limit again, as I was now issuing requests with twelve threads.
+To fix this I needed to implement a wait and retry clause around every single function call or object access which internally triggered a call to the Github \ac{api}, otherwise the worker processes would die silently and data would be lost.
+
+Another problem was continuous data mining.
+As it is impractical to wipe data from previous runs, I needed to handle edge cases such as force pushing of commits.
+Force pushes can alter the history of a git repository significantly.
+As the complete history of a repository is stored inside the database, I needed to detect a force push and truncate the old commits of the history, which were now outdated and irrelevant.
