@@ -2,7 +2,7 @@
 
 The biggest initial task for this thesis was the acquisition of data.
 The data should be as extensive as possible, feature a high conjunction between contributers over several repositories to verify a possible connection between those and have realistic meta data.
-Two different solutions approaches existed for these requirements.
+Two different solutions came up for these requirements.
 
 The first approach was to design an algorithm for automatic local generation of repositories.
 The main problem with this solution is, that the visualization and data mining code might be highly optimized for this specific generation algorithm.
@@ -17,15 +17,15 @@ Even though some ground truth is missing, I decided to use this approach as it w
 
 \section{Structure of the Data}
 
-Before we get to the data aggregator, I want to explain the internal git storage data structure and mechanisms, which are important for the purpose of this thesis~\cite{book:pro-git}.
+Before we get to the data aggregator, I want to briefly explain the internal Git storage data structure and mechanisms, which are important for the purpose of this thesis~\cite{book:pro-git}.
 
 Git, as most programmers know it, is a collection of high level abstraction tools to work with it's underlying \ac{fs}.
-The most basic structure in git is an \emph{blob} object.
-An \emph{blob} object is a file which is added to a git \ac{fs} and is compressed and saved in the \inlinecode{.git/objects} directory under the respective \ac{sha1} of the uncompressed file.
+The most basic structure in Git is an \emph{blob} object.
+A \emph{blob} object is a file which has been added to a Git \ac{fs} and is compressed and saved in the \inlinecode{.git/objects} directory under the respective \ac{sha1} hash of the uncompressed file.
 The probability of a \ac{sha1} collision is really low, roughly $10^{-45}$, even though Google managed to force a collision in an controlled environment in 2017~\footnote{Announcing the first SHA1 collision:~\url{https://security.googleblog.com/2017/02/announcing-first-sha1-collision.html} Retrieved Dec. 16, 2017}.
 
-To represent a UNIX \ac{fs} or to simply bundle multiple git \emph{blob} objects together, git introduces the \emph{tree} object.
-A \emph{tree} object is a file which is also saved in \inlinecode{.git/objects} under its \ac{sha1} and contains the \ac{sha1} of all \emph{blob} objects and \emph{tree} objects as well as their names and file permissions.
+To represent a UNIX \ac{fs} or to simply bundle multiple Git \emph{blob} objects together, Git introduces the \emph{tree} object.
+A \emph{tree} object is a file which has a \ac{sha1} hash reference to all underlying \emph{blob} and \emph{tree} objects as well as their names and file permissions.
 If a \emph{tree} holds a reference to another \emph{tree} it could be interpreted as a subdirectory.
 
 \begin{minted}[linenos]{text}
@@ -35,10 +35,10 @@ If a \emph{tree} holds a reference to another \emph{tree} it could be interprete
     040000 tree 8aaf336db307bdcab2f082bd710b31ddb5f9ebd4	thesis
 \end{minted}
 \begingroup
-\captionof{listing}{A \emph{tree} file\label{lst:raw-commit}.}
+\captionof{listing}{\emph{tree} file example\label{lst:raw-commit}.}
 \endgroup
 
-Now we come to probably the most important git feature for this thesis; the \emph{commit}.
+Now we come to the probably most important Git feature for this thesis; the \emph{commit}.
 The commit is utilized to provide an exact representation of a state of the repository's files and directories.
 
 \begin{minted}[linenos]{text}
@@ -48,24 +48,40 @@ The commit is utilized to provide an exact representation of a state of the repo
     committer Arne Beer <arne@twobeer.de> 1513434723 +0100
 \end{minted}
 \begingroup
-\captionof{listing}{A \emph{commit} file\label{lst:raw-commit}.}
+\captionof{listing}{\emph{commit} file example\label{lst:raw-commit}.}
 \endgroup
 
-As you can see in listing~\ref{lst:raw-commit}, the \emph{commit} is just another kind of file utilized by git, which contains some meta data about a repository version:
+As you can see in listing~\ref{lst:raw-commit}, the \emph{commit} is just another kind of file utilized by Git, which contains some meta data about a repository version:
 
 \begin{itemize}
-    \item The reference to a \emph{tree} object. This is practically the root directory of the git project
+    \item The reference to a \emph{tree} object. This is practically the root directory of the Git project
     \item A reference to one or multiple parent commits, to maintain a version history
     \item The name and email address of the author
     \item The name and email address of the committer
     \item The exact commit and publish \ac{utc} timestamp with timezone
 \end{itemize}
 
+Just as the \emph{blob} object the \emph{tree} and \emph{commit} files are also stored in the \inlinecode{.git/objects} directory under their respective hash.
 
-
-\section{Problems}
-
+With these simple methods Git manages to create a robust \ac{vcs}.
+Git also provides tools to easily switch between commits of a project (checkout), show the changes between two different commits (diff) and to resolve conflicts between two different commits and merge them together.
+There are a lot more features available, but those mentioned are the most important for this project.
 
 \section{The Aggregator}
 
+As earlier mentioned I decided to get data from Github and wanted to utilize their \ac{api}. In 200lol Github introduced the \emph{Github APIv2}.
+The \ac{api} is publicly available and can be used by anyone who is registered on Github and has a rate limit of 5000 requests per user per hour.
+
+The data aggregator is written in Python and combines querying the Github \ac{api} with cloning repositories and scanning them locally.
+
+Github offers some features, which are convenient to find repositories a specific user contributed to and to find other contributer which are likely related to each other.
+The first feature is \emph{starring}. Every user can \emph{star} a repository to show that he likes a project.
+The Github \emph{api} doesn't allow to get all repositories a user ever contributed to, it only allows to query the repositories owned by a user and the repositories \emph{starred} by a user.
+With this feature we can get some repositories a user contributed to, even though he doesn't own these repositories, as user tend to star repositories they contributed to (quote).
+
+Another feature is \emph{following}. Every user can follow another user to get informed, if they do specific things like creating new repositories or \emph{starring} repositories. As user tend to (quote) follow friends or colleagues, we can get find repositories of people which are personally related or work together.
+
+The third feature is the \emph{organization}. An organization is used to host projects under an account
+
+\section{Problems}
 
