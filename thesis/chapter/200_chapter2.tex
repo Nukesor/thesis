@@ -133,19 +133,17 @@ During the repository exploration, every relevant repository is added to a share
 Each worker process scans a single repository as described in~\ref{github-repo-scan}.
 
 
-\subsection{Github User and Remotes}\label{github-user-remote-scan}
-For detection and analysis of connections between contributers in a big amount of repositories, I needed to get repositories of related users.
+\subsection{Github connected User}\label{github-user-remote-scan}
+For detection and analysis of connections between contributers over multiple repositories, I needed to gather as many repositories of related users as possible.
 Gitalizer is able to achieve this by not just scanning a single user, but rather scanning the repositories of the specific user, as well as the repositories of all \emph{following} and \emph{followed} users.
 For this task two different worker pools are utilized.
 The user pool is initialized with a shared queue, lets call it ``user-queue'', of all users we need to look at.
 This pool simply searches for relevant repositories of a single user and passes them to a second shared queue.
 The scan pool then processes the ``repo-queue'' as described in~\ref{github-repo-scan}.
 
-
-\subsection{Github Organization}
-This approach works nearly as the scan in~\ref{github-user-remote-scan}.
+For organizations it's nearly the same approach.
 Initially all repositories, which are owned by the organization, are added to the ``repo-queue''.
-All publicly visible organization members are then added to the ``user-queue''.
+All publicly visible organization members are then added to the ``user-queue'' and processed as described above.
 
 
 \section{Problems}
@@ -154,12 +152,14 @@ The earliest and most delaying problem was the rate limit of the Github \ac{api}
 The first version of the aggregator didn't clone and scan the repository locally, but rather gathered all information from the Github \ac{api} endpoints.
 This approach worked well until the aggregator hit the official repository of Nmap, which has about 11.000 commits and took over three hours to scan.
 Soon I realized that this would severely slow down my research and I then started to continuously minimize the amount \ac{api} calls.
-A user and remote scan of myself led to about 600.000 commits, to provide you with a reference.
+A user scan with remotes of my own Github account led to about 600.000 commits, to provide you with a reference of scale.
 
-After implementing the worker pools I managed to hit the rate limit again, as I was now issuing requests with twelve threads.
-To fix this I needed to implement a wait and retry clause around every single function call or object access which internally triggered a call to the Github \ac{api}, otherwise the worker processes would die silently and data would be lost.
+After implementing multiprocessing, I managed to hit the rate limit again, as I was now issuing requests with sixteen threads.
+I needed to implement a wait and retry clause around every single function call or object access which internally triggered a call to the Github \ac{api} to fix this issue, otherwise the worker processes would silently die and the collected data would be incomplete.
 
-Another problem was continuous data mining.
-As it is impractical to wipe data from previous runs, I needed to handle edge cases such as force pushing of commits.
-Force pushes can alter the history of a git repository significantly.
+Another problem occurred during continuous data mining.
+Gitalizer only scans repositories until it hits a commit it has already scanned in a previous run.
+This rule only applies to repositories, which have once been scanned completely.
+In this scenario I needed to handle edge cases such as force pushing of commits.
+Force pushes can alter the history of a git repository significantly, which can lead to a split in the Git history and leaves dangling commits.
 As the complete history of a repository is stored inside the database, I needed to detect a force push and truncate the old commits of the history, which were now outdated and irrelevant.
