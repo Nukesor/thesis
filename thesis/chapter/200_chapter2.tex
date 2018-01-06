@@ -1,18 +1,18 @@
 \chapter{Data Aggregation}\label{data-aggregation}
 
 The biggest initial task for this thesis was the acquisition of data.
-The data should be as extensive as possible, feature a high conjunction between contributers over several repositories to verify a possible connection between those and have realistic meta data.
-Two different solutions came up for these requirements.
+The data had to be as extensive as possible, feature a high conjunction between contributers over several repositories to verify a possible connection between those and have realistic meta data.
+For these requirements two different solutions came up.
 
 The first approach was to design an algorithm for automatic local generation of repositories.
 The main problem with this solution is, that the visualization and data mining code might be highly optimized for this specific generation algorithm.
-Real world data is noisy and inconsistent. Thereby the developed solution might have worked on the generated data, but would have probably failed on real world data.
+Real world data is noisy and inconsistent. Thereby the developed solution would have worked on the generated data, but might have failed on real world data.
 
-The second solution was to get real world data from somewhere. The most obvious choice was to mine data from open source projects.
+The second solution was to collect real world data, and thereby collect data from open source projects.
 I chose Github for this purpose, as it hosts one of the biggest collection of open source projects and provides a great \ac{api} for querying Github's meta data.
 A problem with this approach is that we don't have access to all important meta data, as for example the full list of members for organizations or the internal team structure of organizations.
-Another problem are old email addresses, which are not related to any account anymore.
-Even though some ground truth is missing, I decided to use this approach as it was still the most viable and promising way to gather as much ground truth and real world noise as possible.
+Another problem is old email addresses, which are not related to any account anymore, because all commits made with this email address are irrefutable.
+Even though some ground truth is missing, I decided to use this approach as it was still the most promising way to gather as much ground truth and real world noise as possible.
 
 
 \section{Structure of the Data}
@@ -20,11 +20,11 @@ Even though some ground truth is missing, I decided to use this approach as it w
 Before we get to the data aggregator, I want to briefly explain the internal Git storage data structure and mechanisms, which are important for the purpose of this thesis~\cite{book:pro-git}.
 
 Git, as most programmers know it, is a collection of high level abstraction tools to work with it's underlying \ac{fs}.
-The most basic structure in Git is an \emph{blob} object.
-A \emph{blob} object is a file, which has been added to a Git \ac{fs}. It is compressed and and saved in the \inlinecode{.git/objects} directory under the respective \ac{sha1} hash of the uncompressed file.
+The most basic structure in Git is a \emph{blob} object.
+A \emph{blob} object is a file, which has been added to a Git \ac{fs}. It is compressed and saved in the \inlinecode{.git/objects} directory under the respective \ac{sha1} hash of the uncompressed file.
 The probability of a \ac{sha1} collision is really low, roughly $10^{-45}$, even though Google managed to force a collision in an controlled environment in 2017~\footnote{Announcing the first SHA1 collision:~\url{https://security.googleblog.com/2017/02/announcing-first-sha1-collision.html} Retrieved Dec. 16, 2017}.
 
-To represent a UNIX \ac{fs} or to simply bundle multiple Git \emph{blob} objects together, Git introduces the \emph{tree} object.
+To represent a UNIX \ac{fs} or to simply bundle multiple Git \emph{blob} objects together, Git uses the \emph{tree} object.
 A \emph{tree} object is a file, which has a \ac{sha1} hash reference to all underlying \emph{blob} and \emph{tree} objects as well as their names and file permissions.
 If a \emph{tree} holds a reference to another \emph{tree} it could be interpreted as a subdirectory.
 
@@ -69,16 +69,16 @@ There are a lot more features available, but those mentioned are the most import
 
 \section{Github Meta Data}\label{github-meta-data}
 
-I decided to use Github as a data source, as it is not only convenient to find \acp{url} for cloning repositories, but also provides some other useful meta data, which can be used to evaluate the precision of extracted knowledge.
+I decided to use Github as a data source, as it is not only convenient to find \acp{url} for cloning repositories, but also provides some other useful meta data, which can be used to evaluate the precision of any extracted knowledge.
 
 Github offers some features, which are convenient to find repositories a specific user contributed to and to find other contributer which are likely related to each other.
 
 The first feature is \emph{starring}. Every user can \emph{star} a repository to show that he likes a project.
 The Github \emph{api} doesn't provide a method to get all repositories a user ever contributed to, it only allows to query the repositories owned by a user and the repositories \emph{starred} by a user.
-With this feature it is possible to get some repositories a user contributed to, even though he doesn't own these repositories, as users tend to star repositories they contributed to (quote).
+With this feature it is possible to get some repositories a user contributed to, even though he doesn't own these repositories, as users tend to star repositories they contributed to \todo{Find a quote}.
 
 Another feature is \emph{following}. Every user can \emph{follow} another user to get informed, if they do specific things like creating new repositories or \emph{starring} repositories.
-As user tend to (quote) \emph{follow} friends or colleagues, repositories of people, which are somehow personally related or work together, can be located.
+As user tend to \todo{Find a quote} \emph{follow} friends or colleagues, we can locate repositories of people, which are somehow personally related or work together.
 
 The third feature are \emph{organizations}.
 An organization is used to host projects under an account which is not necessarily led by a single natural person, but rather supports roles with different permissions and team structures.
@@ -89,11 +89,14 @@ Despite not knowing all members of an organization, we still get some useful inf
 
 \section{Data structure}\label{data-structure}
 
+\todo{Ordentliche Beschreibung der Datenstruktur und deren Vorteile. SChreiben nach den ersten schwierigen Queries.}
+To store and represent the gathered Information I chose a \ac{sql} based solution. To be exact I chose PostgreSQL as it provides excellent tools to provide a high consistency, namely check constraints, and a great support for working with times and time zones.
+The usage of a \ac{sql} database and the combination of a \ac{orm} allows me to write highly specific queries and
 
 \section{The Aggregator}
 
 As mentioned in~\ref{data-aggregation}, I decided to get data from Github and wanted to utilize their \emph{Github APIv3} for this purpose.
-This \ac{api} is publicly available and can be used by anyone who is registered on Github.
+This \ac{api} is publicly available and can be used by anyone registered on Github.
 There is a rate limit of 5000 requests per user per hour.
 
 The program I wrote for this thesis is named Gitalizer and features data aggregation, preprocessing, knowledge extraction and visualization.
@@ -103,14 +106,14 @@ The data aggregation module of Gitalizer is capable of several scanning methods.
 
 \subsection{Stand-alone Repository}\label{stand-alone-repository-scan}
 Gitalizer can scan any git repository from a \ac{ssh} or \ac{http} \acs{url} as long as it has access to it.
-At first the repository is cloned into a local directory and when the cloning is don the scan process begins.
+At first the repository is cloned into a local directory.
+When the cloning is done the scan process begins.
 During the scan, we checkout the \emph{HEAD} of the current default branch for this repository and walk down every commit of the Git history.
-The program saves all available meta data for each commit.
-The emails, timestamps and names of the committer as well as additions and deletions to the project in lines of code.
+The program saves all available meta data for each commit in its database, namely the emails, timestamps and names of the committer as well as additions and deletions to the project in lines of code.
 
 After this scan we are still missing a lot of information.
 The unique identifier of an author or committer is their email address, as names may change or can be ambiguous.
-The problem with the simplicity of Git is that there exists no concept of a user.
+The problem with the simplicity of Git is that there doesn't exist the concept of an user.
 Thereby we cannot easily link email addresses to a specific contributer.
 
 
@@ -139,7 +142,7 @@ Gitalizer is able to achieve this by not just scanning a single user, but rather
 For this task two different worker pools are utilized.
 The user pool is initialized with a shared queue, lets call it ``user-queue'', of all users we need to look at.
 This pool simply searches for relevant repositories of a single user and passes them to a second shared queue.
-The scan pool then processes the ``repo-queue'' as described in~\ref{github-repo-scan}.
+The second pool then processes the ``repo-queue'' as described in~\ref{github-repo-scan}.
 
 For organizations it's nearly the same approach.
 Initially all repositories, which are owned by the organization, are added to the ``repo-queue''.
@@ -155,7 +158,7 @@ Soon I realized that this would severely slow down my research and I then starte
 A user scan with remotes of my own Github account led to about 600.000 commits, to provide you with a reference of scale.
 
 After implementing multiprocessing, I managed to hit the rate limit again, as I was now issuing requests with sixteen threads.
-I needed to implement a wait and retry clause around every single function call or object access which internally triggered a call to the Github \ac{api} to fix this issue, otherwise the worker processes would silently die and the collected data would be incomplete.
+I needed to implement a wait and retry clause around every single function call or object access, which internally triggered a call to the Github \ac{api}, to fix this issue, otherwise the worker processes would silently die and the collected data would be incomplete.
 
 Another problem occurred during continuous data mining.
 Gitalizer only scans repositories until it hits a commit it has already scanned in a previous run.
@@ -163,3 +166,4 @@ This rule only applies to repositories, which have once been scanned completely.
 In this scenario I needed to handle edge cases such as force pushing of commits.
 Force pushes can alter the history of a git repository significantly, which can lead to a split in the Git history and leaves dangling commits.
 As the complete history of a repository is stored inside the database, I needed to detect a force push and truncate the old commits of the history, which were now outdated and irrelevant.
+\todo{Grafik zu dieser Problematik}
