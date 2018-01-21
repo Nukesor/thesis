@@ -1,0 +1,39 @@
+\chapter{Git}\label{git-explanation}
+In this chapter the \ac{vcs} \emph{Git} will be introduced. As Git and its techniques and data structures are the foundation of this thesis, I will explain the important user roles, technologies, and other interesting parts of Git.
+
+
+\section{Introduction to Git}
+Git is a tool, which is used to manage different versions of files in a specific directory.
+Each version of the project is saved in a so called \emph{commit}.
+Users are able to meticulously specify the files or changes of files that should be added to a commit. It is then capable of showing the exact changes between different commits, which is called a \emph{diff}.
+
+Git is the currently \todo{Quote} most popular tool to control the code of a programming project.
+It enables to work with multiple developers on a single code base, as it provides two different techniques, the \emph{branch} and the \emph{merge}.
+The versioning of Git is internally represented as an non-cyclic, connected graph of commits or a \emph{tree}.
+The commits act as \emph{nodes} and the connection to their parent commits as \emph{edges}.
+Every time two edges leave a single node, a new \emph{branch} is created.
+In Git, every branch has its own name, whereby the main branch is usually named \emph{master}.
+
+In case two different people want to work on the same files, they can each create their own branch on which they can work unimpeded.
+After they finished and want to add their work to the master branch, they can now \emph{merge} their changes.
+Git then tries to automatically resolve any conflicts which might have emerged from editing the same lines in a file.
+If that is not possible, it marks the conflicts and allows the user to manually correct them.
+
+
+With this methodology it is possible to work with many people or teams on the same project without accidentally overwriting changes of another developer whilst maintaining a clear history of all changes of the project.
+
+Another important feature of Git is the \emph{remote}.
+A remote is usually located on a distinct server, which is attached to some kind of network, which is accessible by developers.
+A remote acts as a single source of truth a developer can \emph{push} their changes to or \emph{pull} changes from other developers.
+Git supports several protocols such as \ac{http} or \ac{ssh} to connect to the remote and to provide a simple user management layer.
+
+
+\section{Git User Roles}
+There exist two roles in Git, namely the \emph{committer} and the \emph{author}.
+Every commit in Git contains the email addresses and the names of these two people.
+The \emph{author} of a commit is the person which actually contributed the changes in the files.
+The \emph{committer} is the person, which created the git commit.
+This is important to keep track of the original author of the changes.
+Lets look at the case of an author contributing code to a project in an email with an attached patch file.
+If a maintainer of the project now applies the patch file and commits without setting the \emph{author}, the information about the original author would be lost.
+Although in most cases the \emph{author} and the \emph{committer} are the same person. \todo{Prozentzahl auf Basis der gesammelten Daten.}
