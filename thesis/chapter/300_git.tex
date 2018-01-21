@@ -61,10 +61,10 @@ A \emph{tree} object is a file, which has a \ac{sha1} hash reference to all unde
 To represent a subdirectory a \emph{tree} simply holds a reference to another \emph{tree} object.
 
 \begin{minted}[linenos]{text}
-    100644 blob 11d1ee77f9a23ffcb4afa860dd4b59187a9104e9	.gitignore
-    040000 tree ac0f5960d9c5f662f18697029eca67fcea09a58c	expose
-    100644 blob 61b5b2808cc2c8ab21bb9caa7d469e08f875277a	install.sh
-    040000 tree 8aaf336db307bdcab2f082bd710b31ddb5f9ebd4	thesis
+    100644 blob 11d1ee77f9a23ffcb4afa860dd4b59187a9104e9  .gitignore
+    040000 tree ac0f5960d9c5f662f18697029eca67fcea09a58c  expose
+    100644 blob 61b5b2808cc2c8ab21bb9caa7d469e08f875277a  install.sh
+    040000 tree 8aaf336db307bdcab2f082bd710b31ddb5f9ebd4  thesis
 \end{minted}
 \begingroup
 \captionof{listing}{\emph{tree} file example\label{lst:raw-commit}.}
@@ -73,9 +73,9 @@ To represent a subdirectory a \emph{tree} simply holds a reference to another \e
 As stated before the \emph{commit} is utilized to provide an exact representation of a state of the repository's files and directories.
 
 \begin{minted}[linenos]{text}
-    tree cd7d001b696db430b898b75c633686067e6f0b76
-    parent c19b969705e5eae0ccca2cde1d8a98be1a1eab4d
-    author Arne Beer <arne@twobeer.de> 1513434723 +0100
+    tree      cd7d001b696db430b898b75c633686067e6f0b76
+    parent    c19b969705e5eae0ccca2cde1d8a98be1a1eab4d
+    author    Arne Beer <arne@twobeer.de> 1513434723 +0100
     committer Arne Beer <arne@twobeer.de> 1513434723 +0100
 \end{minted}
 \begingroup
