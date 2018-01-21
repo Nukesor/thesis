@@ -75,4 +75,17 @@
     \vskip 40\p@
   }}
 
+\newenvironment{itemlist}[1]{%
+  \begin{trivlist}
+  \topsep=0pt
+  \parskip=0pt
+  \item {\sffamily\fontseries{bx}{#1}}
+  \begin{itemize}
+  \setlength\itemsep{-0.3em}
+}{%
+  \end{itemize}
+  \end{trivlist}
+  \vspace{0.3em}
+}
+
 \endinput
