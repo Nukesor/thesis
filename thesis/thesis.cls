@@ -58,7 +58,7 @@
     \huge \scshape \bf #1\par % chapter title
     \vspace{4pt} % add some vertical space
     \nobreak
-    \vskip 40\p@
+    \vskip 20\p@
   }}
 
 
