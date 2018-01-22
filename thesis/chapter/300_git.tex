@@ -9,20 +9,20 @@ Each version of the project is saved as a so called \emph{commit}.
 Users are able to meticulously specify the files or changes in files that should be added to a commit.
 It is also capable of showing the exact changes between different commits, which is called a \emph{diff}.
 
-Git is the currently most popular tool to control a project's code with an still trending tendency~\footnote{Version Control Systems Popularity in 2016~\url{https://rhodecode.com/insights/version-control-systems-2016} Retrieved Jan. 22, 2018}.
+Git is the currently most popular tool to control a project's code with an still trending tendency~\cite{article:git-popularity}.
 It enables to work with multiple developers on a single code base, as it provides several different techniques, the \emph{history tree}, the \emph{branch} and the \emph{merge}.
 The versioning history of Git is internally represented as an directed, non-cyclic, connected graph of commits or a \emph{tree}.
 The commits act as \emph{nodes} and the connection to their parent commits as \emph{edges}.
 Every time two edges leave a single node, a new \emph{branch} is created.
 In Git, every branch has its own name, whereby the main branch is usually named \emph{master}.
 
-\begin{figure}[h]
-    \includegraphics[scale=0.4]{./graphs/git-history-branch}
+\begin{figure}[H]
+    \includegraphics[scale=0.35]{./graphs/git-history-branch}
     \centering
     \caption{A Git commit history tree.}\label{fig:git-commit-tree}
 \end{figure}
 
-In case two different people want to work on the same files, they can each create their own branch on which they can work unimpeded.
+As shown in figure \ref{fig:git-commit-tree} two developer can create their own branch on which they can work unimpeded.
 After they finished and want to add their work to the master branch, they can now \emph{merge} their changes.
 Git then tries to automatically resolve any conflicts which might have emerged from editing the same lines in a file.
 If that is not possible, it marks the conflicts and allows the user to manually correct them.
@@ -58,7 +58,7 @@ It is compressed and saved in the \inlinecode{.git/objects} directory under the 
 As follows there exists a blob object for every version of every file of the project.
 
 The \ac{sha1} hashing for unique file identifier might seem unsafe, but the probability of a \ac{sha1} collision is really low, roughly $10^{-45}$.
-Lately Google managed to force a collision in an controlled environment in 2017, but it is really unlikely to encounter a collision under normal circumstances.~\footnote{Announcing the first SHA1 collision:~\url{https://security.googleblog.com/2017/02/announcing-first-sha1-collision.html} Retrieved Dec. 16, 2017}.
+Lately Google managed to force a collision in an controlled environment in 2017, but it is really unlikely to encounter a collision under normal circumstances~\cite{techreport:sha-collision}.
 This feature of \ac{sha1} hashing become quite important in the design of the database later on.
 
 As mentioned in the introduction\ref{git-introduction} Git is used to store the state of a specific directory on any underlying \ac{fs}.

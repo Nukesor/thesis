@@ -6,8 +6,9 @@ There is a rate limit of 5000 requests per user per hour.
 
 \section{Database layout}\label{data-structure}
 \todo{Ordentliche Beschreibung der Datenstruktur und deren Vorteile. SChreiben nach den ersten schwierigen Queries.}
-To store and represent the gathered Information I chose a \ac{sql} based solution. To be exact I chose PostgreSQL as it provides excellent tools to provide a high consistency, namely check constraints, and a great support for working with times and time zones.
-The usage of a \ac{sql} database and the combination of a \ac{orm} allows me to write highly specific queries and
+To store and represent the gathered Information I chose a \ac{sql} based solution.
+To be exact I chose PostgreSQL as it provides excellent tools to provide a high consistency, namely check constraints, and a great support for working with times and time zones.
+The usage of a \ac{sql} database and the combination of a \ac{orm} allows me to write highly specific queries and bla.
 
 
 \section{Gitalizer}
@@ -17,7 +18,8 @@ For interaction with the Github \ac{api} the \emph{pygithub} library is used, wh
 
 
 \section{Methods}
-The data aggregation module of Gitalizer is capable of several scanning methods. In the following we will look at these approaches in detail.
+The data aggregation module of Gitalizer is capable of several scanning methods.
+In the following we will look at these approaches in detail.
 
 \subsection{Stand-alone Repository}\label{stand-alone-repository-scan}
 Gitalizer can scan any git repository from a \ac{ssh} or \ac{http} \acs{url} as long as it has access to it.
