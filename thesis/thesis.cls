@@ -81,7 +81,7 @@
   \parskip=0pt
   \item {\sffamily\fontseries{bx}{#1}}
   \begin{itemize}
-  \setlength\itemsep{-0.3em}
+  \setlength\itemsep{-0.2em}
 }{%
   \end{itemize}
   \end{trivlist}

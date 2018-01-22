@@ -1,32 +1,69 @@
-\chapter{Data from Github}\label{github}
+\chapter{Github}\label{github}
 The biggest initial task for this thesis was the acquisition of data.
-The data had to be as extensive as possible, feature a high conjunction between contributers over several repositories to verify a possible connection between those and have realistic meta data.
-For these requirements two different solutions came up.
+Selecting a data source was a crucial step as good data for analysis and evaluation is the backbone of this thesis. This chapter will list the requirements in detail and evaluate Github as a solution for these.
 
-I chose Github for this purpose, as it hosts one of the biggest collection of open source projects and provides a great \ac{api} for querying Github's meta data.
-A problem with this approach is that we don't have access to all important meta data, as for example the full list of members for organizations or the internal team structure of organizations.
-Another problem is old email addresses, which are not related to any account anymore, because all commits made with this email address are irrefutable.
-Even though some ground truth is missing, I decided to use this approach as it was still the most promising way to gather as much ground truth and real world noise as possible.
+\section{Requirements}
+The data source had to satisfy as many requirements as specified in Chapter~\ref{attack-models} as possible.
 
-I decided to use Github as a data source, as it is not only convenient to find \acp{url} for cloning repositories, but also provides some other useful meta data, which can be used to evaluate the precision of any extracted knowledge.
+To accomplish a meaningful analysis of commit behaviour one needs a sufficient amount of commits.
+For example one would need a few commits per weekday over a timespan of a month for a simple sleep rhythm analysis.
+If there are only 20 commits for a user over the past month there is not enough data for a representative analysis.
+To gain the most amount of commits one needs to get as many repositories a user contributed to as possible.
 
-Github offers some features, which are convenient to find repositories a specific user contributed to and to find other contributer which are likely related to each other.
+For analysis of companioned persons as described in Section~\ref{industrial-spy} it is crucial to find different user, which are likely to know each other.
 
-The first feature is \emph{starring}. Every user can \emph{star} a repository to show that he likes a project.
-The Github \emph{api} doesn't provide a method to get all repositories a user ever contributed to, it only allows to query the repositories owned by a user and the repositories \emph{starred} by a user.
-With this feature it could be possible to get some repositories a user contributed to, even though he doesn't own these repositories, in case the user stars repositories he contributed to.
+To attack a company, as described in Section~\ref{industrial-spy}, or at to spy on company members, as described in Section~\ref{employer-monitoring}, one needs as many repositories owned by the company as possible.
+Thereby some kind of representation for a company should be available.
+Ideally there should also be a list of all company members for evaluation purposes of data mining findings.
 
-Another feature is \emph{following}. Every user can \emph{follow} another user to get informed, if they do specific things like creating new repositories or \emph{starring} repositories.
-By getting the followers or following, one might catch some friends of the user.
+\begin{itemlist}{A recap of the requirements to the data source:}
+    \item Realistic noise
+    \item Real world data
+    \item Large amount of repositories
+    \item Access to all commits of each repository
+    \item Access complete metadata for each commit
+    \item Email to user association
+    \item Methods to discover repositories a user contributed to
+    \item Methods to discover companioned contributer
+    \item A representation of a company
+    \item Member of a compane
+    \end{itemlist}
 
-The third feature are \emph{organizations}.
-An organization is used to host projects under an account which is not necessarily led by a single natural person, but rather supports roles with different permissions and team structures.
+
+\section{The Chosen One}
+I decided to use Github as a data source, for it is not only convenient to find \acp{url} for cloning repositories, but also provides solutions most of the other requirements.
+It hosts one of the biggest collection of open source projects with 64 million repositories, 24 million users and 1,5 million organizations~\cite{article:github-statistics}.
+For comparison purposes: Gitlab, one of Githubs competitors, doesn't provide detailed usage statistics, but they state that they only host about 100000 organizations, which is remarkably less than Github~\cite{article:gitlab-help}.
+Github also provides a well documented \ac{api} for querying its metadata.
+
+One of the downsides of using Github is, that we don't have access to all metadata, as for example the full list of members for organizations or the internal team structure of organizations.
+Another problem is old email addresses, which are not related to any account any longer, since all commits made with this email address are irrefutable.
+Even though some ground truth is missing, I decided to use this approach as it is still the most promising way to gather as much data and real world noise as possible, compared to other open source hosting services.
 
 \begin{figure}[H]
-    \includegraphics[scale=0.3]{./graphs/github-data-structure}
-    \centering
-    \caption{Simplified Github relationships.}\label{fig:github-relationship}
+\includegraphics[scale=0.27]{./graphs/github-data-structure}
+\centering
+\caption{Simplified Github relationships.}\label{fig:github-relationship}
 \end{figure}
+
+\subsection{Github's features}
+Github offers some features, which are convenient to for example find repositories a specific user contributed to or to find contributers which likely personally know each other.
+
+\subsubsection{Stars}
+The first feature is \emph{starring}. Every user can \emph{star} a repository to show that he likes a project.
+The Github \emph{api} doesn't provide a method to get all repositories a user ever contributed to, it only allows to query the repositories actually owned or forked by a user, but it provides an endpoint to query all \emph{starred} repositories of an user.
+In case a user stars a repository he contributed to, whilst not owning it, it is possible to get this repository with this feature.
+Of course it is still no reliable way to get all repositories a user contributed to, but it is a solution approach to get at least a few of them.
+
+\subsection{Follower}
+Another feature is \emph{following}. Every user can \emph{follow} another user to get informed, if they do specific things like creating new repositories or \emph{starring} repositories.
+By getting the followers or following, one might catch some friends of the user.
+It is also possible that a user follows the owner of a repository he contributed to.
+By using this feature it is thereby possible to catch some additional contributed repositories as well some friends of the user.
+
+\subsection{Organizations}
+The third feature are \emph{organizations}.
+An organization is used to host projects under an account which is not necessarily led by a single natural person, but rather supports roles with different permissions and team structures.
 
 This feature provides us with some important ground truth, but sadly a lot of information is not visible, as users have to actively opt-in, if they want to be publicly displayed as a member of an organization.
 Additionally team structures can only be examined, if one is a member of the organization.

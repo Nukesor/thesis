@@ -22,7 +22,7 @@ In Git, every branch has its own name, whereby the main branch is usually named 
     \caption{A Git commit history tree.}\label{fig:git-commit-tree}
 \end{figure}
 
-As shown in figure \ref{fig:git-commit-tree} two developer can create their own branch on which they can work unimpeded.
+As shown in figure~\ref{fig:git-commit-tree} two developer can create their own branch on which they can work unimpeded.
 After they finished and want to add their work to the master branch, they can now \emph{merge} their changes.
 Git then tries to automatically resolve any conflicts which might have emerged from editing the same lines in a file.
 If that is not possible, it marks the conflicts and allows the user to manually correct them.
@@ -61,7 +61,7 @@ The \ac{sha1} hashing for unique file identifier might seem unsafe, but the prob
 Lately Google managed to force a collision in an controlled environment in 2017, but it is really unlikely to encounter a collision under normal circumstances~\cite{techreport:sha-collision}.
 This feature of \ac{sha1} hashing become quite important in the design of the database later on.
 
-As mentioned in the introduction\ref{git-introduction} Git is used to store the state of a specific directory on any underlying \ac{fs}.
+As mentioned in the introduction~\ref{git-introduction} Git is used to store the state of a specific directory on any underlying \ac{fs}.
 To represent a \ac{fs} or to simply bundle multiple Git \emph{blob} objects together, Git uses the \emph{tree} object.
 
 A \emph{tree} object is a file, which has a \ac{sha1} hash reference to all underlying \emph{blob} and \emph{tree} objects as well as their names and file permissions.
