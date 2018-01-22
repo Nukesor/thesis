@@ -9,12 +9,18 @@ Each version of the project is saved as a so called \emph{commit}.
 Users are able to meticulously specify the files or changes in files that should be added to a commit.
 It is also capable of showing the exact changes between different commits, which is called a \emph{diff}.
 
-Git is the currently \todo{Quote} most popular tool to control a project's code.
+Git is the currently most popular tool to control a project's code with an still trending tendency~\footnote{Version Control Systems Popularity in 2016~\url{https://rhodecode.com/insights/version-control-systems-2016} Retrieved Jan. 22, 2018}.
 It enables to work with multiple developers on a single code base, as it provides several different techniques, the \emph{history tree}, the \emph{branch} and the \emph{merge}.
 The versioning history of Git is internally represented as an directed, non-cyclic, connected graph of commits or a \emph{tree}.
 The commits act as \emph{nodes} and the connection to their parent commits as \emph{edges}.
 Every time two edges leave a single node, a new \emph{branch} is created.
 In Git, every branch has its own name, whereby the main branch is usually named \emph{master}.
+
+\begin{figure}[h]
+    \includegraphics[scale=0.4]{./graphs/git-history-branch}
+    \centering
+    \caption{A Git commit history tree.}\label{fig:git-commit-tree}
+\end{figure}
 
 In case two different people want to work on the same files, they can each create their own branch on which they can work unimpeded.
 After they finished and want to add their work to the master branch, they can now \emph{merge} their changes.
@@ -36,6 +42,7 @@ Every commit in Git contains the email addresses and the names of these two peop
 The \emph{author} of a commit is the person which actually contributed the changes in the files.
 The \emph{committer} is the person, which created the git commit.
 This is important to keep track of the original author of the changes.
+
 Lets look at the case of an author contributing code to a project in an email with an attached patch file.
 If a maintainer of the project now applies the patch file and commits without setting the \emph{author}, the information about the original author would be lost.
 Although in most cases the \emph{author} and the \emph{committer} are the same person. \todo{Prozentzahl auf Basis der gesammelten Daten.}
@@ -77,6 +84,8 @@ As stated before the \emph{commit} is utilized to provide an exact representatio
     parent    c19b969705e5eae0ccca2cde1d8a98be1a1eab4d
     author    Arne Beer <arne@twobeer.de> 1513434723 +0100
     committer Arne Beer <arne@twobeer.de> 1513434723 +0100
+
+    Chapter 2, acronyms
 \end{minted}
 \begingroup
 \captionof{listing}{\emph{commit} file example\label{lst:raw-commit}.}
@@ -90,6 +99,7 @@ As you can see in listing~\ref{lst:raw-commit}, the \emph{commit} is just anothe
     \item The name and email address of the author.
     \item The name and email address of the committer.
     \item The \ac{utc} timestamps with \ac{utc} offset for the commit and author date.
+    \item The commit message. A message with arbitrary text from the committer.
 \end{itemize}
 
 Just as the \emph{blob} object the \emph{tree} and \emph{commit} files are also stored in the \inlinecode{.git/objects} directory under their respective hash.
