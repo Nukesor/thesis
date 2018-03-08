@@ -26,8 +26,8 @@ It is important to note that there is a many-to-many relationship in figure~\ref
 This feature prevents duplication of the same commits from forked repositories.
 It is for instance a common practice to create a fork of a repository to develop without intervening with the main git repository of the project.
 As described in Section~\ref{internal representation} the probability of a \ac{sha1} collision is extremely low.
-By exploiting this feature is possible to enforce a unique constraint on the commit hash column assuming that any duplicated commit hash actually results from a forked or copied repository.
-Without this mechanism it could be possible that the same commit of a contributer could be analyzed multiple times as a result of repository forking.
+By exploiting this feature it is possible to enforce a unique constraint on the commit hash column, assuming that any duplicated commit hash actually results from a forked or copied repository.
+Without this mechanism it could be possible that the same commit of a contributer could be used multiple times as a result of repository forking.
 After collecting 43 million commits from Github and actively ignoring obvious project forks, there are still 49 million references between commits and repositories.
 This means that about 13\% of gathered commits result from forked repositories which can not easily identified as such.
 
@@ -35,7 +35,11 @@ As stated above each commit is also saved with its respective email addresses.
 There exists a one-to-many relationship between contributers and emails, as every contributer can obtain an unlimited amount of email addresses.
 To unambiguously assign a commit to a person, it is necessary to connect all commits email addresses to this person.
 This relationship does not have a \inlinecode{NOT NULL} constraint as it happens quite often that an email address can not be assigned to any person.
-Looking at the collected data it appears that roughly every fifth email address scraped from Github is no longer connected to an active user.
+Looking at the collected data it appears that roughly 20\% of collected email addresses from Github are no longer connected to an active user.
+
+The last model of the database schema is the organization.
+As stated in section~\ref{github-organization} Github provides a way to organize several people in organizations and teams.
+As one of the goals of this thesis is to see if it is possible to detect member of an organization in open-source projects, this data can be used to check against the results of this research's results.
 
 
 \section{Gitalizer}
