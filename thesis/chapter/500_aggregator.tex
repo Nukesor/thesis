@@ -1,14 +1,23 @@
 \chapter{The Aggregator}\label{aggregator}
-As mentioned in~\ref{data-aggregation}, I decided to get data from Github and wanted to utilize their \emph{Github APIv3} for this purpose.
+As mentioned in Chapter~\ref{github}, I decided to use Github as my data source and to utilize their \emph{Github APIv3} for this purpose.
 This \ac{api} is publicly available and can be used by anyone registered on Github.
-There is a rate limit of 5000 requests per user per hour.
+In this chapter I will explain the technologies and methods used in the data aggregation process, the database structure and show some problem which occurred during the duration of this thesis.
 
 
-\section{Database layout}\label{data-structure}
-\todo{Ordentliche Beschreibung der Datenstruktur und deren Vorteile. SChreiben nach den ersten schwierigen Queries.}
-To store and represent the gathered Information I chose a \ac{sql} based solution.
-To be exact I chose PostgreSQL as it provides excellent tools to provide a high consistency, namely check constraints, and a great support for working with times and time zones.
-The usage of a \ac{sql} database and the combination of a \ac{orm} allows me to write highly specific queries and bla.
+\section{Gitalizer's Database}\label{data-structure}
+To store the gathered Information I chose a \ac{sql} based solution.
+PostgreSQL provides excellent tools to provide a high consistency in your database, namely check constraints, as well as great support for working with times, time zones and locations.
+
+The usage of a \ac{sql} database in the combination with an \ac{orm} allows to write highly specific queries and provides some other convenient features I will cover later in this section.
+
+\subsection{Database Design}
+
+\subsection{Database Features}
+One of the most important features of using an \ac{orm} is implicit deduplication of commits for forked repositories with a subset of identical commits.
+This is achieved by using a many to many relationship from commits to repositories, but requires a unique constraint on the commit hash column.
+As described in Section~\ref{internal representation} the probability of a \ac{sha1} collision is extremely low.
+By exploiting this feature is possible to enforce a unique constraint on the commit hash column assuming that any duplicated commit hash actually results from a forked or copied repository.
+
 
 
 \section{Gitalizer}
