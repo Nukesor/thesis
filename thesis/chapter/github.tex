@@ -1,8 +1,8 @@
-\chapter{Github}\label{github}
+\section{Github}\label{github}
 The biggest initial task for this thesis was the acquisition of data.
 Selecting a data source was a crucial step as good data for analysis and evaluation is the backbone of this thesis. This chapter will list the requirements in detail and evaluate Github as a solution for these.
 
-\section{Requirements}
+\subsection{Requirements}
 The data source had to satisfy as many requirements as specified in Chapter~\ref{attack-models} as possible.
 
 To accomplish a meaningful analysis of commit behaviour one needs a sufficient amount of commits.
@@ -12,7 +12,7 @@ To gain the most amount of commits one needs to get as many repositories a user 
 
 For analysis of companioned persons as described in Section~\ref{industrial-spy} it is crucial to find different user, which are likely to know each other.
 
-To attack a company, as described in Section~\ref{industrial-spy}, or at to spy on company members, as described in Section~\ref{employer-monitoring}, one needs as many repositories owned by the company as possible.
+To attack a company, as described in Section~\ref{industrial-spy}, or to spy on company members, as described in Section~\ref{employer-monitoring}, one needs as many repositories owned by the company as possible.
 Thereby some kind of representation for a company should be available.
 Ideally there should also be a list of all company members for evaluation purposes of data mining findings.
 
@@ -26,11 +26,11 @@ Ideally there should also be a list of all company members for evaluation purpos
     \item Methods to discover repositories a user contributed to
     \item Methods to discover companioned contributer
     \item A representation of a company
-    \item Member of a compane
+    \item Member of a company
     \end{itemlist}
 
 
-\section{The Chosen One}
+\subsection{The Chosen One}
 I decided to use Github as a data source, for it is not only convenient to find \acp{url} for cloning repositories, but also provides solutions most of the other requirements.
 It hosts one of the biggest collection of open source projects with 64 million repositories, 24 million users and 1,5 million organizations~\cite{article:github-statistics}.
 For comparison purposes: Gitlab, one of Githubs competitors, doesn't provide detailed usage statistics, but they state that they only host about 100000 organizations, which is remarkably less than Github~\cite{article:gitlab-help}.
@@ -46,7 +46,7 @@ Even though some ground truth is missing, I decided to use this approach as it i
 \caption{Simplified Github relationships.}\label{fig:github-relationship}
 \end{figure}
 
-\subsection{Github's features}
+\subsubsection{Github's features}
 Github offers some features, which are convenient to for example find repositories a specific user contributed to or to find contributers which likely personally know each other.
 
 \subsubsection{Stars}
