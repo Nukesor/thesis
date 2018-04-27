@@ -1,16 +1,16 @@
-\chapter{The Aggregator}\label{aggregator}
+\section{The Aggregator}\label{aggregator}
 As mentioned in Chapter~\ref{github}, I decided to use Github as my data source and to utilize their \emph{Github APIv3} for this purpose.
 This \ac{api} is publicly available and can be used by anyone registered on Github.
 In this chapter I will explain the technologies and methods used in the data aggregation process, the database structure and show some problem which occurred during the duration of this thesis.
 
 
-\section{Gitalizer's Database}\label{data-structure}
+\subsection{Gitalizer's Database}\label{data-structure}
 To store the gathered Information I chose a \ac{sql} based solution.
 PostgreSQL provides excellent tools to provide a high consistency in your database, namely check constraints, as well as great support for working with times, time zones and locations.
 
 The usage of a \ac{sql} database in the combination with an \ac{orm} allows to write highly specific queries and provides some other convenient features I will cover later in this section.
 
-\subsection{Database Design}
+\subsubsection{Database Design}
 The schema created for the purpose of this thesis consists of five \ac{orm} models.
 There is a model for Commits, Emails and Repositorys, Contributers as well as Organizations.
 The latter is only important to validate results and is not actually used for knowledge discovery, as this is Github specific data.
@@ -42,17 +42,17 @@ As stated in section~\ref{github-organization} Github provides a way to organize
 As one of the goals of this thesis is to see if it is possible to detect member of an organization in open-source projects, this data can be used to check against the results of this research's results.
 
 
-\section{Gitalizer}
+\subsection{Gitalizer}
 The program I wrote for this thesis is named Gitalizer and features data aggregation, preprocessing, knowledge extraction and visualization.
 Gitalizer uses a PostgreSQL database for data storage and data consistency checks as described in~\ref{data-structure}.
-For interaction with the Github \ac{api} the \emph{pygithub} library is used, which provides a convenient abstraction layer for requests and automatically maps \ac{json} responses to python objects.
+For interaction with the Github \ac{api} the \emph{PyGithub} library is used, which provides a convenient abstraction layer for requests and automatically maps \ac{json} responses to python objects.
 
 
-\section{Methods}
+\subsubsection{Methods}
 The data aggregation module of Gitalizer is capable of several scanning methods.
 In the following we will look at these approaches in detail.
 
-\subsection{Stand-alone Repository}\label{stand-alone-repository-scan}
+\subsubsection{Stand-alone Repository}\label{stand-alone-repository-scan}
 Gitalizer can scan any git repository from a \ac{ssh} or \ac{http} \acs{url} as long as it has access to it.
 At first the repository is cloned into a local directory.
 When the cloning is done the scan process begins.
@@ -65,7 +65,7 @@ The problem with the simplicity of Git is that there doesn't exist the concept o
 Thereby we cannot easily link email addresses to a specific contributer.
 
 
-\subsection{Github Repository}\label{github-repo-scan}
+\subsubsection{Github Repository}\label{github-repo-scan}
 To tackle the problems in~\ref{stand-alone-repository-scan}, I used the Github \ac{api} to get some of the missing meta data.
 The general approach is the same as in the previous scan method. The repository is cloned and locally scanned.
 However, a request to Github is issued every time a new email is found that we do not already have linked to a contributer.
@@ -76,17 +76,17 @@ Anyway this approach does not work, if the user of a commit removed the email us
 In this case there is nothing that can be done and these commits need to be handled later on in the preprocessing of the data.
 
 
-\subsection{Github User}\label{github-user-scan}
+\subsubsection{Github User}\label{github-user-scan}
 To get all repositories of a specific user, I implemented a new functionality utilizing the Github \ac{api}.
-At first several requests are issued to get all repositories of the specified user, as well as all \emph{starred} repositories of this user.
-For each \emph{starred} repository we check if the user contributed to this repository, which is quite easy as the \ac{api} provides an endpoint for this query.
+At first several requests are issued to get all repositories of the specified user, as well as all starred repositories of this user.
+For each starred repository we check if the user contributed to this repository, which is quite easy as the \ac{api} provides an endpoint for this query.
 During the repository exploration, every relevant repository is added to a shared queue, lets call it ``repo-queue'', which is then processed by a multiprocessing pool of workers.
 Each worker process scans a single repository as described in~\ref{github-repo-scan}.
 
 
-\subsection{Github connected User}\label{github-user-remote-scan}
+\subsubsection{Github connected User}\label{github-user-remote-scan}
 For detection and analysis of connections between contributers over multiple repositories, I needed to gather as many repositories of related users as possible.
-Gitalizer is able to achieve this by not just scanning a single user, but rather scanning the repositories of the specific user, as well as the repositories of all \emph{following} and \emph{followed} users.
+Gitalizer is able to achieve this by not just scanning a single user, but rather scanning the repositories of the specific user, as well as the repositories of all following and followed users.
 For this task two different worker pools are utilized.
 The user pool is initialized with a shared queue, lets call it ``user-queue'', of all users we need to look at.
 This pool simply searches for relevant repositories of a single user and passes them to a second shared queue.
@@ -97,7 +97,7 @@ Initially all repositories, which are owned by the organization, are added to th
 All publicly visible organization members are then added to the ``user-queue'' and processed as described above.
 
 
-\section{Problems}
+\subsection{Problems}
 During the development of the data aggregator I experienced a few problems and edge cases which needed to be handled.
 The earliest and most delaying problem was the rate limit of the Github \ac{api}.
 The first version of the aggregator didn't clone and scan the repository locally, but rather gathered all information from the Github \ac{api} endpoints.
