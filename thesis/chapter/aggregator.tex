@@ -17,7 +17,7 @@ A model for Commits, Emails and Repositorys, Contributers as well as Organizatio
 The latter is only important to validate results and is not actually used for knowledge discovery, as this is Github specific data.
 
 \begin{figure}[H]
-\includegraphics[scale=0.27]{./graphs/gitalizer-data-structure}
+\includegraphics[scale=0.3]{./graphs/gitalizer-data-structure}
 \centering
 \caption{Gitalizer database relationships.}\label{fig:gitalizer-relationship}
 \end{figure}
@@ -115,6 +115,7 @@ As explained in Section~\ref{more-git-features} it is possible to rewrite commit
 This scenario needs to be explicitly handled since force pushes can completely alter the history of a git repository, which can subsequently lead to a split in the Git history and leaves dangling commits.
 As the complete history of a repository is stored inside the database, Gitalizer needs to detect a force push by walking down the git history tree until it finds known commits.
 If any of these commits has children, which are not in the newly scanned commits, a force push took place and the old commit history has to be truncated, since it is now outdated and irrelevant.
+\todo{Grafik zu dieser git force push}
 
 
 \subsection{Problems}
@@ -125,12 +126,11 @@ But beside this rate limiting there also is an abuse detection mechanism, which 
 The first version of the aggregator didn't clone and scan the repository locally, but rather gathered all information from the Github \ac{api} endpoints.
 This approach worked well until the aggregator hit the official repository of Nmap, which has about 11.000 commits and took over three hours to scan.
 Soon I realized that this would severely slow down my research and I then started to continuously minimize the amount \ac{api} calls issued by Gitalizer.
-A connected user scan of my own Github account led to about 600.000 commits and took about one and a half day, to provide you with a reference of scale.
+A connected user scan of my own Github account led to about 600.000 commits and took about one and a half day on the final working version of Gitalizer, to provide you with a reference of scale.
 
 After implementing multiprocessing, I managed to hit the rate limit again, as I was now issuing requests with many threads.
 To fix this issue I implemented a wait and retry wrapper around every single function call or object access, which triggered a call to the Github \ac{api}.
 Afterwards the aggregator was capable of running multiple days without worker processes silently dying or incomplete collected data.
 
-Fine tuning the edge cases and handling of the \ac{api} took about 3 months, since there were many problems such as unpredictable error responses from github, missing data in queries or simply unknown or broken encodings in Github's meta data.
+Fine tuning the edge cases and the handling of the \ac{api} took about 3 months, since there were many problems such as unpredictable error responses from github, missing data in queries or simply unknown or broken encodings in Github's meta data.
 
-\todo{Grafik zu dieser Problematik}
