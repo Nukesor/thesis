@@ -1,4 +1,4 @@
-\section{Data source}\label{github}
+\section{Data source}\label{data-source}
 The biggest initial task for this thesis was the acquisition of data.
 Selecting a data source was a crucial step, as good data for analysis and evaluation is the backbone of this thesis.
 This section will list these requirements in detail and evaluate why I chose to use Github as a data source.
@@ -37,10 +37,11 @@ Ideally there should also be a list of all company members for evaluation purpos
 \end{itemlist}
 
 
-\subsection{Github}
+\subsection{Github}\label{github}
 I decided to use Github as a data source, for it is not only convenient to find \acp{url} for cloning repositories, but also provides solutions for most of the other requirements.
 It hosts one of the biggest collections of open source projects~\cite{techreport:how-github-conquered} with 64 million repositories, 24 million users and 1,5 million organizations~\cite{article:github-statistics}.
 Github also provides a well documented \ac{api} for querying its metadata and there are libraries for most major languages, which provide an abstraction layer for this \ac{api}.
+This \ac{api} is publicly available and can be used by anyone registered on Github.
 
 For instance Gitlab, one of Github's competitors, has much less data to offer.
 Gitlab doesn't provide detailed usage statistics, but they state that they only host about 100000 organizations, which is remarkably less than Github~\cite{article:gitlab-help}.
@@ -48,7 +49,7 @@ As Gitlab is an open-source project, there also are an unknown number of private
 
 On the other hand one of the downsides of using Github is, that we don't have access to all metadata.
 For example the full list of members for organizations is often unaccessible, as users actively need to opt-in to be publicly displayed as a member of the team.
-The internal team structure of organizations is not visible at all for outsiders.
+The internal team structures of organizations are not visible, as one needs to be a member of the organization to access those.
 Another problem are dangling email addresses, which are not related to any account any more.
 All commits made with this email address cannot be used any more for any analysis which requires a user to commit relationship.
 Even though some ground truth is missing, I decided to use this approach as it still was the most promising way to gather as much data and real world noise as possible, compared to other open source hosting services.
@@ -82,8 +83,9 @@ Github offers some features, which are convenient to for example find repositori
     \item[Organizations] \hfill \\
         The third feature are \emph{organizations}.
         An organization is used to host projects under an account which is not necessarily led by a single natural person, but rather supports roles with different permissions and team structures.
+        Github allows to query all repositories of an organization via their \ac{api}.
+        This enables us to link an organization to its owned repositories and as a result to perform analyses for users on a specific organization repository subset.
 
-        This feature provides us with some important ground truth, but sadly a lot of information is not visible, as users have to actively opt-in, if they want to be publicly displayed as a member of an organization.
-        Additionally team structures can only be examined, if one is a member of the organization.
+        Generally organizations provide us with some important ground truth, even though the information might not be complete.
         Despite not knowing all members of an organization, we still get some useful information to estimate the tendency of precision of our knowledge extraction algorithms.
 \end{description}
