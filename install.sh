@@ -1,2 +1,1 @@
-pacman -S pygmentize texlive-most biber rubber
-yaourt -S latex-mk --noconfirm
+sudo pacman -S pygmentize texlive-most biber rubber inotify-tools
