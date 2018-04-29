@@ -5,15 +5,16 @@ I will also talk about the current cases of application and some interesting sce
 
 
 \subsection{Introduction to Git}\label{git-introduction}
-At its core, Git is a tool, which is used to manage different versions of files in a specific directory. This
+At its core, Git is a tool, which is used to manage different versions of files in a specific directory. A directory managed by Git is called a \emph{repository}.
 Each version of the project is saved as a so called \emph{commit}, which represents a specific state of all files and directories in the project.
-Users are able to meticulously specify the files or changes in files that should be added to a commit, they can for example only select a subset of changes which happened.
-By doing so one can split a large set of changes of possibly completely unrelated changes into several commits, where each commit forms a set of logically related changes.
-Git is then capable of showing the exact changes between different commits, which is called a \emph{diff} and jumping between different versions of the project, which is called a \emph{checkout}.
+Users are able to meticulously specify files or changes in files that should be added to a commit.
+For instance a developer can only commit a subset of the changes, which were applied to a repository.
+By doing so, one can split a large set of possibly completely unrelated changes into several commits, where each commit in itself forms a set of logically related changes.
+After creating several commits Git is capable of showing the exact changes between different commits, which is called a \emph{diff} and jumping between different versions of the project, which is called a \emph{checkout}.
 
-Git is the currently most popular tool to control a project's code with a still trending tendency~\cite{article:git-popularity}.
-It enables to work with multiple developers on a single code base, as it provides several different techniques, namely the history \emph{tree}, the \emph{branch} and the \emph{merge}.
-The versioning history of Git is internally represented as an directed, non-cyclic, connected graph of commits or a tree.
+Git is the currently most popular tool to control a project's code with a still upward tendency~\cite{article:git-popularity}.
+It enables to work with multiple developers on a single code base, as it provides several different techniques, namely the \emph{history tree}, the \emph{branch} and the \emph{merge}.
+The commit history of Git is internally represented as an directed, non-cyclic, connected graph of commits or a tree.
 The commits act as \emph{nodes} and the connection to their parent commits as \emph{edges}.
 Every time two edges leave a single node, a new branch is created.
 Git provides the feature to name branches, whereas the main branch is per default named \emph{master}.
