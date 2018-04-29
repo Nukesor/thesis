@@ -96,12 +96,30 @@ In the following we will look at those approaches in detail.
 
 
 \subsection{Database optimization}
-As the database kept growing, several adjustments in the database schema and setup had to be made.
-After reaching about 12\ac{GB}, the database write and read operations took longer than the actual aggregation process.
-The performance of the database has then been continuously increased in several steps.
-One of the first counter measures was the reduction of commits in the database using \ac{sha1} as stated in Section~\ref{database-design} and the ignoring of forked repositories to reduce a bloating of the relation table between commits and repositories.
-Another performance boost has been achieved by disabling or loosen several fail-safe mechanisms of PostgreSQL, namely `synchronous commit' and `write ahead' parameter, which are designed to save data on a system crash.
-As there is no important or critical data handled it was acceptable to pass on these mechanisms.
+As the database kept growing, it became the bottleneck in the aggregation process several times.
+As a result adjustments in the database schema, PostgreSQL parameter tweaking and migration to better hardware were necessary.
+The first considerable slowdown occurred after reaching about 12~\acp{gb} of data.
+At this stage the database write and read operations took longer than the actual aggregation process and the whole machine started to become unresponsive because of high I/O load.
+
+The performance of the database then needed to be continuously tweaked in several steps.
+The first counter measures was the reduction of commits using deduplication through utilizing the \ac{sha1} hash as stated in Section~\ref{database-design}
+The ignoring of forked repositories reduced the amount of entries in the relation table between commits and repositories by another 26\%.
+
+The next performance boosts were achieved by disabling or loosening of several fail-safe mechanisms of PostgreSQL, namely `synchronous commit' and `write ahead' parameter, which are designed to save data on a system crash.
+As there is no important or critical data handled it was acceptable to pass on these mechanisms, and trade safety for performance.
+
+\begin{figure}[H]
+\includegraphics[scale=0.25]{./pic/server-graphs/query-refactoring}
+\centering
+\caption{The CPU load of the aggregation server during optimization.}\label{fig:cpu-load}
+\end{figure}
+
+After renting a root server and deploying gitalizer onto it the aggregation process worked really well until the database size hit about 25~\ac{gb}.
+In Figure~\label{fig:cpu-load} you see the overall \ac{cpu} load right before optimizing several \ac{sql} queries by caching intermediate results and increasing the cache size of PostgreSQL.
+The dark blue represents the I/O wait time while the light blue represents the actually used processor capacity by the aggregator.
+Due to complex and numerous \ac{sql} queries the server became partly unresponsive and the aggregation process began to stall.
+
+After many improvements the server can now run with 16 worker threads and roughly 38~\ac{gb} of data without any signs of slowdown whilst using the rate limit to capacity.
 
 
 \subsection{Incremental aggregation}
@@ -111,17 +129,22 @@ After a repository is scanned completely at least once it is marked as as such a
 All following runs then only clone the repository and scan the newest unknown commits.
 These are discovered by performing a breadth first search until no new nodes are found.
 
+\begin{figure}[H]
+\includegraphics[scale=0.3]{./graphs/git-history-rewrite}
+\centering
+\caption{Gitalizer database relationships.}\label{fig:gitalizer-relationship}
+\end{figure}
+
 As explained in Section~\ref{more-git-features} it is possible to rewrite commits and force push them.
 This scenario needs to be explicitly handled since force pushes can completely alter the history of a git repository, which can subsequently lead to a split in the Git history and leaves dangling commits.
 As the complete history of a repository is stored inside the database, Gitalizer needs to detect a force push by walking down the git history tree until it finds known commits.
 If any of these commits has children, which are not in the newly scanned commits, a force push took place and the old commit history has to be truncated, since it is now outdated and irrelevant.
-\todo{Grafik zu dieser git force push}
 
 
 \subsection{Problems}
 During the development of the data aggregator I experienced a few problems and edge cases which needed to be handled.
 The earliest and most delaying problem was the rate limit of the Github \ac{api}, which limits to 5000 requests per hour.
-But beside this rate limiting there also is an abuse detection mechanism, which triggers, if too many requests are fired in a short amount of time.
+But beside this rate limiting there also is an abuse detection mechanism, which triggers, if too many requests are fired in a short amount of time, which resulted in various hacks with random wait times to detain those mechanisms from triggering.
 
 The first version of the aggregator didn't clone and scan the repository locally, but rather gathered all information from the Github \ac{api} endpoints.
 This approach worked well until the aggregator hit the official repository of Nmap, which has about 11.000 commits and took over three hours to scan.
@@ -134,3 +157,10 @@ Afterwards the aggregator was capable of running multiple days without worker pr
 
 Fine tuning the edge cases and the handling of the \ac{api} took about 3 months, since there were many problems such as unpredictable error responses from github, missing data in queries or simply unknown or broken encodings in Github's meta data.
 
+
+Another problem occurred during the local scanning of the repositories.
+The library used for interaction with Git \emph{libgit2} issued a \emph{stat} Linux syscalls during a diff operation for each file which changed between those commits in case there were any local not-commited changes.
+Anyhow the repositories, which were locally scanned, were cloned with \emph{bare} mode.
+This means that there exists no project root directory, but rather only the git internal representations of those files, which makes the behaviour stated above unnecessary and unwanted.
+As a result all processes slowed severely down due to high I/O wait times, because of stat syscalls on non existent files.
+Luckily after reporting the issue~\footnote{`Unnecessary syscalls on bare repository' github.com, https://github.com/libgit2/libgit2/issues/4480 (accessed, 25.04.2018)} it was resolved in a week and I was able to continue developing with my own compiled version of the libgit2 library.
