@@ -1,7 +1,35 @@
 \chapter{Analysis}\label{analysis}
-In this chapter several attacks as stated in Section~\ref{attack-models} will be shown.
+In this chapter several attacks as listed in Section~\ref{attack-models} will be shown. The methods and
+
+\section{Holiday and Sick Leave Detection}
+
+The information about anomalies in the regular work pattern can be a valuable information for several parties.
+Usually only few parties people know about the holiday or sick leave times of a person.
+To know if a persons tends to become sick often or for long times is a dangerous intrusion into a persons privacy.
+For instance this could be abused by head hunters or personnel managers to cull possible employees with too high sick leave rates and thereby reduce the job prospects of the target.
+
+For employees this might convenient to detect anomalies in the productivity of an employee.
+In case an employee doesn't commit on a regular basis for several days, this behaviour would be instantly visible with this method.
+
+Another attack vector could be to look at the correlation of missing time between several employees.
+This attack could even be performed by an outsider, if the employees of a company are known.
+The information gained by this attack could be quite delicate, as they could reveal relationships between employees.
+This attack is heavily inspired by an article about data mining articles from the popular German weekly magazine \emph{Der Spiegel} written by the David Kriesel~\cite{article:spiegel-mining}.
 
 
-\subsection{Holiday and Sick Leave Detection}
-To detect anomalies in the regular work pattern is a powerful tool to assess the productivity of either an employee or a possible target of a head hunter.
+\subsection{Implementation}
+
+The requirements for this algorithm is the detection of a regular work pattern for a given interval.
+It must have the ability to adjust to a changing work pattern, but at the same time has to be capable of detecting anomalies in this pattern.
+If the attacker wants to look at multiple people, some kind of measure for similarity in the missing time patterns has to exist.
+
+The input for this analysis is the intersection between all commits from the considered repositories and all commits from the considered contributors.
+The commits' meta data used for this analysis are time stamps as well as additions and deletions in lines of code.
+
+
+\begin{figure}[H]
+    \includegraphics[scale=0.21]{./graphs/analysis/work-time-analysis}
+    \centering
+    \caption{The work time analysis of the author.}\label{fig:missing-time}
+\end{figure}
 

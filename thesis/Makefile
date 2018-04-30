@@ -7,7 +7,7 @@ all:thesis.pdf presentation.pdf clean
 
 watch:
 	evince thesis.pdf &
-	while true; do inotifywait -e close_write,moved_to,create **/*.tex $(DEPS); make thesis; make clean; done;
+	while true; do inotifywait -e close_write,moved_to,create */**/*.tex $(DEPS); make thesis; make clean; done;
 
 thesis:
 	rubber --unsafe --pdf thesis.tex
