@@ -1,29 +1,28 @@
 \section{Data source}\label{data-source}
 The biggest initial task for this thesis was the acquisition of data.
 Selecting a data source was a crucial step, as good data for analysis and evaluation is the backbone of this thesis.
-This section will list these requirements in detail and evaluate why I chose to use Github as a data source.
+This section will list all requirements in detail and evaluate why I chose to use Github as a data source.
 Furthermore some functionalities of Github will be explained and a brief overview of the data provided by Github's \ac{api} will be given.
 
 
 \subsection{Requirements}\label{requirements}
 The data source had to satisfy as many requirements, which were specified in Chapter~\ref{attack-models}, as possible.
 
-To accomplish a meaningful analysis of commit behaviour one needs a sufficient amount of commits.
+To accomplish a meaningful analysis of commit conduct one needs a sufficient amount of commits.
 For instance it is necessary to have a few commits per weekday over a timespan of a month for a simple sleep rhythm analysis.
 If there are only 20 commits for a user over the past month there is probably not enough data for a representative analysis.
 To gather as many commits as possible we have to get access to as many repositories to which the targeted user contributed to as possible.
 Thereby the data source has to provide a way to dynamically explore repositories around a single user.
 
 For analysis of companioned persons as described in Section~\ref{industrial-spy} it is crucial to find users, which are likely to know each other.
-Optimally the data source provides a functionality for users to actively mark other user as their friends or colleagues.
-There should at least be the possibility for some kind of link between different users which.
+Optimally the data source provides a functionality for users to actively mark other users as their friends or colleagues.
 
-To attack a company, as described in Section~\ref{industrial-spy}, or to spy on company members, as described in Section~\ref{employer-monitoring}, we want in the best case all repositories owned by the company.
-The data source thereby needs to provide some kind of representation for a company should be available.
+To attack a company, as described in Section~\ref{industrial-spy}, or to spy on company members, as described in Section~\ref{employer-monitoring}, the best case scenario would be to have full access to all repositories owned by the company.
+The data source thereby needs to provide some kind of representation for a company.
 Ideally there should also be a list of all company members for evaluation purposes of data mining findings.
 
 
-\begin{itemlist}{A recap of the requirements to the data source:}
+\begin{itemlist}{A summary of the requirements to the data source:}
     \item Realistic noise
     \item Real world data
     \item Large amount of repositories
@@ -57,10 +56,10 @@ Even though some ground truth is missing, I decided to use this approach as it s
 \begin{figure}[H]
 \includegraphics[scale=0.27]{./graphs/github-data-structure}
 \centering
-\caption{Simplified Github relationships.}\label{fig:github-relationship}
+\caption{Simplified Github relationships in Crow's foot notation.}\label{fig:github-relationship}
 \end{figure}
 
-\subsection{Github's features}
+\subsection{Github's features}\label{github-features}
 In the following I will explain some of the features provided by Github, which cover the requirements listed in Section~\ref{requirements}.
 Github offers some features, which are convenient to for example find repositories a specific user contributed to or to find contributers which likely personally know each other.
 
@@ -71,18 +70,18 @@ Github offers some features, which are convenient to for example find repositori
         Even though Github allows to query all repositories, which are owned or forked by a user, their \ac{api} doesn't provide a method to get all repositories a user ever contributed to.
         However Github provides an endpoint to query all starred repositories of an user.
         In case a user stars a repository he contributed to, whilst not owning it, it is now possible to get this repository with this feature.
-        Of course it is still not a reliable way to get all repositories to which a user ever contributed to, but it is a viable approach to get at least a few of them.
+        Of course it is still not a reliable way to get all repositories a user ever contributed to, but it is a viable approach to get at least a few of them.
 
     \item[Follower] \hfill \\
         Another important feature is \emph{following}.
-        Every user can follow any other user to get informed, if they do specific things like creating new repositories or starring repositories, or to simply show interest in or respect for their work.
+        Every user can follow any other user to get informed, if they do specific things, like creating new repositories or starring repositories, or to simply show interest in or respect for their work.
         By getting all followed or following users, one might catch some friends of the user.
         It is also possible that a user follows the owner of a repository he contributed to.
-        By using this feature it is thereby possible to catch some additional contributed repositories as well some friends of the user.
+        By using this feature it is thereby possible to get some additional contributed repositories as well some friends of the user.
 
     \item[Organizations] \hfill \\
         The third feature are \emph{organizations}.
-        An organization is used to host projects under an account which is not necessarily led by a single natural person, but rather supports roles with different permissions and team structures.
+        An organization is used to host projects under an account, which is not necessarily led by a single natural person, but rather supports roles with different permissions and team structures.
         Github allows to query all repositories of an organization via their \ac{api}.
         This enables us to link an organization to its owned repositories and as a result to perform analyses for users on a specific organization repository subset.
 
