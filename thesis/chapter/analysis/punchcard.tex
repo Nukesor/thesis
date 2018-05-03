@@ -1,27 +1,27 @@
 \section{Working hours}
 
 This attack aims to gather as much information about the working hour behaviour as possible.
-Knowing the
-
-Usually only few parties people know about the holiday or sick leave times of a person.
-To know if a persons tends to become sick often or for long times is a dangerous intrusion into a persons privacy.
-For instance this could be abused by head hunters or personnel managers to cull possible employees with too high sick leave rates and thereby reduce the job prospects of the target.
-
-This attack is heavily inspired by an article about data mining articles from the popular German weekly magazine \emph{Der Spiegel} written by the David Kriesel~\cite{article:spiegel-mining}.
-
+Information which can be extracted by this attack is for example the sleep rhythm of the target.
+It can be used to detect whether the target is a person working regular shifts from from Monday to Friday or rather a freelancer or open-source contributor working at the weekend.
+The attack can be further used to compare the working hour patterns of several people in the same project or organization.
+For instance this could be used to infer relationships between colleagues, based on an equal working shift.
 
 \subsection{Implementation}
 
-The requirements for this algorithm is the detection of a regular work pattern for a given interval.
-It must have the ability to adjust to a changing work pattern, but at the same time has to be capable of detecting anomalies in this pattern.
-If the attacker wants to look at multiple people, some kind of measure for similarity in the missing time patterns has to exist.
-
-The input for this analysis is the intersection between all commits from the considered repositories and all commits from the considered contributors.
-The commits' meta data used for this analysis are time stamps as well as additions and deletions in lines of code.
+\begin{figure}[H]
+    \includegraphics[scale=0.20]{./graphs/analysis/ordered-punchcard}
+    \centering
+    \caption{Punchcard of the sleep rhythm analysis of the author.}\label{fig:working-hour-rhythm-author}
+\end{figure}
 
 \begin{figure}[H]
-    \includegraphics[scale=0.20]{./graphs/analysis/work-time-analysis}
+    \includegraphics[scale=0.20]{./graphs/analysis/random-punchcard}
+    \centering
+    \caption{Punchcard of an user without a regular sleep rhythm.}\label{fig:random-sleep-rhythm}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[scale=0.20]{./graphs/analysis-affinity/3}
     \centering
     \caption{The work time analysis of the author.}\label{fig:missing-time}
 \end{figure}
-
