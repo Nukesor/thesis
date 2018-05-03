@@ -1,23 +1,23 @@
 \section{Holiday and Sick Leave Detection}
 
 The information about anomalies in the regular work pattern can be a valuable information for several parties.
-Usually only few parties people know about the holiday or sick leave times of a person.
-To know if a persons tends to become sick often or for long times is a dangerous intrusion into a persons privacy.
+Usually only few parties know about the holiday or sick leave times of a person.
+To know if a persons tends to become sick more often or for long times is a dangerous intrusion into a persons privacy.
 For instance this could be abused by head hunters or personnel managers to cull possible employees with too high sick leave rates and thereby reduce the job prospects of the target.
 
-For employees this might convenient to detect anomalies in the productivity of an employee.
+For employers this might be convenient to detect anomalies in the productivity of an employee.
 In case an employee doesn't commit on a regular basis for several days, this behaviour would be instantly visible with this method.
 
-Another attack vector could be to look at the correlation of miss-out between several employees.
-This attack could even be performed by an outsider, if the employees of a company are known.
-The information gained by this attack could be quite delicate, as they could reveal relationships between employees.
+Another attack vector could be to look at the correlation of miss-out between several persons.
+This attack could even be performed by an outsider on a commercial open-source project, if the employees of the targeted company are known.
+The information gained by this attack could be quite delicate, as it could reveal relationships between persons.
 This attack is heavily inspired by an article about data mining articles from the popular German weekly magazine \emph{Der Spiegel} written by the David Kriesel~\cite{article:spiegel-mining}.
 
 
 \subsection{Implementation}
 
-The requirements for this algorithm is the detection of a regular work pattern for a given interval.
-It must have the ability to adjust to a changing work pattern, but at the same time has to be capable of detecting anomalies in this pattern.
+One requirement for this algorithm is the detection of a regular work pattern for a given interval.
+It must have the ability to adjust to a changing work pattern, but at the same time needs to be capable of detecting anomalies in this pattern.
 If the attacker wants to look at multiple people, some kind of measure for similarity in the missing time patterns has to exist.
 
 The input for this analysis is the intersection between all commits from the considered repositories and all commits from the considered contributors.
@@ -30,10 +30,10 @@ The commits' meta data used for this analysis are time stamps as well as additio
 \end{figure}
 
 The analysis of the data is a chronological scan of all commits for specific user.
-Before performing the actual analysis, the data is converted into a usable format representing the week days.
-The converted data format represents the amount of commits for each day in the last year.
+Before performing the actual analysis, the data is converted into an easier to handle format.
 It is really difficult to measure productivity in lines of code committed or in the amount of commits made by a person, as they don not necessarily display the amount of work that have been put into those commits.
 As a result I decided, that a day counts as a work day as long as at least single commit has been made during the day.
+The preprocessed data is thereby equivalent to the days a contributer worked on, ordered by the week of the year.
 
 \begin{minted}{python}
 def analyse(weeks):
@@ -70,14 +70,14 @@ def check_anomaly(prototype, week):
 
 \end{minted}
 \begingroup
-\captionof{listing}{Miss-out analysis \label{lst:naive-path-tracing}.}
+\captionof{listing}{Miss-out analysis algorithm.}\label{lst:miss-out-algorithm}
 \endgroup
 
 The algorithm inspects every week work pattern of a given interval.
-At the beginning a new \emph{prototype} is tried to be found.
+At the beginning a new \emph{prototype} is tried to be found, which is performed in the function \inlinecode{find\_prototype} in Listing\ref{lst:miss-out-algorithm}.
 A prototype is a representative week work pattern, which resembles the average work day pattern of the next weeks.
-This happens in the function \inlinecode{find\_prototype}.
-It performs a simple iteration over a given interval to find a work day pattern, which occurs more often than a given threshold.
+
+The function performs a simple iteration over a given interval to find a work day pattern, which occurs more often than a given threshold.
 If a prototype is found, we are capable of identifying anomalies that deviate from this pattern.
 
 For each following week it is firstly checked if this week is a anomaly for this prototype.
@@ -95,14 +95,14 @@ Only obvious anomalies, namely weeks without a single work day, will then be mar
 
 Figure~\ref{fig:missing-time} shows the analysis of the author for his work repositories.
 The y-axis shows the additions or deletions per commit, the x-axis shows the week of a year.
-For better analysis and evaluation of the results, a scatter plot with the additions and deletions per commit has been added on top of the miss-out graph.
+For better verification and evaluation of the results, a scatter plot with the additions and deletions per commit has been added on top of the miss-out graph.
 
 The evaluation of this algorithm turned out to be quite difficult, as there is no publicly available information about sick leave or holiday.
 For the purpose of this thesis I had to use anonymous statistics of several friends and colleagues to evaluate the algorithm.
 The algorithm successfully manages to find all anomalies, which occurred in the last year, for all seven regarded users.
 
 An unexpected side effect of detecting prototypes is that the algorithm also also finds inconsistencies in the work routine.
-For instance between week 37 to 45 in Figure~\ref{fig:missing-time} I was forced to reduce my working hours due to legal questions and shift hours and working days.
+For instance between week 37 to 45 in Figure~\ref{fig:missing-time} I was forced to reduce my working hours due to legal questions and continuously shift hours and working days for several weeks.
 It is hard to interpret those inconsistencies without more contextual information, but nevertheless it provides the fact that something happened during this time.
 
 \begin{figure}[H]
@@ -112,4 +112,4 @@ It is hard to interpret those inconsistencies without more contextual informatio
 \end{figure}
 
 In Figure~\ref{fig:miss-out-comparison} the comparison between multiple employees can be seen.
-Contributor0 and Contributor2 are working on flexible work time, while the other two contributors have regular working hours, which reflects in the inconsistencies of those contributors.
+Contributor0 and Contributor2 are working on flexible work time, which reflects in the inconsistencies of those contributors, while the other two contributors have regular working hours.
