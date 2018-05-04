@@ -17,7 +17,7 @@ PostgreSQL provides excellent tools to ensure a high consistency in your databas
 The \ac{sql} database is used in combination with the \ac{orm} library \emph{SQLAlchemy}.
 
 The basic schema created for the purpose of this thesis consists of five \ac{orm} models.
-A model for commits, emails, repositories, contributers and organizations has been created.
+A model for commits, emails, repositories, contributors and organizations has been created.
 The latter is only important to validate results and is not actually used for knowledge discovery, as this is Github specific data.
 
 \begin{figure}[H]
@@ -38,13 +38,13 @@ The formula for calculating the probability of such a collision is:
     p \leq \frac{n(n-1)}{2} * \frac{1}{2^{b}}
 \end{equation}
 
-Without this mechanism it could be possible that the same commit of a contributer could be used multiple times as a result of repository forking.
+Without this mechanism it could be possible that the same commit of a contributor could be used multiple times as a result of repository forking.
 After collecting 43 million commits from Github and actively ignoring obvious project forks, there are still 49 million references between commits and repositories.
 This means that about 13\% of gathered commits result from forked repositories which can not easily be identified as such.
 Considering Formula~\ref{eq:collision-probability}, the probability of a collision for 49 million hashes on the 160 bit \ac{sha1} hash would be about $8.21 * 10^{-34}$.
 
 As stated above each commit is also saved with its respective email addresses.
-There exists a one-to-many relationship between contributers and emails, as every contributer can obtain an unlimited amount of email addresses.
+There exists a one-to-many relationship between contributors and emails, as every contributor can obtain an unlimited amount of email addresses.
 It is necessary to connect all email addresses commit to a specific contributor, to unambiguously assign all commit to their respective contributor.
 This relationship does not have a \inlinecode{NOT NULL} constraint as it happens quite often that an email address can not be assigned to any person.
 Looking at the collected data it appears that roughly 20\% of all collected email addresses from Github are no longer connected to an active user.
@@ -72,13 +72,13 @@ In the following we will look at those approaches in detail.
         After this scan we are still missing a lot of information.
         There exists no unique identifier of an author or committer, as names may change or can be ambiguous and a single person can have multiple email addresses.
         The problem with the simplicity of Git is that there exists no concept of an user.
-        Thereby we cannot easily link several email addresses to a specific contributer without additional metadata.
+        Thereby we cannot easily link several email addresses to a specific contributor without additional metadata.
 
 
     \item[Github Repository]\label{github-repo-scan} \hfill \\
         To tackle the problem of missing metadata in~\ref{stand-alone-repository-scan}, I used the Github \ac{api} to get some of the missing metadata.
         The general approach is the same as in the previous scan method. The repository is cloned and locally scanned.
-        However, a request to Github is issued every time an email is found, which we do not already have linked to a contributer.
+        However, a request to Github is issued every time an email is found, which we do not already have linked to a contributor.
         Github allows to link multiple email addresses with a single user account and automatically references the respective user in their own \ac{api} commit representation.
         With this additional metadata we gain ground truth about the identity of an author or committer.
 
@@ -93,7 +93,7 @@ In the following we will look at those approaches in detail.
 
 
     \item[Connected users and organizations]\label{github-repo-scan} \hfill \\
-        For detection and analysis of connections between contributers over multiple repositories additional user repository discovery as described in~\ref{requirements}, another feature has been added to Gitalizer.
+        For detection and analysis of connections between contributors over multiple repositories additional user repository discovery as described in~\ref{requirements}, another feature has been added to Gitalizer.
         Gitalizer is able to achieve this by not just scanning a single user, but also scanning the repositories of all following and followed users as described in~\ref{github-user-scan}.
         For this task two different worker pools are utilized.
         The user discovery pool is initialized with a shared queue, lets call it ``user-queue'', of all users we need to look at.

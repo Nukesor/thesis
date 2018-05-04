@@ -41,7 +41,7 @@ Erklärung von Git und dessen Daten
 
 - Wofür wird Git benutzt
 - Welche Rollen gibt es in Git
-- Was ist wichtig für die Arbeit (Contributer, Email, Commit)
+- Was ist wichtig für die Arbeit (Contributor, Email, Commit)
 - Welche Datenstruktur benutzt Git intern.
 
 Chapter 4 Github:
