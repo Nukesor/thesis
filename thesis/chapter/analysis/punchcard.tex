@@ -48,27 +48,30 @@ The resulting punchcard vector is then stored in the database for faster and eas
 \end{figure}
 
 
+
+\subsection{Punchcard Clustering}
+
 To find common work patterns, several cluster cluster algorithms have been performed on the aggregated data.
 The Python \emph{scikit} framework has been used for this purpose, as it features nine different clustering methods and provides good documentation and abstraction from the underlying clustering logic~\footnote{`Clustering' scikit-learn.org, http://scikit-learn.org/stable/modules/clustering.html (accessed, 24.04.2018)}.
 For the task of finding similar punchcard patterns in the data, a clustering algorithm is required, which can operate on a high-dimensional dataset with an unknown amount of clusters
 Scikit provides three different clustering algorithms, which can handle an unknown amount of clusters.
 
-\begin{description}
-    \item[Affinity Propagation]\hfill \\
-        Affinity Propagation considers similarities between all data points to find clusters.
-        The memory requirements for this method scale quadratically for non-sparse sets with the number of the data points~\cite[p.~ii]{article:Frey972}
-        About 13 \ac{gb} memory have been used with a sample of roughly 10.000 data points.
-        This clustering algorithm features a promising approach, as it utilizes a method similar to message passing, to find an \emph{exemplar}, which resembles the representative of a cluster, and its surrounding cluster member.
-
-    \item[DBSCAN]\hfill \\
-
-    \item[Mean-Shift]\hfill \\
-
-\end{description}
-
+\subsubsection{Mean-Shift}
 
 \begin{figure}[H]
-    \includegraphics[scale=0.32]{./graphs/analysis/random-punchcard}
+    \includegraphics[scale=0.32]{./graphs/analysis/supercluster}
     \centering
-    \caption{Punchcard of an user without a regular sleep rhythm.}\label{fig:random-sleep-rhythm}
+    \caption{Supercluster found by mean-shift clustering.}\label{fig:working-hour-rhythm-author}
 \end{figure}
+
+
+\subsubsection{DBSCAN}
+
+\subsubsection{Affinity Propagation}
+Affinity Propagation considers similarities between all data points to find clusters.
+The memory requirements for this method scale quadratically for non-sparse sets with the number of the data points~\cite[p.~ii]{article:Frey972}
+About 13 \ac{gb} memory have already been used with a sample of roughly 10.000 data points and becomes thereby impractical for larger scale analyses.
+This clustering algorithm features a promising approach, as it utilizes a method similar to message passing, to find an \emph{exemplar}, which resembles the representative of a cluster, and its surrounding cluster member.
+However it has to be noted, that this clustering method is sometimes a little too detailed, as it, for instance, split very similar patterns into two or more different clusters.
+
+
