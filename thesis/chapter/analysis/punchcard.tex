@@ -56,22 +56,46 @@ The Python \emph{scikit} framework has been used for this purpose, as it feature
 For the task of finding similar punchcard patterns in the data, a clustering algorithm is required, which can operate on a high-dimensional dataset with an unknown amount of clusters
 Scikit provides three different clustering algorithms, which can handle an unknown amount of clusters.
 
-\subsubsection{Mean-Shift}
+\subsubsection{Mean Shift}\label{mean-shift}
+Mean shift is a clustering methods, which performs an operation similar to a gradient descent, which shifts all adjacent data points to their center~\cite{article:mean-shift}.
+The goal of this algorithm is to find a representative centroid for each cluster and assign each data point to a cluster.
+This methodology proved to be too aggressive for the current data.
 
 \begin{figure}[H]
     \includegraphics[scale=0.32]{./graphs/analysis/supercluster}
     \centering
-    \caption{Supercluster found by mean-shift clustering.}\label{fig:working-hour-rhythm-author}
+    \caption{Super cluster centroid found by mean-shift clustering.}\label{fig:mean-shift-super-cluster}
 \end{figure}
 
 
+Despite trying a wide range of values for the bandwidth, which is the measure of distance used for detecting adjacent points, this algorithm always created a super cluster, which contained more than 89\% of all data points. Such a super cluster can be seen in Figure~\ref{fig:mean-shift-super-cluster}.
+The other 11\% were invariably small clusters representing extreme outlier or strange patterns, which do not resemble any of the expected patterns for normal work shift or leisure time developers.
+An example for an extreme outlier can be seen in Figure~\ref{fig:mean-shift-outlier}.
+My assumption is that the density for the major part of the provided data is too high and equally distributed around the centeroid of the super cluster.
+Thereby all those data points are slowly shifted to this single centroid.
+As it is difficult to debug 168-dimensional space, I decided that an profound analysis would be too time consuming and to try the next solution.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.32]{./graphs/analysis/outlier}
+    \centering
+    \caption{Super cluster centroid found by mean-shift clustering.}\label{fig:mean-shift-outlier}
+\end{figure}
+
 \subsubsection{DBSCAN}
+The \ac{dbscan} clustering algorithm operates by creating clusters of transitively connectable data points with a maximal distance between each point.~\ref{inproceedings:dbscan}.
+It is highly scalable and performant, even for large data sets, because of this scalability it was my first choice.
+Unfortunately it produces very similar results to the mean shift clustering algorithm~\ref{mean-shift} as it finds a super cluster very similar to Figure~\ref{fig:mean-shift-super-cluster}.
+I assume that this algorithm suffers from similar problems as the mean shift approach, which are high density of data points without clear borders.
+Thereby this methodology manages to most part of all data points transitively from a single starting point, but creates a huge amount of mini clusters, when supplied with smaller values for the maximum distance between data points.
+This algorithm also manages to find extreme outlier clusters, but it is not suitable for the purpose of this thesis, due to the extremely low granularity on the data inside the super cluster.
+
 
 \subsubsection{Affinity Propagation}
-Affinity Propagation considers similarities between all data points to find clusters.
-The memory requirements for this method scale quadratically for non-sparse sets with the number of the data points~\cite[p.~ii]{article:Frey972}
-About 13 \ac{gb} memory have already been used with a sample of roughly 10.000 data points and becomes thereby impractical for larger scale analyses.
+The Affinity Propagation algorithm considers similarities between all data points to find clusters~\cite{article:affinity-propagation}.
 This clustering algorithm features a promising approach, as it utilizes a method similar to message passing, to find an \emph{exemplar}, which resembles the representative of a cluster, and its surrounding cluster member.
+Affinity Propagation was the only available clustering method that was detailed enough to find interesting patterns without creating a super cluster.
+About 200 different patterns have been discovered using this methodology.
 However it has to be noted, that this clustering method is sometimes a little too detailed, as it, for instance, split very similar patterns into two or more different clusters.
-
-
+Additionally the memory requirements for this method scale quadratically, for non-sparse sets, with the number of the data points~\cite[p.~ii]{article:affinity-propagation}.
+About 13 \ac{gb} memory have already been used with a sample of roughly 10.000 data points.
+This algorithm becomes thereby impractical for analyses on the whole dataset, but it works for smaller analyses and is thereby suitable for the validation of this thesis.
