@@ -23,7 +23,7 @@ These commit timestamps are then converted into a different format, which repres
 The result is a simple vector with length 168, which corresponds seven days with 24 hours each.
 I will refer to this representation hereafter as a \emph{punchcard}.
 
-\begin{minted}{python}
+\begin{minted}[linenos]{python}
 def preprocess(commits):
     punchcard = [0] * 168
     for commit in commits:

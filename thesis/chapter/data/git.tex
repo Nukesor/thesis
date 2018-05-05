@@ -54,7 +54,7 @@ Collected data indicates that in about 89\% the author and the committer are the
 
 \subsection{Internal Representation}
 Git's underlying storage and management solution for files is commonly described as an mini \ac{fs}~\cite[p.~9]{book:pro-git}
-In the following I will thereby refer to it's file management layer as \emph{git-fs} and explain the most important aspects of it.
+In the following I will thereby refer to its file management layer as \emph{git-fs} and explain the most important aspects of it.
 
 The representation of a single file in Git is called a \emph{blob} object~\cite[p.~56]{book:pro-git}.
 A blob object is a file, which has been added to a \emph{git-fs}.
@@ -70,7 +70,7 @@ To represent a \ac{fs} or to simply bundle multiple Git blob objects together, G
 
 A tree object is a file, which has a \ac{sha1} hash reference to all underlying blob and tree objects as well as their names and \ac{fs} permissions.
 To represent a subdirectory, a tree simply holds a reference to another tree object.
-With these tools git manages to build it's own basic representation of a \ac{fs}.
+With these tools git manages to build its own basic representation of a \ac{fs}.
 
 \begin{minted}[linenos]{text}
     100644 blob 11d1ee77f9a23ffcb4afa860dd4b59187a9104e9  .gitignore
@@ -112,7 +112,7 @@ The commit is the most important object for this thesis.
 It contains crucial information such as the date of the commit as well as the email, which is needed to identify a contributor across several commits.
 
 \subsection{Features}
-Git provides a collection of high level abstraction tools to work with it's underlying \ac{fs}.
+Git provides a collection of high level abstraction tools to work with its underlying \ac{fs}.
 In the following the most important features for data aggregation will be listed and briefly explained.
 
 \begin{description}

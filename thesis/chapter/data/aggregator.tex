@@ -100,7 +100,7 @@ In the following we will look at those approaches in detail.
         This worker pool simply searches for relevant repositories of each user and passes the repository \ac{url} to a second shared queue.
         The second pool then processes this ``repo-queue'' as described in~\ref{github-repo-scan}.
 
-        For organizations it's nearly the same approach.
+        For organizations it is nearly the same approach.
         Initially all repositories, which are owned by the organization, are added to the ``repo-queue''.
         All publicly visible organization members are then added to the ``user-queue'' and processed as described above.
 \end{description}
