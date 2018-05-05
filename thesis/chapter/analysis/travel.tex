@@ -1,0 +1,33 @@
+\section{Geo location}
+
+This attack aims to extract information about the actual location on the globe of a target.
+The algorithm tries to firstly determine the exact timezone of the target and then to exclude any countries or states, which do not match the observed timestamps.
+There are several possible vectors for this attack:
+
+\begin{itemize}
+    \item Detect the main country or timezone of a target.
+    \item Analyse where and how often a target travels to a specific location.
+    \item Determine the location of a workforce of a company.
+\end{itemize}
+
+
+\subsection{Implementation}\label{travel-implementation}
+
+The data used for this analysis are all commit timestamps of the target, as well as the target's Github location for verification.
+In the following I will explain the algorithm used to detect the different timezones and determine the main location of the contributor.
+
+\begin{minted}{python}
+def preprocess(commits):
+    punchcard = [0] * 168
+    for commit in commits:
+        hour = commit.commit_time.hour # returns 0-23
+        weekday = = commit.commit_time.weekday() # returns 0-6
+
+        index = weekday*24 + hour
+        punchcard[index] += 1
+
+\end{minted}
+\begingroup
+\captionof{listing}{}\label{lst:travel-analysis}
+\endgroup
+
