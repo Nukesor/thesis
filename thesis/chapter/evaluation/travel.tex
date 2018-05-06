@@ -9,6 +9,16 @@ and Mac, but it is not necessarily enabled by default.
 It is also available for Linux, for instance with the \emph{tzupdate} package~\footnote{`Set the system timezone based on IP geolocation', github.com, https://github.com/cdown/tzupdate (accessed, 24.04.2018)}, but it needs to be installed and activated manually.
 
 \begin{figure}[H]
+    \includegraphics[scale=0.40]{./graphs/analysis/timezone-user-distribution}
+    \centering
+    \caption{Distribution of users according to the amount of different timezones.}\label{fig:timezone-distribution}
+\end{figure}
+
+Figure~\ref{fig:timezone-distribution} shows the amount of contributors in relation to the amount of detected timezones.
+On about 70\% of considered contributors only a single timezone timezone has been detected, looking at the last year.
+These 70\% do either not commit, when they travel, their \ac{os} does not synchronize the timezone accordingly to their location or they simply do not traveled in the last two years.
+
+\begin{figure}[H]
     \includegraphics[scale=0.10]{./graphs/analysis/author-home-location}
     \centering
     \caption{Home location analysis of the author.}\label{fig:author-home-location}
@@ -29,7 +39,8 @@ The data provided by the users was obviously too arbitrary and full of mistakes 
 
 As a result I decided to manually choose a subset of locations by looking for distinct identifiers in the location strings.
 For instance, every home location of contributor, which contained \emph{Germany} or \emph{Deutschland} in their location string, should be in the \ac{utc} +1 timezone and contain the specific timezone \inlinecode{Europe/Berlin}.
-I created INSERTHERE such rules and was thus able to validate the home location of about NUMBERHERE contributors.
-The assignment of the contributors home location was correct in about 92\% of the considered contributors.
+I created 17 such rules and was thus able to validate the home location of about 2000 contributors.
+The assignment of the contributors home location was correct in about 76\% of the considered contributors.
+It needs to be noted, that the accuracy of this result is quite certainly deteriorated by location strings, which contain ambiguous information as, for instance, \inlinecode{❤️ Japan ✈︎ India}, and maybe by contributors, which moved to another country in the last year, as we cannot detect those for sure.
 
-
+Nevertheless an accuracy of 76\% clearly shows, that it is possible to narrow down the location of a contributor to a timezone and even to a subset of countries, by simply looking at the their git commit timestamps.
