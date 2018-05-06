@@ -20,3 +20,29 @@ It is even possible that a privat individual wants to monitor another person, wh
 
 As there have not been any papers published about this specific topic yet or at least no public paper and as Git plays such a crucial role in todays information technology, I want to investigate and evaluate this potential threat.
 Furthermore I want to create a foundation for future research and provide a first example on how such attacks might look like.
+
+\section{Contents}
+This thesis examines the process and capabilities of building a data mining software based on git metadata.
+After the introduction explaining the motivation, the approach and the goals of this thesis, Chapter 2 will explain the requirements to the data, existing solutions as well as process of building an own aggregator, which collects data from Github.
+Chapter 3 shows the actual implementation of three different algorithms and how their gained information could be used in a real world scenario.
+Chapter 4 evaluates the results of the previously presented algorithms by comparing it with real world ground truth and conducting small surveys.
+Chapter 5 then concludes and discusses the overall results of this research.
+
+\section{Motivation}
+Each year more and more data is collected by employers.
+A study conducted by \ac{mit} students shows, that data-driven companies, that collect data about everything in their company, are about 5\% more productive~\cite{article:management-revolution}, but this does not necessarily justify an invasion into employees' privacy.
+Privacy violation already goes as far as the tracking of medical records of employees, which is a service provided by the company \emph{Castlight}~\cite{article:medical-data}.
+Some parties warn against surveillance of employees by the management and demand stricter handling of employee data~\cite{article:vermessung-belegschaft}
+Generally it can be said, that we need to take better care about information of ourselves and that people need to know in which ways they can leak information.
+This thesis aims to show this on the example of the \ac{vcs} Git, which is technically a very practical tool, which was developed with no malicious intend, but it might be used for such.
+
+\section{Leading Questions and Goals}
+
+The primary research objective of this thesis is finding out how feasible a data mining approach on git metadata would be.
+This question is explored by looking at various data mining techniques and applying them to aggregated data from Github.
+
+\section{Methods and approach}
+
+To gather data and perform analysis on the data for the purpose of this thesis, a program called \emph{Gitalizer} is developed.
+It is capable of continuously collecting data from Github in several ways.
+Furthermore three different analysis methodologies and several evaluation methods for these are implemented.
