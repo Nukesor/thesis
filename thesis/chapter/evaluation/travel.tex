@@ -1,0 +1,35 @@
+\section{Geolocation}
+
+First of all, it needs to be clarified, that parts of this attack only works under specific circumstances.
+Git commit timestamps identical to the current local time of the underlying \ac{os}.
+If one wants to show the travel path of a target, the target's \ac{os} needs to automatically adjust the \ac{utc} accordingly to the current geolocation of the device.
+
+This feature is available for the newer versions of big \acp{os}, such as Windows~\footnote{Ivan Jenic, `Your Time Zone Can Now Switch Automatically in Windows 10', windowsreport.com, https://windowsreport.com/time-zone-automatic-switch-windows-10 (accessed, 24.04.2018)}
+and Mac, but it is not necessarily enabled by default.
+It is also available for Linux, for instance with the \emph{tzupdate} package~\footnote{`Set the system timezone based on IP geolocation', github.com, https://github.com/cdown/tzupdate (accessed, 24.04.2018)}, but it needs to be installed and activated manually.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.10]{./graphs/analysis/author-home-location}
+    \centering
+    \caption{Home location analysis of the author.}\label{fig:author-home-location}
+\end{figure}
+
+In Figure~\ref{fig:author-home-location} the visualized home location analysis of the author can be seen.
+Regions marked in dark green are regions, in which the contributor is likely to live.
+The light green region represents the timezone of the home location.
+As you can see in Figure~\ref{fig:author-home-location} the country French Guiana is also marked as a possible home location.
+This problem occurs due to the several conversions between country names and codes, which were necessary as stated~\ref{timezone-implementation}.
+This misassignment only happens during the visualization of the results and thereby doesn't affect the results of the analysis.
+
+To evaluate the overall precision of the geolocation results, the correctness of the determined home location is checked.
+Github allows users to specify a string for their current home, which is collected during the aggregation process.
+Unfortunately there are no conventions on how this string has to look like.
+Initially I tried to pass these strings to OpenStreetMap, but this resulted in too many wrongly assigned locations.
+The data provided by the users was obviously too arbitrary and full of mistakes for the OpenStreetMap \ac{api} to handle.
+
+As a result I decided to manually choose a subset of locations by looking for distinct identifiers in the location strings.
+For instance, every home location of contributor, which contained \emph{Germany} or \emph{Deutschland} in their location string, should be in the \ac{utc} +1 timezone and contain the specific timezone \inlinecode{Europe/Berlin}.
+I created INSERTHERE such rules and was thus able to validate the home location of about NUMBERHERE contributors.
+The assignment of the contributors home location was correct in about 92\% of the considered contributors.
+
+
