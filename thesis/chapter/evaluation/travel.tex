@@ -41,6 +41,6 @@ As a result I decided to manually choose a subset of locations by looking for di
 For instance, every home location of contributor, which contained \emph{Germany} or \emph{Deutschland} in their location string, should be in the \ac{utc} +1 timezone and contain the specific timezone \inlinecode{Europe/Berlin}.
 I created 17 such rules and was thus able to validate the home location of about 2000 contributors.
 The assignment of the contributors home location was correct in about 76\% of the considered contributors.
-It needs to be noted, that the accuracy of this result is quite certainly deteriorated by location strings, which contain ambiguous information as, for instance, \inlinecode{❤️ Japan ✈︎ India}, and maybe by contributors, which moved to another country in the last year, as we cannot detect those for sure.
+It needs to be noted, that the accuracy of this result is quite certainly deteriorated by location strings, which contain ambiguous information, and maybe by contributors, which moved to another country in the last year, as we cannot detect those for sure.
 
 Nevertheless an accuracy of 76\% clearly shows, that it is possible to narrow down the location of a contributor to a timezone and even to a subset of countries, by simply looking at the their git commit timestamps.

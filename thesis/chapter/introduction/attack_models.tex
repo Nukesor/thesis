@@ -1,8 +1,7 @@
 \section{Attack models}\label{attack-models}
-This section introduces three attacker models and their respective goals.
-
-The required data to achieve and evaluate the goal will be listed and explained in the process.
+To show possible scenarios, this section introduces three attacker models and their respective goals.
 These attack models serve as a guideline for the data aggregation process, which will be covered in the next chapter.
+Only a small subset of these listed attacks will be actually performed by me, but this listing also serves as a exhibition of some possible attacks, for anyone that wants to further investigate this topic.
 
 \subsection{The Employer}\label{employer-monitoring}
 This attack model deals with the scenario of an employer, which wants to monitor their employees.
@@ -10,10 +9,9 @@ The attacker's motivation is to spot irregularities in working behavior as well 
 
 \begin{description}
     \item[Productivity of Employees] \hfill \\
-        Ensure employees produces enough code.
+        An employer wants to ensure that their employees produce sufficient amount of code.
         For this purpose the changes in lines of code over a specific time span will be evaluated.
         \begin{itemlist}{Required data:}
-            \item Commits of the employer's repositories.
             \item Commit timestamps
             \item Additions of each commit
             \item Deletions of each commit
@@ -23,7 +21,6 @@ The attacker's motivation is to spot irregularities in working behavior as well 
         Check if an employee is productive in the defined working hours.
         This is especially useful to supervise employees, which work remotely.
         \begin{itemlist}{Required data:}
-            \item Commits of employer's repositories.
             \item Commit timestamps
         \end{itemlist}
 
@@ -31,7 +28,6 @@ The attacker's motivation is to spot irregularities in working behavior as well 
         Inspect if an employee is working on an external project during working hours.
         This only works if the employer has access to the external project, for example open source projects.
         \begin{itemlist}{Required data:}
-            \item All commits of any available repository to come into question
             \item Commit timestamps
         \end{itemlist}
 
@@ -40,7 +36,6 @@ The attacker's motivation is to spot irregularities in working behavior as well 
         With this metric the quality of an employee could be measured.
         To compare the quality we would need an external tool for code analysis.
         \begin{itemlist}{Required data:}
-            \item Commits of the employer's repositories.
             \item Complete commit patch
             \item Commit timestamps
         \end{itemlist}
@@ -49,36 +44,39 @@ The attacker's motivation is to spot irregularities in working behavior as well 
 
 
 \subsection{The Individual}
-This scenario describes a single person, which wants to harm, monitor or gain information about an open source developer.
+This scenario describes a single person, which wants to harm, monitor or gain information about an open-source developer.
 
-An example goal of an attacker could be to either stalk the victim, harm him in any way or to manipulate him or one of his acquaintances.
+A possible goal of the attacker could be to either stalk the victim, harm him in any way or to manipulate him or one of his acquaintances.
 The motivation of this attacker is mostly personal and on an emotional level.
-
-Another non emotional attacker could be a robber trying to find the perfect time window to rob a house or the tracking of a high profile target.
-
-A third attacker could be a headhunter which tries to get information about the skills and reliability of a developer.
+Another non emotional attacker motive could be a robber trying to find the perfect time window to rob a house or the tracking of a high profile target.
+A third attacker motive could be a headhunter which tries to get information about the skills and reliability of a developer.
 
 \begin{description}
     \item[Sleeping Rhythm and Daily Routine] \hfill \\
         Learn about the persons sleep rhythm and obvious patterns in his daily routine.
         This attack aims to understand and predict the victim's behaviour.
         \begin{itemlist}{Required data:}
-            \item Victim's commits.
             \item Commit timestamps.
         \end{itemlist}
 
     \item[Personal Relationships to Various Programmers] \hfill \\
-        Show how many people work together (Same time window). Time correlation.
+        Detect which contributor work together and try to discover the relationships between them.
         \begin{itemlist}{Required data:}
-            \item Victim's commits.
+            \item Git history.
             \item Commit timestamps.
         \end{itemlist}
 
     \item[Sick Leave and Holiday] \hfill \\
-        Detect breaks in his typical work behaviour, which could represent holiday breaks or sick leave.
-        This attack could give information about whether a developer is at home right now or if he tends to be sick alot.
+        Detect breaks in his typical work behaviour. Those could represent holiday breaks or sick leave.
+        This attack could give information about whether a developer is at home right now or if they tends to be sick a lot.
         \begin{itemlist}{Required data:}
-            \item Victim's commits.
+            \item Commit timestamps.
+        \end{itemlist}
+
+    \item[Geolocation] \hfill \\
+        Pinpoint the location of an contributor or at least narrow it down to a timezone or country could be interesting.
+        Doing so could provide the attacker with a history of the target's travels.
+        \begin{itemlist}{Required data:}
             \item Commit timestamps.
         \end{itemlist}
 \end{description}
@@ -88,16 +86,14 @@ A third attacker could be a headhunter which tries to get information about the 
 \subsection{The Industrial Spy}\label{industrial-spy}
 This attack model covers the scenario of an external person, which wants to gain as much private or malicious information about a company as possible.
 The attacker's motivation is either to harm the company, gain an advantage as an competitor or in the stock market or to sell secret information to a third party.
-This attack vector only works if the targeted company is providing their product or at least parts of their product as open-source software.
+This attack vector only works if the targeted company is providing their full product or at least parts of their product as open-source software.
 
 \begin{description}
     \item[Company Employees] \hfill \\
         The most important target is to detect the company's employees as three other goals for this attacker model depend on this information.
         Another motivation could be to detect company members for further social engineering attacks or to headhunt the company's employees.
         \begin{itemlist}{Required data:}
-            \item All commits of the company's repositories.
             \item Commit history graph.
-            \item As much meta data about the company's employees as possible for evaluation.
         \end{itemlist}
 
     \item[Employee History] \hfill \\
@@ -106,7 +102,7 @@ This attack vector only works if the targeted company is providing their product
         Social engineering or headhunting could be a motivation here as well.
         \begin{itemlist}{Required data:}
             \item Company Employees
-            \item Commit timestamps of the company's repositories
+            \item Commit timestamps
         \end{itemlist}
 
     \item[Global Workforce Distribution] \hfill \\
@@ -116,14 +112,13 @@ This attack vector only works if the targeted company is providing their product
         \begin{itemlist}{Required data:}
             \item Company Employees
             \item All Commits
-            \item Commit timestamps of the company's repositories
+            \item Commit timestamps
         \end{itemlist}
 
     \item[Internal Team Structures] \hfill \\
         Try to predict different teams, the role of each team and the respective team members.
         \begin{itemlist}{Required data:}
             \item Company Employees.
-            \item Commits of the employer's repositories.
             \item Commit history graph.
         \end{itemlist}
 \end{description}
