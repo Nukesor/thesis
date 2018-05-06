@@ -1,40 +1,41 @@
-Git is a \ac{VCS} used by most programmers on a daily basis these days.
+Git is a \ac{vcs} used by most programmers on a daily basis these days.
 It is supposed help developers to manage their
 According to the Eclipse Community Survey about 42.9\% of professional software developers used git in 2014 with an upward tendency~\cite{article:git-popularity}.
 It is deployed in many if not most commercial and private projects and generally valued by its users.
-It allows to collaborate with thousands of contributors on the same project whilst maintaining order.
+It allows to collaborate with thousands of contributors on the same project whilst maintaining a clear version history.
 
 Several million users send new commits to their Git repositories every day.
-On Github alone, the currently biggest open source platform, there exist about 25 million active repositories, a total of 67 million repositories and about 24 million users~\cite{article:github-statistics}.
+On Github alone, the currently biggest open source platform, there exist about 25 million active repositories and a total of 67 million repositories~\cite{article:github-statistics}.
 
 Some well known projects and organizations use Git, for example Linux, Microsoft, Ansible and Facebook~\cite{article:github-statistics}.
-But every of those repository contains the complete contribution history of every contributing user.
-Each of those contributions contains all changes, a timestamp, a message from the author and their email address.
+But each of those repositories contains the complete contribution history of every contributing user.
+Every contribution contains all changes, a timestamp, a message from the author and their email address.
 
 This raises the question how much information is hidden in the metadata of a Git repository and which attack vectors could be introduced by analysing this information.
-Could this information be used to harm or manipulate a contributor or maybe even a company.
+Could this information be used to harm or manipulate a contributor or maybe even a company?
 
-The newly gained knowledge could be utilized by employers to spy on their employees.
+The gained knowledge could be utilized by employers to spy on their employees.
 It could be used by an unknown attacker who aims to obtain sensitive information about a company and its employees through their open-source projects.
-It is even possible that a privat individual wants to monitor another person, which regularly contributes to open-source repositories.
+It is even possible that a privat individual uses it to monitor another person, which regularly contributes to open-source repositories.
 
-As there have not been any papers published about this specific topic yet or at least no public paper and as Git plays such a crucial role in todays information technology, I want to investigate and evaluate this potential threat.
+As there have not been any papers published about this specific topic yet or at least no public paper and as Git plays such a crucial role in todays software development, I want to investigate and evaluate this potential threat.
 Furthermore I want to create a foundation for future research and provide a first example on how such attacks might look like.
 
 \section{Contents}
 This thesis examines the process and capabilities of building a data mining software based on git metadata.
-After the introduction explaining the motivation, the approach and the goals of this thesis, Chapter 2 will explain the requirements to the data, existing solutions as well as process of building an own aggregator, which collects data from Github.
-Chapter 3 shows the actual implementation of three different algorithms and how their gained information could be used in a real world scenario.
+After the introduction explaining the motivation, the approach and the goals of this thesis, Chapter 2 will explain the requirements to the data, existing solutions as well as the process of building an own aggregator, which collects data from Github.
+Chapter 3 shows the actual implementation of three different algorithms and how their gained information could be used in real world scenario.
 Chapter 4 evaluates the results of the previously presented algorithms by comparing it with real world ground truth and conducting small surveys.
 Chapter 5 then concludes and discusses the overall results of this research.
 
 \section{Motivation}
 Each year more and more data is collected by employers.
-A study conducted by \ac{mit} students shows, that data-driven companies, that collect data about everything in their company, are about 5\% more productive~\cite{article:management-revolution}, but this does not necessarily justify an invasion into employees' privacy.
+A study conducted by \ac{mit} students shows, that data-driven companies, that collect data about everything in their company, are about 5\% more productive~\cite{article:management-revolution}, but this should net justify any invasion into their employees' privacy.
 Privacy violation already goes as far as the tracking of medical records of employees, which is a service provided by the company \emph{Castlight}~\cite{article:medical-data}.
 Some parties warn against surveillance of employees by the management and demand stricter handling of employee data~\cite{article:vermessung-belegschaft}
+
 Generally it can be said, that we need to take better care about information of ourselves and that people need to know in which ways they can leak information.
-This thesis aims to show this on the example of the \ac{vcs} Git, which is technically a very practical tool, which was developed with no malicious intend, but it might be used for such.
+This thesis aims to show this on the example of the \ac{vcs} Git, which is technically a very practical tool, which was developed with no malicious intend, but which might be used for such.
 
 \section{Leading Questions and Goals}
 
