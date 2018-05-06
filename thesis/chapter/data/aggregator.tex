@@ -6,10 +6,34 @@ In the end some problems which occurred during the data collection will be shown
 
 
 \subsection{Existing solutions}
+There are a number of existing solutions for accessing and collecting git metadata.
+In the following the practicability of these solutions will be evaluated based on our requirements.
 
-There are a number of existing solutions for accessing git metadata.
-\todo{Add some references to existing solutions.}
+\subsubsection{GHTorrent}
+The \emph{GHTorrent} project aims to provide Github's metadata to elude the limitations Github's rate limiting~\cite{inproceedings:ghtorrent}.
+It provides representations for followers and commits, as well as organizations and organization members, but there are some crucial informations missing.
+GHTorrent only stores the main email address of a user and does thereby not support the handling of multiple emails, as commits are directly assigned to their respective Github user id.
+Commits miss information about additions and deletions in lines of code, which implicates that each commit would need to be scanned by a separate program again.
+Furthermore GHTorrent does not have the concept of \emph{starring}, which makes it hard to reduce the amount of repositories to scan to a manageable size.
+Their database provides about 4~\ac{TB} of data according to their website, which is too much information without very precise limitation~\footnote{`The GHTorrent project' ghtorrent.com, http://ghtorrent.org/ (accessed, 05.05.2018)}
+It provides a vast amount of data, but at the same time it cannot be ensure, that the data is as complete as possible for a specific user.
+Modifying the GHTorrent code base and extending their database schema has thereby been judged as impractical.
 
+\subsubsection{ghcrawler}
+Microsoft provides an open-source crawler called \emph{ghcrawler}, which is supposed to continuously fetch data from Github~\footnote{`Github crawler' github.com, http://github.com/ (accessed, 05.05.2018)}.
+Sadly their documentation is very bad and after diving into their source code, it appears that their crawler is for Github entities only and not for the underlying data of git repos.
+
+\subsubsection{Alitheia-Core}
+\emph{Alitheia-Core} is a Java data collector for git repositories.
+It is not actively maintained since more than three years and their documentation website is offline.
+Using this library seemed unpromising and unviable.
+
+https://github.com/mauricioaniche/repodriller
+\subsubsection{RepoDriller}
+The \emph{RepoDriller} project is project that aims to support researchers by providing easy access to repository data from Github~\footnote{`A tool to support researchers on mining software repositories studies' github.com, http://github.com/ (accessed, 05.05.2018)}.
+Despite providing a good solution for getting all necessary information from a repository, it provides no way to explore Github using \emph{stars} or \emph{following}.
+These features, as well as assignment of emails to a contributor via the Github \ac{api}, would have to be added.
+As the program is also written in Java and I am no longer familiar with the language and its ecosystem, I decided to stick to writing my own solution.
 
 \subsection{Database}\label{gitalizer-database}
 To store the gathered Information I chose a \ac{sql} based solution.
