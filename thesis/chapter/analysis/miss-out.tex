@@ -5,7 +5,7 @@ Usually only few parties know about the holiday or sick leave times of a person.
 To know if a persons tends to become sick more often or for long times is a dangerous intrusion into a persons privacy.
 For instance this could be abused by head hunters or personnel managers to cull possible employees with too high sick leave rates and thereby reduce the job prospects of the target.
 
-For employers this might be convenient to detect anomalies in the productivity of an employee.
+For employers this might be convenient for detecting anomalies in the productivity of employees.
 In case an employee doesn't commit on a regular basis for several days, this behaviour would be instantly visible with this method.
 
 Another attack vector could be to look at the correlation of miss-out between several persons.
@@ -13,15 +13,16 @@ This attack could even be performed by an outsider on a commercial open-source p
 The information gained by this attack could be quite delicate, as it could reveal relationships between persons.
 This attack is heavily inspired by an article about data mining articles from the popular German weekly magazine \emph{Der Spiegel} written by the David Kriesel~\cite{article:spiegel-mining}.
 
+For now the goal of this attack is to simply detect miss-out and if a contributor has anomalies in their regular work day pattern.
+
 
 \subsection{Implementation}
 
-One requirement for this algorithm is the detection of a regular work pattern for a given interval.
-It must have the ability to adjust to a changing work pattern, but at the same time needs to be capable of detecting anomalies in this pattern.
-If the attacker wants to look at multiple people, some kind of measure for similarity in the missing time patterns has to exist.
+Due to possible fluctuations or changes in work routine, one requirement to this algorithm is the detection of a regular work pattern for a given interval.
+It must have the ability to adjust to a changing work pattern, but at the same time it needs to be capable of detecting anomalies in this pattern.
 
 The input for this analysis is the intersection between all commits from the considered repositories and all commits from the considered contributors.
-The commits' meta data used for this analysis are time stamps as well as additions and deletions in lines of code.
+The commits' meta data used for this analysis are timestamps as well as additions and deletions in lines of code.
 
 \begin{figure}[H]
     \includegraphics[scale=0.20]{./graphs/analysis/work-time-analysis}
@@ -31,8 +32,8 @@ The commits' meta data used for this analysis are time stamps as well as additio
 
 The analysis of the data is a chronological scan of all commits for specific user.
 Before performing the actual analysis, the data is converted into an easier to handle format.
-It is really difficult to measure productivity in lines of code committed or in the amount of commits made by a person, as they don not necessarily display the amount of work that have been put into those commits.
-As a result I decided, that a day counts as a work day as long as at least single commit has been made during the day.
+It is really difficult to measure productivity in lines of code or in the amount of commits made by a person, as they do not necessarily display the amount of work, which has been put into this code.
+As a result I decided, that a day counts as a work day as long as at least a single commit is created during the day.
 The preprocessed data is thereby equivalent to the days a contributor worked on, ordered by the week of the year.
 
 \begin{minted}[linenos]{python}
@@ -73,19 +74,20 @@ def check_anomaly(prototype, week):
 \captionof{listing}{Miss-out analysis algorithm.}\label{lst:miss-out-algorithm}
 \endgroup
 
-The algorithm inspects every week work pattern of a given interval.
-At the beginning a new \emph{prototype} is tried to be found, which is performed in the function \inlinecode{find\_prototype} in Listing\ref{lst:miss-out-algorithm}.
+The algorithm inspects every week work pattern of a given interval, which has been set to a year for this analysis.
+At the beginning, a new \emph{prototype} is tried to be found.
+This is performed in the function \inlinecode{find\_prototype} in Listing\ref{lst:miss-out-algorithm}.
 A prototype is a representative week work pattern, which resembles the average work day pattern of the next weeks.
 
-The function performs a simple iteration over a given interval to find a work day pattern, which occurs more often than a given threshold.
+This function performs a simple iteration over a fix amount of future weeks, to find a work day pattern occurring more often than a given threshold.
 If a prototype is found, we are capable of identifying anomalies that deviate from this pattern.
 
-For each following week it is firstly checked if this week is a anomaly for this prototype.
-Anomalies are simply detected by comparing the amount of working days of the prototype and the currently looked at week.
-The real difference in the working pattern is not suitable for this analysis, as it produces too many false positives for employees with flexible work time.
+For each following week it is then firstly checked if this week is a anomaly in regards to the current prototype.
+Anomalies are simply detected by comparing the amount of working days of the prototype and the considered week.
+The difference in the working patterns is not suitable for this analysis, as it produces too many false positives for employees with flexible work time.
 
-Secondly it is checked if there exists a week in the near future, which is identical to the prototype.
-If there is no week identical to the prototype in the near future, the current prototype is reset and a new prototype needs to be found.
+Secondly it is checked if a week identical to the prototype exists in the near future.
+If there is no such week, the current prototype is reset and a new prototype needs to be found again.
 
 In case no prototype can be found, anomalies cannot be easily identified, as there exists no pattern to check against.
 Only obvious anomalies, namely weeks without a single work day, will then be marked as such.
