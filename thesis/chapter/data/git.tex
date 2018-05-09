@@ -1,5 +1,5 @@
 \section{Git}\label{git-explanation}
-This section introduces the \ac{vcs} \emph{Git}, as it plays a fundamental role in this thesis.
+This section presents the \ac{vcs} \emph{Git}, as it plays a fundamental role in this thesis.
 In the following the most relevant parts of Git will be explained such as user roles, technologies and internal data representations.
 I will also talk about the current cases of application and some interesting scenarios which might be interesting for this thesis.
 
@@ -142,7 +142,7 @@ In the following some functionalities will be shown, which can lead to problems 
 
     \item[filter-branch] \hfill \\
         In case somebody pushes a huge file, which significantly increases the size of the repository, or adds a file with secret information, for example a password file, git provides the \emph{filter-branch} command.
-        The filter-branch command removes a specified file from every commit in the history and thereby rewrites the history to the point, where this file was introduced to the repository.
+        The filter-branch command removes a specified file from every commit in the history and thereby rewrites the history to the point, where this file was added to the repository.
         This command leads to similar problems as the rebase command, since it can severely change the history of a repository.
 
     \item[force push] \hfill \\
