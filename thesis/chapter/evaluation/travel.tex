@@ -4,8 +4,8 @@ First of all, it needs to be clarified, that parts of this attack only works und
 Git commit timestamps are created by taking the current local time of the underlying \ac{os}.
 If one wants to show the travel path of a target, the target's \ac{os} needs to automatically adjust the \ac{utc} offset accordingly to the current geolocation of the device.
 
-This feature is available for newer versions of big \acp{os}, such as Windows~\footnote{Ivan Jenic, `Your Time Zone Can Now Switch Automatically in Windows 10', windowsreport.com, https://windowsreport.com/time-zone-automatic-switch-windows-10 (accessed, 24.04.2018)}
-and Mac, but it is not necessarily enabled by default.
+This feature is available for newer versions of popular \acp{os}, such as \emph{Windows}~\footnote{Ivan Jenic, `Your Time Zone Can Now Switch Automatically in Windows 10', windowsreport.com, https://windowsreport.com/time-zone-automatic-switch-windows-10 (accessed, 24.04.2018)}
+and \emph{Mac Os}, but they are not enabled by default.
 It is also available for Linux, for instance with the \emph{tzupdate} package~\footnote{`Set the system timezone based on IP geolocation', github.com, https://github.com/cdown/tzupdate (accessed, 24.04.2018)}, but it needs to be manually installed and activated.
 
 \begin{figure}[H]
@@ -38,7 +38,7 @@ Initially I tried to pass these strings to OpenStreetMap, but this resulted in t
 The data provided by the users was obviously too arbitrary and full of mistakes for the OpenStreetMap \ac{api} to handle.
 
 As a result I decided to manually choose a subset of locations by looking for distinct identifiers in the location strings.
-For instance, every home location of a contributor, that contained \emph{Germany} or \emph{Deutschland} in their location string, should be in the \ac{utc} +1 timezone and contain the specific timezone \inlinecode{Europe/Berlin}.
+For instance, every home location of a contributor, that contained \emph{Germany} or \emph{Deutschland} in their location string, should be in the  timezone \inlinecode{Europe/Berlin}, which switches between \ac{CET} and \ac{CEST}.
 I created 17 such rules and was thus able to validate the home location of about 4000 contributors.
 The assignment of the contributors home location was correct in about 76\% of the considered contributors.
 It needs to be noted, that the accuracy of this result is quite certainly deteriorated by location strings, which contain ambiguous information, and maybe by contributors, which moved to another country in the last year, as we cannot detect those for sure.
