@@ -8,15 +8,16 @@ The evaluation of this algorithm turned out to be quite difficult, as there is n
 For the purpose of this thesis I had to use anonymous statistics of several friends and colleagues to evaluate the algorithm.
 The algorithm successfully manages to find all anomalies, which occurred in the last year, for all seven regarded users.
 
-An unexpected side effect of detecting prototypes is that the algorithm also also finds inconsistencies in the work routine.
+A not intended side effect of detecting prototypes is that the algorithm not only detected anomalies, such as sick leave or holiday, but also also found inconsistencies in the work routine.
 For instance between week 37 to 45 in Figure~\ref{fig:missing-time} I was forced to reduce my working hours due to legal questions and continuously shift hours and working days for several weeks.
 It is hard to interpret those inconsistencies without more contextual information, but nevertheless it provides the fact that something happened during this time.
 
 \begin{figure}[H]
     \includegraphics[scale=0.20]{./graphs/analysis/work-time-analysis-comparison}
     \centering
-    \caption{The miss-out analysis of several employees.}\label{fig:miss-out-comparison}
+    \caption{The miss-out analysis graphs of four employees.}\label{fig:miss-out-comparison}
 \end{figure}
 
 In Figure~\ref{fig:miss-out-comparison} the comparison between multiple employees can be seen.
-Contributor0 and Contributor2 are working on flexible work time, which reflects in the inconsistencies of those contributors, while the other two contributors have regular working hours.
+\emph{Contributor0} and \emph{Contributor2} are working on flexible work time, which reflects in the inconsistencies in the work patterns (yellow sections in ~\ref{fig:miss-out-comparison}) of those contributors.
+The other two contributors have very consistent working hours patterns, as can be seen by the long lasting blue sections.

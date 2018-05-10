@@ -5,7 +5,7 @@ In this section I will explain the technologies and methods used in the data agg
 In the end some problems which occurred during the data collection will be shown as well.
 
 
-\subsection{Existing solutions}
+\subsection{Existing Solutions}
 There are a number of existing solutions for accessing and collecting git metadata.
 In the following the practicability of these solutions will be evaluated based on our requirements.
 
@@ -130,7 +130,7 @@ In the following we will look at those approaches in detail.
 \end{description}
 
 
-\subsection{Database optimization}
+\subsection{Database Optimization}
 As the database kept growing, it became the bottleneck in the aggregation process several times.
 As a result, adjustments in the database schema, PostgreSQL parameter tweaking and migration to better hardware were necessary.
 The first considerable slowdown occurred after reaching about 12~\acp{gb} of data.
@@ -157,7 +157,7 @@ Due to complex and numerous \ac{sql} queries the server became partly unresponsi
 After many improvements the server can now run with 16 worker threads and roughly 38~\ac{gb} of data without any signs of slowdown whilst using the rate limit to capacity.
 
 
-\subsection{Incremental aggregation}
+\subsection{Incremental Aggregation}
 To ensure a constantly up to date database, Gitalizer needed to be capable of fast rescans of repositories.
 The initial scan of a repository always includes cloning, scanning the whole repository and writing it into the database.
 After a repository is scanned completely at least once it is marked as as such and will never by completely scanned again.
