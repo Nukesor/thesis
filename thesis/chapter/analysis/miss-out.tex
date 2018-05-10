@@ -79,7 +79,47 @@ At the beginning, a new \emph{prototype} is tried to be found.
 This is performed in the function \inlinecode{find\_prototype} in Listing\ref{lst:miss-out-algorithm}.
 A prototype is a representative week work pattern, which resembles the average work day pattern of the next weeks.
 
-This function performs a simple iteration over a fix amount of future weeks, to find a work day pattern occurring more often than a given threshold.
+
+\begin{minted}[linenos]{python}
+def find_prototype(self, weeks, threshold):
+    """Look at the first few weeks to find a new prototype."""
+    # Create an entry for each pattern and count the occurrences of this entry
+    occurrence_counter = {}
+    for _, week in weeks.iterrows():
+        pattern = week.pattern
+        if pattern not in occurrence_counter:
+            occurrence_counter[pattern] = {
+                'prototype': week,
+                'count': 1,
+            }
+        else:
+            occurrence_counter[pattern]['count'] += 1
+
+    # Get the prototype for the pattern with the most occurrences
+    #
+    # If there is no week which solely has the most occurences, return None.
+    # In this case we can't predict a proper prototype.
+    max_count = 0
+    invalid = False
+    prototype = None
+    for _, item in occurrence_counter.items():
+        if item['count'] > threshold and item['count'] > max_count:
+            prototype = item['prototype']
+            max_count = item['count']
+            invalid = False
+        elif item['count'] == max_count:
+            invalid = True
+
+    if invalid:
+        return None
+
+    return prototype
+\end{minted}
+\begingroup
+\captionof{listing}{Miss-out analysis algorithm.}\label{lst:prototype-detection}
+\endgroup
+
+This function, which can be seen in Listing~\ref{lst:prototype-detection}, performs a simple iteration over a fix amount of future weeks, to find a work day pattern occurring more often than a given threshold.
 If a prototype is found, we are capable of identifying anomalies that deviate from this pattern.
 
 For each following week it is then firstly checked if this week is a anomaly in regards to the current prototype.
