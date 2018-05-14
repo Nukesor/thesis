@@ -6,7 +6,7 @@ There are several possible vectors for this attack:
 
 \begin{itemize}
     \item Detect the timezone of a target and narrow down their location.
-    \item Analyse where and how often a target travels to a specific location.
+    \item Analyze where and how often a target travels to a specific location.
     \item Determine the location of a workforce of a company.
 \end{itemize}
 
@@ -68,23 +68,27 @@ def get_travel_path(commits):
 
             continue
 
-        # Get possible timezone candidates for this commit and intersect them with the current_location set
+        # Get possible timezone candidates for this commit and
+        # intersect them with the current_location set
         location = set(zones)
         intersection = location & current_location["set"]
 
-        # Check if the possible timezones of this commit matches any timezone of the current set.
+        # Check if the possible timezones of this commit
+        # matches any timezone of the current set.
         if len(intersection) > 0:
-            # By reassigning the intersected set we gain additional precision by considering possible specific DST changes
+            # By reassigning the intersected set we gain additional precision
+            # by considering possible specific DST changes
             current_location["set"] = intersection
             current_location["end"] = commit_time.date()
             last_valid_location = commit_time.date()
 
         # There is no match between the possible timezones and the current set.
-        # In this case we need to check if this is a single occurrence (anomaly) or
-        # if this is an actual change.
+        # In this case we need to check if this is a single
+        # occurrence (anomaly) or if this is an actual change.
         else:
             # No change_at_day exists, but we detected a change
-            # Remember the change. If this change lasts for at least a day it will be marked.
+            # Remember the change. If this change lasts for at
+            # least a day it will be marked.
             if change_at_day is None:
                 change_at_day = commit.commit_time.date()
                 location_candidate = {
@@ -121,7 +125,8 @@ def get_travel_path(commits):
             current_location = last_location
 
             # Check if the old location and the current candidate actually match
-            # If that is the case drop the candidate and completely replace the current_location set
+            # If that is the case drop the candidate and
+            # completely replace the current_location set
             intersection = location_candidate["set"] & current_location["set"]
             if len(intersection) > 0:
                 # Update current_timezone
@@ -136,7 +141,8 @@ def get_travel_path(commits):
                 continue
 
         # We detected a change and it seems to be valid.
-        # Save the current timezone and set the candidate as the current timezone.
+        # Save the current timezone and set the
+        # candidate as the current timezone.
         travel_path.append(current_location)
         current_location = location_candidate
         change_at_day = None
@@ -173,7 +179,8 @@ def find_home_location(travel_path):
     home_location = None
     found = False
 
-    # Try to find the current home location and narrow it down as good as possible:
+    # Try to find the current home location and
+    # to narrow it down as good as possible
     for location in travel_path:
         duration = location["end"] - location["start"]
 

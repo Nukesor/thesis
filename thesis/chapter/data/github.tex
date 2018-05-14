@@ -8,7 +8,7 @@ Furthermore some functionalities of Github will be explained and a brief overvie
 \subsection{Requirements}\label{requirements}
 The data source had to satisfy as many requirements, which were specified in Chapter~\ref{attack-models}, as possible.
 
-To accomplish a meaningful analysis of commit conduct one needs a sufficient amount of commits.
+To accomplish a meaningful analysis one needs a sufficient amount of commits.
 For instance it is necessary to have a few commits per weekday over a timespan of a month for a simple sleep rhythm analysis.
 If there are only 20 commits for a user over the past month there is probably not enough data for a representative analysis.
 To gather as many commits as possible we have to get access to as many repositories to which the targeted user contributed to as possible.
@@ -60,12 +60,12 @@ Even though some ground truth is missing, I decided to use this approach as it s
 
 \subsection{Github's Features}\label{github-features}
 In the following I will explain some of the features provided by Github, which cover the requirements listed in Section~\ref{requirements}.
-Github offers some features, which are convenient to for example find repositories a specific user contributed to or to find contributors which likely personally know each other.
+Github offers some features, which are convenient to, for example, finding repositories a specific user contributed to or to find contributors which likely personally know each other.
 
 \begin{description}
     \item[Stars] \hfill \\
         A very crucial feature is \emph{starring}. Every user has the possibility to star a repository to show appreciation or interest in this specific project.
-        Hence popular repositories usually have a comparative big amount of stars. For instance the Github Linux kernel mirror has a star count of over 58000~\footnote{`Linux kernel source tree' Github.com, https://github.com/torvalds/linux (accessed, 24.04.2018)}.
+        Hence popular repositories usually have a comparatively large number of stars. For instance the Github Linux kernel mirror has a star count of over 58000~\footnote{`Linux kernel source tree' Github.com, https://github.com/torvalds/linux (accessed, 24.04.2018)}.
         Even though Github allows to query all repositories, which are owned or forked by a user, their \ac{api} does not provide a method to get all repositories a user ever contributed to.
         However Github provides an endpoint to query all starred repositories of an user.
         In case a user stars a repository he contributed to, whilst not owning it, it is now possible to get this repository with this feature.

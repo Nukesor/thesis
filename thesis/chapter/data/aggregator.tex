@@ -7,7 +7,7 @@ In the end some problems which occurred during the data collection will be shown
 
 \subsection{Existing Solutions}
 There are of existing solutions for accessing and collecting Git metadata.
-In the following the practicability of these solutions will be evaluated based on our requirements.
+In the following the practicability of these solutions are evaluated based on our requirements.
 
 \subsubsection{GHTorrent}
 The \emph{GHTorrent} project aims to provide Github's metadata to elude the limitations of Github's \ac{api} rate limiting~\cite{inproceedings:ghtorrent}.
@@ -73,7 +73,7 @@ This relationship does not have a \inlinecode{NOT NULL} constraint as it happens
 Looking at the collected data it appears that roughly 20\% of all collected email addresses from Github are no longer connected to an active user.
 
 As stated in Section~\ref{github-features} Github provides a way to organize several people in organizations and teams.
-As one of the goals of this thesis is to see if it is possible to detect member of an organization in open-source projects, a model for organization has been created as well.
+As one of the goals of this thesis is to see if it is possible to detect members of an organization in open-source projects, a model for organization has been created as well.
 This data can then be used to check against the results of this research's results.
 
 
@@ -149,7 +149,7 @@ As there is no important or critical data handled it was acceptable to pass on t
 \end{figure}
 
 After renting a root server and deploying Gitalizer onto it, the aggregation process worked really well, until the database size hit about 25~\ac{gb}.
-In Figure~\ref{fig:cpu-load} you see the overall CPU load right before optimizing several \ac{sql} queries by caching intermediate results and increasing the cache size of PostgreSQL.
+In Figure~\ref{fig:cpu-load} you see the overall \ac{cpu} load right before optimizing several \ac{sql} queries by caching intermediate results and increasing the cache size of PostgreSQL.
 The dark blue represents the I/O wait time while the light blue represents the actually used processor capacity by the aggregator.
 Due to complex and numerous \ac{sql} queries the server became partly unresponsive and the aggregation process began to stall.
 
@@ -180,7 +180,7 @@ An example scenario can be seen in Figure~\ref{fig:gitalizer-relationship}, wher
 During the development of the data aggregator I experienced a few problems and edge cases which needed to be handled.
 The earliest and most delaying problem was the rate limit of the Github \ac{api}, which limits to 5000 requests per hour.
 Beside this rate limiting there also is an abuse detection mechanism, which triggers, if too many requests are fired in a short amount of time.
-The solution for this problem resulted in various patches, which include random wait times to detain those mechanisms from triggering.
+The solution for this problem resulted in various workarounds, which include random wait times to detain those mechanisms from triggering.
 
 The first version of the aggregator did not clone and scan the repository locally, but rather gathered all information from the Github \ac{api} endpoints.
 This approach worked well until the aggregator hit the official repository of \emph{Nmap}, which has about 11.000 commits and took over three hours to scan.

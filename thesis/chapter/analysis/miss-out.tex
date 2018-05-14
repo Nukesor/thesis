@@ -30,9 +30,9 @@ The commits' metadata used for this analysis are timestamps as well as additions
     \caption{The work time analysis of an employee.}\label{fig:missing-time}
 \end{figure}
 
-The analysis of the data is a chronological scan of all commits for specific user.
+The analysis of the data is a chronological scan of all commits for a specific user.
 Before performing the actual analysis, the data is converted into an easier to handle format.
-It is really difficult to measure productivity in lines of code or in the amount of commits made by a person, as they do not necessarily display the amount of work, which has been put into this code.
+It is really difficult to measure productivity in lines of code or in the number of commits made by a person, as they do not necessarily display the amount of work, which has been put into this code.
 As a result I decided, that a day counts as a work day as long as at least a single commit is created during the day.
 The preprocessed data is thereby equivalent to the days a contributor worked on, ordered by the week of the year.
 
@@ -76,7 +76,7 @@ def check_anomaly(prototype, week):
 
 The algorithm inspects every week work pattern of a given interval, which has been set to a year for this analysis.
 At the beginning, a new \emph{prototype} is tried to be found.
-This is performed in the function \inlinecode{find\_prototype} in Listing\ref{lst:miss-out-algorithm}.
+This is performed in the function \inlinecode{find\_prototype} in Listing~\ref{lst:miss-out-algorithm}.
 A prototype is a representative week work pattern, which resembles the average work day pattern of the next weeks.
 
 

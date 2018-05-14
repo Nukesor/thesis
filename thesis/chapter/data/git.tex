@@ -1,7 +1,7 @@
 \section{Git}\label{git-explanation}
 This section presents the \ac{vcs} \emph{Git}, as it plays a fundamental role in this thesis.
 In the following the most relevant parts of Git will be explained such as user roles, technologies and internal data representations.
-Moreover, current cases of application and some interesting scenarios, which might be interesting for this thesis, will be mentioned.
+Moreover, current cases of application and some scenarios, that might be interesting for this thesis, will be mentioned.
 
 
 \subsection{Introduction to Git}\label{git-introduction}
@@ -14,7 +14,7 @@ After creating at least two commits, Git is capable of showing the exact changes
 
 Git is the currently most popular tool to control a project's code with a still upward tendency~\cite{article:git-popularity}.
 It enables to work with multiple developers on a single code base, as it provides several techniques to prevent, detect and resolve conflicts of changes at the same code, namely the \emph{history tree}, the \emph{branch} and the \emph{merge}.
-The commit history of Git is internally represented as an directed, non-cyclic, connected graph of commits.
+The commit history of Git is internally represented as adirected, non-cyclic, connected graph of commits.
 The commits act as \emph{nodes} and the connection to their parent commits as \emph{edges}.
 If a single node has two children, a new branch is created.
 Git provides the feature to name branches, whereas the main branch is per default named \emph{master}.
