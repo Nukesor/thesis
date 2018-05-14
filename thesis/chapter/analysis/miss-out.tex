@@ -1,22 +1,6 @@
 \section{Holiday and Sick Leave Detection}
 
-The information about anomalies in the regular work pattern can be a valuable information for several parties.
-Usually only few parties know about the holiday or sick leave times of a person.
-To know if a persons tends to become sick more often or for long times is a dangerous intrusion into a persons privacy.
-For instance this could be abused by head hunters or personnel managers to cull possible employees with too high sick leave rates and thereby reduce the job prospects of the target.
-
-For employers this might be convenient for detecting anomalies in the productivity of employees.
-In case an employee does not commit on a regular basis for several days, this behaviour would be instantly visible with this method.
-
-Another attack vector could be to look at the correlation of miss-out between several persons.
-This attack could even be performed by an outsider on a commercial open-source project, if the employees of the targeted company are known.
-The information gained by this attack could be quite delicate, as it could reveal relationships between persons.
-This attack is heavily inspired by an article about data mining articles from the popular German weekly magazine \emph{Der Spiegel} written by the David Kriesel~\cite{article:spiegel-mining}.
-
-For now the goal of this attack is to simply detect miss-out and if a contributor has anomalies in their regular work day pattern.
-
-
-\subsection{Implementation}
+The goal of this attack is to simply detect miss-out and if a contributor has anomalies in their regular work day pattern.
 
 Due to possible fluctuations or changes in work routine, one requirement to this algorithm is the detection of a regular work pattern for a given interval.
 It must have the ability to adjust to a changing work pattern, but at the same time it needs to be capable of detecting anomalies in this pattern.

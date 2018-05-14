@@ -1,17 +1,10 @@
-\section{Working hours}
+\section{Sleep Rhythm and Working hours}
 
 The next attack aims to extract information about the working hour behaviour of a target.
 This should be achieved by displaying the pattern of the target in form of a weighted scatter plot and by comparing those patterns between several targets.
-There are several possible vectors for this attack:
+Additionally the detection of anomalies such as automated programs, which contribute to a project on a regular basis, will be conducted.
 
-\begin{itemize}
-    \item Obtain Information about the sleep rhythm of the target.
-    \item Detect whether the target is a person working regular shifts from Monday to Friday or rather an open-source contributor working in their leisure time.
-    \item Detect anomalies such as automated programs, which contribute to a project on a regular basis.
-    \item Compare the working hour patterns of several people in the same project or organization. This could, for instance, be used to infer relationships between colleagues, based on an equal working shifts.
-\end{itemize}
-
-Additionally a clustering will be performed to find anomalies, common patterns and to evaluate the results of this analysis.
+A clustering will be performed to find anomalies, common patterns and to evaluate the results of this analysis.
 As we are only interested in contributors with a representative amount of commits, all contributors with less than one hundred commits in the last year have been excluded.
 This reduced the amount of considered contributors from 175.000 to about 10.300.
 
