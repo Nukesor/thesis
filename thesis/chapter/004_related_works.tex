@@ -1,18 +1,48 @@
-\chapter{Possible Attacks and Related Work}\label{attack-models}
-This chapter will show the creation of several attack models, to list a few possible attacks and outline the requirements to the data needed for these tests.
+\chapter{Attacks Vectors and Related Work}\label{related-work}
+This chapter will show the creation of several attack models, which as well to list a few possible attacks and outline the requirements to the data needed for these tests.
 In the same context several related works will be mentioned in reference to the particular attacks.
 
-In the following, I will present three attacker models and their respective goals.
+
+\subsection{Attack Models}\label{attack-models}
+In the following, I will present three attacker models, which were used to design the attack goals in the next section.
+Each attacker model represents an interest group, which might use Git metadata to surveil, spy upon, manipulate or harm a target.
+A list of possible valuable information about a target, which might be obtainable by analyzing Git metadata, are stated for each model.
+
+\begin{description}
+    \item[The Employer] \hfill \\
+        This attack model deals with the scenario of an employer, which wants to monitor their employees.
+        The attacker's motivation is to spot irregularities in working behavior as well as unmotivated or unproductive employees.
+        Information, such as productivity metrics of employees, compliance with working hours and sick leave, could be used to surveil employees without their consensus.
+
+    \item[The Individual] \hfill \\
+        This scenario describes a single person, which wants to harm, monitor or gain information about an open-source developer.
+
+        A possible goal of the attacker could be to either stalk the victim, harm them in any way or to manipulate them or one of their acquaintances.
+        The motivation of this attacker is mostly personal and on an emotional level.
+        For this purpose, the attacker could use information about the target such as relationships to other developers and sleeping rhythm and daily routines.
+
+        Another non emotional attacker motive could be a robber trying to find the perfect time window to rob a house or the tracking of a high profile target.
+        For instance, information about the geographic location of the target at a specific time could be used for this purpose.
+
+        A third attacker motive could be a headhunter which tries to get information about the skills and reliability of a developer.
+        Several metrics, such as productivity, sick leave tendencies, geographic location and daily routine could be used for this purpose
+
+    \item[The Industrial Spy] \hfill \\
+        This attack model covers the scenario of an external person, which wants to gain as much private or malicious information about a company as possible.
+        The attacker's motivation is either to harm the company, gain an advantage as an competitor or in the stock market or to sell secret information to a third party.
+        This attack vector only works if the targeted company is providing their full product or at least parts of their product as open-source software.
+
+        Valuable information for this attacker are, for instance, a list of company employees, the company employee history, the geographic location of the company's workforce and internal team structures of the company.
+\end{description}
+
+
+\subsection{Attack Goals}\label{attack-goals}
 These attack models serve as a guideline for the data aggregation process, which will be covered in the next chapter.
-Only a small subset of these listed attacks will be actually performed by me, but this listing also serves as a exhibition of some possible attacks, for anyone that wants to further investigate this topic.
-
-
-\section{The Employer}\label{employer-monitoring}
-This attack model deals with the scenario of an employer, which wants to monitor their employees.
-The attacker's motivation is to spot irregularities in working behavior as well as unmotivated or unproductive employees.
+Only a small subset of these listed attacks will be actually performed by me, but this listing also serves as an exhibition of some possible attacks, for anyone that wants to further investigate this topic.
 
 \begin{description}
     \item[Productivity of Employees] \hfill \\
+
         An employer wants to ensure that their employees produce sufficient amount of code.
         For this purpose the changes in lines of code over a specific time span will be evaluated.
         The data needed for this attack are the additions and deletions of all commits as well as all commit timestamps.
@@ -28,23 +58,11 @@ The attacker's motivation is to spot irregularities in working behavior as well 
         The data needed for this attack are commit timestamps.
 
     \item[Code Quality Between Employees] \hfill \\
-        Compare the quality of contributed code between different employees.
+        Compare the quality of contributed code between different employees./
         With this metric the quality of an employee could be measured.
         To compare the quality we would need an external tool for code analysis.
         The data needed for this attack are commit timestamps as well as the complete patch of the commit.
-\end{description}
 
-
-
-\section{The Individual}
-This scenario describes a single person, which wants to harm, monitor or gain information about an open-source developer.
-
-A possible goal of the attacker could be to either stalk the victim, harm them in any way or to manipulate them or one of his acquaintances.
-The motivation of this attacker is mostly personal and on an emotional level.
-Another non emotional attacker motive could be a robber trying to find the perfect time window to rob a house or the tracking of a high profile target.
-A third attacker motive could be a headhunter which tries to get information about the skills and reliability of a developer.
-
-\begin{description}
     \item[Sleeping Rhythm and Daily Routine] \hfill \\
         Learn about the persons sleep rhythm and obvious patterns in his daily routine.
         This attack aims to understand and predict the victim's behaviour.
@@ -59,20 +77,11 @@ A third attacker motive could be a headhunter which tries to get information abo
         This attack could give information about whether a developer is at home right now or if they tends to be sick a lot.
         The data needed for this attack are commit timestamps.
 
-    \item[Geolocation] \hfill \\
+    \item[Geographic Location] \hfill \\
         Pinpoint the location of an contributor or at least narrow it down to a timezone or country could be interesting.
         Doing so could provide the attacker with a history of the target's travels.
         The data needed for this attack are commit timestamps.
-\end{description}
 
-
-
-\section{The Industrial Spy}\label{industrial-spy}
-This attack model covers the scenario of an external person, which wants to gain as much private or malicious information about a company as possible.
-The attacker's motivation is either to harm the company, gain an advantage as an competitor or in the stock market or to sell secret information to a third party.
-This attack vector only works if the targeted company is providing their full product or at least parts of their product as open-source software.
-
-\begin{description}
     \item[Company Employees] \hfill \\
         The most important target is to detect the company's employees as three other goals for this attacker model depend on this information.
         Another motivation could be to detect company members for further social engineering attacks or to headhunt the company's employees.

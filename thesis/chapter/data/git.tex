@@ -44,7 +44,7 @@ Git also supports several protocols such as \ac{http} or \ac{ssh} to connect to 
 There exist two roles in Git, namely the \emph{committer} and the \emph{author}.
 Every commit in Git contains the email addresses and the names of those two people.
 The author of a commit is the person which actually contributed the changes in the files.
-The committer is the person, which created the git commit.
+The committer is the person, which created the Git commit.
 This is important to keep track of the original author of the changes.
 
 Lets look at the case of an author contributing code to a project in an email with an attached patch file.
@@ -70,7 +70,7 @@ To represent a \ac{fs} or to simply bundle multiple Git blob objects together, G
 
 A tree object is a file, which has a \ac{sha1} hash reference to all underlying blob and tree objects as well as their names and \ac{fs} permissions.
 To represent a subdirectory, a tree simply holds a reference to another tree object.
-With these tools git manages to build its own basic representation of a \ac{fs}.
+With these tools Git manages to build its own basic representation of a \ac{fs}.
 
 \begin{minted}[linenos]{text}
     100644 blob 11d1ee77f9a23ffcb4afa860dd4b59187a9104e9  .gitignore
@@ -126,7 +126,7 @@ In the following the most important features for data aggregation will be listed
 
     \item[force push] \hfill \\
         Git allows to push to a remote with the \inlinecode{--force} flag, which is called a \emph{force push}.
-        This enables the users to rewrite every commit in the whole history tree. If another user has a git repository version
+        This enables the users to rewrite every commit in the whole history tree. If another user has a Git repository version
 \end{description}
 
 
@@ -139,14 +139,14 @@ In the following some functionalities will be shown, which can lead to problems 
         This is for example a very powerful but also dangerous tool, as it implicitly changes the timestamps of the commits of the rebased branch.
 
     \item[filter-branch] \hfill \\
-        In case somebody pushes a huge file, which significantly increases the size of the repository, or adds a file with secret information, for example a password file, git provides the \emph{filter-branch} command.
+        In case somebody pushes a huge file, which significantly increases the size of the repository, or adds a file with secret information, for example a password file, Git provides the \emph{filter-branch} command.
         The filter-branch command removes a specified file from every commit in the history and thereby rewrites the history to the point, where this file was added to the repository.
         This command leads to similar problems as the rebase command, since it can severely change the history of a repository.
 
     \item[force push] \hfill \\
         Git allows to push to a remote with the \inlinecode{--force} flag, which is called a \emph{force push}.
         This enables the users to rewrite every commit in the whole history tree.
-        If another user has the old git repository version before the force push, they would now be incapable of simply pulling the newest version.
+        If another user has the old Git repository version before the force push, they would now be incapable of simply pulling the newest version.
         Instead they would need to manually checkout the newest commit of the rewritten remote branch.
 
 \end{description}
