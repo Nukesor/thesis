@@ -1,7 +1,7 @@
 \section{Git}\label{git-explanation}
 This section presents the \ac{vcs} \emph{Git}, as it plays a fundamental role in this thesis.
 In the following the most relevant parts of Git will be explained such as user roles, technologies and internal data representations.
-I will also talk about the current cases of application and some interesting scenarios which might be interesting for this thesis.
+Moreover, current cases of application and some interesting scenarios, which might be interesting for this thesis, will be mentioned.
 
 
 \subsection{Introduction to Git}\label{git-introduction}
@@ -16,7 +16,7 @@ Git is the currently most popular tool to control a project's code with a still 
 It enables to work with multiple developers on a single code base, as it provides several techniques to prevent, detect and resolve conflicts of changes at the same code, namely the \emph{history tree}, the \emph{branch} and the \emph{merge}.
 The commit history of Git is internally represented as an directed, non-cyclic, connected graph of commits.
 The commits act as \emph{nodes} and the connection to their parent commits as \emph{edges}.
-Every time two edges leave a single node, a new branch is created.
+If a single node has two children, a new branch is created.
 Git provides the feature to name branches, whereas the main branch is per default named \emph{master}.
 
 \begin{figure}[H]
@@ -34,7 +34,7 @@ After this resolution a new \emph{merge commit} is created. A merge commit repre
 With this methodology it is possible to work with many people or teams on the same project, without accidentally overwriting changes of another developer, whilst maintaining a clear history of all changes in the project.
 
 Another important feature of Git is the possibility to set up a \emph{remote}.
-A remote acts as a centralized repository developers can \emph{push} their changes to or \emph{pull} changes from other developers.
+A remote often acts as a centralized repository developers can \emph{push} their changes to or \emph{pull} changes from other developers.
 It can for example be a distinct server, which is attached to some kind of network that is accessible by the developers.
 This feature allows developers to contribute to a project, as long as they have access to the remote's network.
 Git also supports several protocols such as \ac{http} or \ac{ssh} to connect to a remote and thereby provide a simple user management layer.
@@ -104,14 +104,14 @@ As you can see in listing~\ref{lst:raw-commit}, the commit is just another kind 
     \item A reference to one or multiple parent commits, to maintain a version history.
     \item The name and email address of the author.
     \item The name and email address of the committer.
-    \item The \ac{utc} timestamps with \ac{utc} offset for the commit and author date.
+    \item The timestamps with \ac{utc} offset for the commit and author date.
     \item The commit message. A message with arbitrary text from the committer.
 \end{itemize}
 
 The commit is the most important object for this thesis.
 It contains crucial information such as the date of the commit as well as the email, which is needed to identify a contributor across several commits.
 
-\subsection{Features}
+\subsection{Relevant Features}
 Git provides a collection of high level abstraction tools to work with its underlying \ac{fs}.
 In the following the most important features for data aggregation will be listed and briefly explained.
 
@@ -129,8 +129,6 @@ In the following the most important features for data aggregation will be listed
         This enables the users to rewrite every commit in the whole history tree. If another user has a git repository version
 \end{description}
 
-
-\subsection{More Features}\label{more-git-features}
 
 Git provides many more features, which are not necessarily important for data analysis, but which might need be taken into account when aggregating the data.
 In the following some functionalities will be shown, which can lead to problems or irregularities in the gathered data.

@@ -6,7 +6,7 @@ In the end some problems which occurred during the data collection will be shown
 
 
 \subsection{Existing Solutions}
-There are a number of existing solutions for accessing and collecting git metadata.
+There are of existing solutions for accessing and collecting git metadata.
 In the following the practicability of these solutions will be evaluated based on our requirements.
 
 \subsubsection{GHTorrent}
@@ -15,7 +15,7 @@ It provides representations for followers and commits, as well as organizations 
 GHTorrent only stores the main email address of a user and does thereby not support the handling of multiple emails, as commits are directly assigned to their respective Github user id.
 Commits miss information about additions and deletions in lines of code, which implicates that each commit would need to be scanned by a separate program again.
 Furthermore GHTorrent does not have the concept of \emph{starring}, which makes it hard to reduce the amount of repositories to scan to a manageable size.
-Their database provides about 4~\ac{TB} of data according to their website, which is too much information without very precise limitation~\footnote{`The GHTorrent project' ghtorrent.com, http://ghtorrent.org/ (accessed, 05.05.2018)}
+Their database provides about 4~\ac{tb} of data according to their website, which is too much information without very precise limitation~\footnote{`The GHTorrent project' ghtorrent.com, http://ghtorrent.org/ (accessed, 05.05.2018)}
 It provides a vast amount of data, but at the same time it cannot be ensure, that the data is as complete as possible for a specific user.
 Modifying the GHTorrent code base and extending their database schema has thereby been judged as impractical.
 
@@ -28,9 +28,8 @@ Sadly their documentation is very bad and after diving into their source code, i
 It is not actively maintained since more than three years and their documentation website is offline.
 Using this library seemed unpromising and unviable.
 
-https://github.com/mauricioaniche/repodriller
 \subsubsection{RepoDriller}
-The \emph{RepoDriller} project is project that aims to support researchers by providing easy access to repository data from Github~\footnote{`A tool to support researchers on mining software repositories studies' github.com, http://github.com/ (accessed, 05.05.2018)}.
+The \emph{RepoDriller} project aims to support researchers by providing easy access to repository data from Github~\footnote{`A tool to support researchers on mining software repositories studies' github.com, http://github.com/ (accessed, 05.05.2018)}.
 Despite providing a good solution for getting all necessary information from a repository, it provides no way to explore Github using \emph{stars} or \emph{following}.
 These features, as well as assignment of emails to a contributor via the Github \ac{api}, would have to be added.
 As the program is also written in Java and I am no longer familiar with the language and its ecosystem, I decided to stick to writing my own solution.
@@ -56,7 +55,7 @@ This feature prevents duplication of the same commits from forked repositories.
 It is, for instance, a common practice to create a fork of a repository to develop without intervening with the main git repository of the project.
 As described in Section~\ref{git-internal-representation} the probability of a \ac{sha1} collision is highly improbable.
 By exploiting this feature, it is possible to enforce a unique constraint on the commit hash column, assuming that any duplicated commit hash actually results from a forked or copied repository.
-The formula for calculating the probability of such a collision is:
+The formula for calculating the probability of such a collision is as follows, where $p$ is the probability of collision, $n$ is the amount of different hashes and $b$ is the size of the hash in bytes:
 
 \begin{equation}\label{eq:collision-probability}
     p \leq \frac{n(n-1)}{2} * \frac{1}{2^{b}}
@@ -150,7 +149,7 @@ As there is no important or critical data handled it was acceptable to pass on t
 \end{figure}
 
 After renting a root server and deploying Gitalizer onto it, the aggregation process worked really well, until the database size hit about 25~\ac{gb}.
-In Figure~\label{fig:cpu-load} you see the overall \ac{cpu} load right before optimizing several \ac{sql} queries by caching intermediate results and increasing the cache size of PostgreSQL.
+In Figure~\ref{fig:cpu-load} you see the overall CPU load right before optimizing several \ac{sql} queries by caching intermediate results and increasing the cache size of PostgreSQL.
 The dark blue represents the I/O wait time while the light blue represents the actually used processor capacity by the aggregator.
 Due to complex and numerous \ac{sql} queries the server became partly unresponsive and the aggregation process began to stall.
 
@@ -173,7 +172,7 @@ These are discovered by performing a breadth first search until no new nodes are
 As explained in Section~\ref{more-git-features} it is possible to rewrite commits and force push them.
 This scenario needs to be explicitly handled since force pushes can completely alter the history of a git repository, which can subsequently lead to a split in the Git history and leaves dangling commits.
 As the complete history of a repository is stored inside the database, Gitalizer needs to detect a force push by walking down the git history tree until it finds known commits.
-If any of these commits has children, which are not in the newly scanned commits, a force push took place and the old commit history has to be truncated, since it is now outdated and irrelevant.
+If any of these commits has children, which are not in the newly scanned commits, a force push took place and the old commit history has to be flagged, since it is now outdated and irrelevant.
 An example scenario can be seen in Figure~\ref{fig:gitalizer-relationship}, where all red commits represent the old commit history, which needs to be truncated.
 
 
@@ -181,11 +180,11 @@ An example scenario can be seen in Figure~\ref{fig:gitalizer-relationship}, wher
 During the development of the data aggregator I experienced a few problems and edge cases which needed to be handled.
 The earliest and most delaying problem was the rate limit of the Github \ac{api}, which limits to 5000 requests per hour.
 Beside this rate limiting there also is an abuse detection mechanism, which triggers, if too many requests are fired in a short amount of time.
-The solution for this problem resulted in various hacks, which include random wait times to detain those mechanisms from triggering.
+The solution for this problem resulted in various patches, which include random wait times to detain those mechanisms from triggering.
 
 The first version of the aggregator did not clone and scan the repository locally, but rather gathered all information from the Github \ac{api} endpoints.
 This approach worked well until the aggregator hit the official repository of \emph{Nmap}, which has about 11.000 commits and took over three hours to scan.
-Soon I realized that this would severely slow down my research and I then started to continuously minimize the amount \ac{api} calls issued by Gitalizer.
+Soon I realized that this would severely slow down my research and I then started to continuously minimize the amount of \ac{api} calls issued by Gitalizer, to avoid waiting for a reset of the previously mentioned \ac{api} limit.
 A connected user scan of my own Github account led to about 600.000 commits and took about one and a half day on the final working version of Gitalizer, to provide you with a reference of scale.
 
 After implementing multiprocessing, I managed to hit the rate limit again, as I was now issuing requests to the \ac{api} with multiple threads.
