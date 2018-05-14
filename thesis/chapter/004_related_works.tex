@@ -1,9 +1,13 @@
-\section{Attack Models}\label{attack-models}
-To show possible scenarios, this section presents three attacker models and their respective goals.
+\chapter{Possible Attacks and Related Work}\label{attack-models}
+This chapter will show the creation of several attack models, to list a few possible attacks and outline the requirements to the data needed for these tests.
+In the same context several related works will be mentioned in reference to the particular attacks.
+
+In the following, I will present three attacker models and their respective goals.
 These attack models serve as a guideline for the data aggregation process, which will be covered in the next chapter.
 Only a small subset of these listed attacks will be actually performed by me, but this listing also serves as a exhibition of some possible attacks, for anyone that wants to further investigate this topic.
 
-\subsection{The Employer}\label{employer-monitoring}
+
+\section{The Employer}\label{employer-monitoring}
 This attack model deals with the scenario of an employer, which wants to monitor their employees.
 The attacker's motivation is to spot irregularities in working behavior as well as unmotivated or unproductive employees.
 
@@ -11,39 +15,28 @@ The attacker's motivation is to spot irregularities in working behavior as well 
     \item[Productivity of Employees] \hfill \\
         An employer wants to ensure that their employees produce sufficient amount of code.
         For this purpose the changes in lines of code over a specific time span will be evaluated.
-        \begin{itemlist}{Required data:}
-            \item Commit timestamps
-            \item Additions of each commit
-            \item Deletions of each commit
-        \end{itemlist}
+        The data needed for this attack are the additions and deletions of all commits as well as all commit timestamps.
 
     \item[Compliance of Working Hours] \hfill \\
         Check if an employee is productive in the defined working hours.
         This is especially useful to supervise employees, which work remotely.
-        \begin{itemlist}{Required data:}
-            \item Commit timestamps
-        \end{itemlist}
+        The data needed for this attack are commit timestamps.
 
     \item[External Projects during Working Hours] \hfill \\
         Inspect if an employee is working on an external project during working hours.
         This only works if the employer has access to the external project, for example open source projects.
-        \begin{itemlist}{Required data:}
-            \item Commit timestamps
-        \end{itemlist}
+        The data needed for this attack are commit timestamps.
 
     \item[Code Quality Between Employees] \hfill \\
         Compare the quality of contributed code between different employees.
         With this metric the quality of an employee could be measured.
         To compare the quality we would need an external tool for code analysis.
-        \begin{itemlist}{Required data:}
-            \item Complete commit patch
-            \item Commit timestamps
-        \end{itemlist}
+        The data needed for this attack are commit timestamps as well as the complete patch of the commit.
 \end{description}
 
 
 
-\subsection{The Individual}
+\section{The Individual}
 This scenario describes a single person, which wants to harm, monitor or gain information about an open-source developer.
 
 A possible goal of the attacker could be to either stalk the victim, harm them in any way or to manipulate them or one of his acquaintances.
@@ -55,35 +48,26 @@ A third attacker motive could be a headhunter which tries to get information abo
     \item[Sleeping Rhythm and Daily Routine] \hfill \\
         Learn about the persons sleep rhythm and obvious patterns in his daily routine.
         This attack aims to understand and predict the victim's behaviour.
-        \begin{itemlist}{Required data:}
-            \item Commit timestamps.
-        \end{itemlist}
+        The data needed for this attack are commit timestamps.
 
     \item[Personal Relationships to Various Programmers] \hfill \\
-        Detect which contributor work together and try to discover the relationships between them.
-        \begin{itemlist}{Required data:}
-            \item Git history.
-            \item Commit timestamps.
-        \end{itemlist}
+        Detect which contributors work together and try to discover the relationships between them.
+        The data needed for this attack are commit timestamps as well as the full Git history graph of the respective repositories.
 
     \item[Sick Leave and Holiday] \hfill \\
         Detect breaks in his typical work behaviour. Those could represent holiday breaks or sick leave.
         This attack could give information about whether a developer is at home right now or if they tends to be sick a lot.
-        \begin{itemlist}{Required data:}
-            \item Commit timestamps.
-        \end{itemlist}
+        The data needed for this attack are commit timestamps.
 
     \item[Geolocation] \hfill \\
         Pinpoint the location of an contributor or at least narrow it down to a timezone or country could be interesting.
         Doing so could provide the attacker with a history of the target's travels.
-        \begin{itemlist}{Required data:}
-            \item Commit timestamps.
-        \end{itemlist}
+        The data needed for this attack are commit timestamps.
 \end{description}
 
 
 
-\subsection{The Industrial Spy}\label{industrial-spy}
+\section{The Industrial Spy}\label{industrial-spy}
 This attack model covers the scenario of an external person, which wants to gain as much private or malicious information about a company as possible.
 The attacker's motivation is either to harm the company, gain an advantage as an competitor or in the stock market or to sell secret information to a third party.
 This attack vector only works if the targeted company is providing their full product or at least parts of their product as open-source software.
@@ -92,33 +76,21 @@ This attack vector only works if the targeted company is providing their full pr
     \item[Company Employees] \hfill \\
         The most important target is to detect the company's employees as three other goals for this attacker model depend on this information.
         Another motivation could be to detect company members for further social engineering attacks or to headhunt the company's employees.
-        \begin{itemlist}{Required data:}
-            \item Commit history graph.
-        \end{itemlist}
+        The data needed for this attack are the Git commit history graphs of the respective repositories.
 
     \item[Employee History] \hfill \\
         Detect the timespan for which an employee worked at a given company.
         This could be interesting, as it shows the average employment duration and the employee amount over the history of the company, which could be an indicator of its current financial growth.
         Social engineering or headhunting could be a motivation here as well.
-        \begin{itemlist}{Required data:}
-            \item Company Employees
-            \item Commit timestamps
-        \end{itemlist}
+        The data needed for this attack are the commit timestamps as well as knowledge about the company's employees.
 
     \item[Global Workforce Distribution] \hfill \\
         Detect the timezone of all employees and create a global distribution graphic by timezones.
         This graphic allows you to guess the location of a company's workforce.
         It is also possible to create this statistic for all contributor, which could show a trend which countries or at least continents are interested the most for the company's product.
-        \begin{itemlist}{Required data:}
-            \item Company Employees
-            \item All Commits
-            \item Commit timestamps
-        \end{itemlist}
+        The data needed for this attack are the commit timestamps as well as knowledge about the company's employees.
 
     \item[Internal Team Structures] \hfill \\
         Try to predict different teams, the role of each team and the respective team members.
-        \begin{itemlist}{Required data:}
-            \item Company Employees.
-            \item Commit history graph.
-        \end{itemlist}
+        The data needed for this attack are the Git commit history graph as well as knowledge about the company's employees.
 \end{description}

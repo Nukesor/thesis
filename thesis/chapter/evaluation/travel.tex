@@ -45,7 +45,7 @@ The assignment of the contributors home location was correct in about 82\% of th
 \begin{table}[]
     \centering
     \begin{tabular}{lllll}
-        Strings query        & Considered & Expected timezone    & Correct & Mean countries per user \\
+        Strings query        & Considered & Expected timezone    & Correct & Mean subset size \\
         & & & & \\
         San Francisco        & 772        & US/Pacific           & 639     & 12.07  \\
         NYC, NY, New York    & 485        & America/New\_York    & 366     & 23.60  \\
@@ -69,4 +69,4 @@ It needs to be noted, that the accuracy of this result is quite certainly deteri
 On manual review of the location strings, there were, for instance, strings such as \inlinecode{I love NYC}, which belongs to a developer living in Germany.
 The result might also be deteriorated by contributors, which moved to another country in the last year, as we cannot detect those for sure.
 
-Nevertheless an accuracy of 76\% clearly shows, that it is possible to narrow down the location of a contributor to a timezone and even to a subset of countries, by simply looking at the their git commit timestamps.
+Nevertheless an accuracy of 76\% clearly shows, that it is possible to narrow down the location of a contributor to a timezone and even to a subset of countries, see the last column in Table~\ref{home-location-table} for reference, by simply looking at the their git commit timestamps.
