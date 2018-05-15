@@ -1,17 +1,7 @@
-\section{Geolocation}
+\section{Geographic location}
 
 This attack aims to extract information about the actual location on the globe of a target.
 The algorithm tries to determine the exact timezone of the target and to exclude any countries or states, which do not match the observed timestamps.
-There are several possible vectors for this attack:
-
-\begin{itemize}
-    \item Detect the timezone of a target and narrow down their location.
-    \item Analyze where and how often a target travels to a specific location.
-    \item Determine the location of a workforce of a company.
-\end{itemize}
-
-
-\subsection{Implementation}\label{travel-implementation}
 
 The data used for this analysis are the commit timestamps of the target, as well as the target's Github location for verification.
 In the following, I will explain the algorithm used to detect different timezones and to determine the main location of the contributor.

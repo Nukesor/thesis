@@ -8,9 +8,6 @@ A clustering will be performed to find anomalies, common patterns and to evaluat
 As we are only interested in contributors with a representative amount of commits, all contributors with less than one hundred commits in the last year have been excluded.
 This reduced the amount of considered contributors from 175.000 to about 10.300.
 
-
-\subsection{Implementation}\label{punchcard-implementation}
-
 The data used for this analysis are the commit timestamps of the target, as well as the Github employee information for verification.
 These commit timestamps are then converted into a different format, which represents the occurrences of commit per hour per weekday over the last year.
 The result is a simple vector with length 168, which corresponds seven days with 24 hours each.
