@@ -120,11 +120,11 @@ In the following I will explain those approaches in detail.
 
     \item[Connected users and organizations]\label{github-repo-scan} \hfill \\
         For detection and analysis of connections between contributors over multiple repositories, additional user repository discovery, as described in Section~\ref{requirements}, has been added to Gitalizer.
-        Gitalizer is able to achieve this by not just scanning a single user, but also scanning the repositories of all following and followed users as described in~\ref{github-user-scan}.
+        Gitalizer is able to achieve this by not just scanning a single user, but also scanning the repositories of all following and followed users as described in the previous approach.
         For this task two different worker pools are utilized.
         The user discovery pool is initialized with a shared queue, lets call it ``user-queue'', with all users we need to look at.
         This worker pool simply searches for relevant repositories of each user and passes the repository \ac{url} to the second shared queue.
-        The second pool then processes this ``repo-queue'' as described in the previous approach.
+        The second worker pool then processes the ``repo-queue'' as described in the approach for github repositories.
 
         For organizations it is nearly the same approach.
         Initially all repositories, which are owned by the organization, are added to the ``repo-queue''.
