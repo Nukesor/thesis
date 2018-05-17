@@ -1,10 +1,10 @@
 \section{Geographic location}
 
-This attack aims to extract information about the actual location on the globe of a target.
+This attack aims to extract information about the geographic location of a target.
 The algorithm tries to determine the exact timezone of the target and to exclude any countries or states, which do not match the observed timestamps.
 
 The data used for this analysis are the commit timestamps of the target, as well as the target's Github location for verification.
-In the following, I will explain the algorithm used to detect different timezones and to determine the main location of the contributor.
+In the following, I will explain the algorithm used to detect different timezones and to narrow down the home location of a contributor.
 Several external data sources have been used to accomplish this:
 
 \begin{description}
@@ -22,15 +22,15 @@ Several external data sources have been used to accomplish this:
 
     \item[OpenStreetMap and geocoders] \hfill \\
     OpenStreetMap is a collaborative project, which provides a free map of the world.
-    Since there are some timezones, which cannot even be assigned to a country with the help of the \emph{pycountry} library, another solution for getting the relation between timezone and state was necessary.
-    To match non-assignable timezone strings to their respective state or country, Gitalizer occasionally issues requests to the \emph{OpenStreetMap} \ac{api} with help of the python \emph{geocoder} library.
+    Since there are some timezones that cannot be assigned to a country with the help of the \emph{pycountry} library, another solution for getting the relation between timezone and state or country was necessary.
+    To match non-assignable timezone strings to their respective state or country, Gitalizer occasionally issues requests to the \emph{OpenStreetMap} \ac{api} with help of the Python \emph{geocoder} library.
 
 \end{description}
 
 To assign \ac{utc} offsets to their possible timezones a special reverse mapping of the existing \ac{iana} database was necessary.
 The python library \emph{tzinfo} provides interaction with the \ac{iana} database, but this adapter is only capable of resolving timezones to their respective \ac{utc} offset.
 
-As a result I wrote my own adapter, which extracts the data from \ac{iana}, with help of \emph{tzinfo}, and saves it into the Gitalizer database.
+As a result I wrote a custom adapter that extracts the data from \ac{iana} with help of \emph{tzinfo} and saves it into the Gitalizer database.
 The database model is named \emph{TimezoneInterval} and contains the timezone identifier, the \ac{utc} offset and the exact start and end of this specific timezone interval.
 This table only needs to be populated once for each project setup, but it needs to be updated in case a new version of the \ac{iana} database is released.
 
@@ -151,14 +151,14 @@ The algorithm in Listing~\ref{lst:travel-analysis} iterates through every commit
 For each following commit it is checked, if there is an intersection between the possible timezones of the last commits and the current commit.
 This is usually the case, if the contributer did not travel to another timezone.
 But it is possible that a change in the timezone happens, even though the contributor did not travel.
-This is due to \ac{dst}, which is something that can be used to improve the precision of the location.
+This is due to \ac{dst}, which is also something that can be used to improve the precision of the location.
 
 For instance, Germany enforces \ac{dst} and switches between the \ac{utc} offsets +1 and +2. Angola on the other hand does not have \ac{dst} and thereby has a continuous offset of +1.
-If commits during a small time interval in the winter from a German contributor are considered, it cannot be determined whether the contributor lives in South-Africa or in Western Europe.
-But if one considers the commits of a whole year, it can be concluded that the contributer has to be in a country, which enforce \ac{dst} and switches between the offsets +1 and +2.
+In case only commits are considered that were created by a German contributor during a small time interval in the winter, it cannot be determined whether the contributor lives in South-Africa or in Western Europe.
+But if one considers the commits of a whole year, it can be concluded that the contributer has to be in a country that enforce \ac{dst} and switches between the offsets +1 and +2.
 
-In case no intersection between the timezones can be found, it needs to be determined, whether the contributer actually committed or if the change happend through some other event, such as the commit from a remote server in a different timezone.
-For this purpose, all timezone switches, which do not continue for longer than a day or which happen at the same day as a commit from the previous location, are marked as insignificant and are ignored.
+If no intersection between the timezones can be found, it needs to be determined, whether the contributer actually committed or if the change happend through some other event, such as the commit from a remote server in a different timezone.
+For this purpose, all timezone switches which do not continue for longer than a day or which happen at the same day as a commit from the previous location are marked as insignificant and are ignored.
 
 The algorithm then returns a chronological list of all detected and as significantly ranked locations with their respective time interval.
 
@@ -201,12 +201,12 @@ def find_home_location(travel_path):
     return home_location
 \end{minted}
 \begingroup
-\captionof{listing}{Methology used to determine the main location of a target, based on the information gained from the function in Listing~\ref{lst:travel-analysis}}\label{lst:home-location-analysis}
+\captionof{listing}{Methodology used to determine the main location of a target, based on the information gained from the function in Listing~\ref{lst:travel-analysis}}\label{lst:home-location-analysis}
 \endgroup
 
 To detect the home location of a contributer, the algorithm in Figure~\ref{lst:home-location-analysis} is used.
 The parameter provided to this function are the results of function~\inlinecode{get\_travel\_path} in Figure~\ref{lst:travel-analysis}.
-The algorithm simply tries to determine the best possible set of timezones existing for the longest duration.
+The algorithm simply tries to determine the best possible set of timezones that subsists for the longest duration.
 
-During this process further intersections of matching timezone sets are made to further increase the precision of the home location.
+During this process, intersections of matching timezone sets are performed to further increase the precision of the home location.
 The result of this function is a non empty intersection of timezone sets, which persisted for the longest time period, compared to all other possible non empty intersection sets.

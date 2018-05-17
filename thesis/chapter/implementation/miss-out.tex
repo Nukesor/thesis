@@ -1,8 +1,8 @@
 \section{Holiday and Sick Leave Detection}
 
-The goal of this attack is to simply detect miss-out and if a contributor has anomalies in their regular work day pattern.
+The goal of this attack is to detect miss-out by looking for anomalies in the work day patterns of a developer.
 
-Due to possible fluctuations or changes in work routine, one requirement to this algorithm is the detection of a regular work pattern for a given interval.
+Due to possible fluctuations or changes in work routine, one requirement to this algorithm is the flexible detection of regular work patterns.
 It must have the ability to adjust to a changing work pattern, but at the same time it needs to be capable of detecting anomalies in this pattern.
 
 The input for this analysis is the intersection between all commits from the considered repositories and all commits from the considered contributors.
@@ -14,11 +14,12 @@ The commits' metadata used for this analysis are timestamps as well as additions
     \caption{The work time analysis of an employee.}\label{fig:missing-time}
 \end{figure}
 
-The analysis of the data is a chronological scan of all commits for a specific user.
-Before performing the actual analysis, the data is converted into an easier to handle format.
 It is really difficult to measure productivity in lines of code or in the number of commits made by a person, as they do not necessarily display the amount of work, which has been put into this code.
 As a result I decided, that a day counts as a work day as long as at least a single commit is created during the day.
-The preprocessed data is thereby equivalent to the days a contributor worked on, ordered by the week of the year.
+Before performing the actual analysis, the data is preprocessed into an easier to handle format.
+For each week of the last year a vector representing the weekdays is created.
+Afterwards each day, a commit has been made on, is marked as a working day.
+The preprocessed data is thereby equivalent to which days a contributor worked on, ordered by the week of the year.
 
 \begin{minted}[linenos]{python}
 def analyse(weeks):
@@ -26,7 +27,7 @@ def analyse(weeks):
     for index, week in weeks.items():
         next_six_weeks = weeks[index:index+future_lookup]
         if not prototype:
-            # See if there is a prototype in the next few weeks.
+            # Check whether there is a prototype in the next few weeks.
             prototype = find_prototype(next_six_weeks)
 
             # Check if this specific week is a anomaly
@@ -58,10 +59,11 @@ def check_anomaly(prototype, week):
 \captionof{listing}{Miss-out analysis algorithm.}\label{lst:miss-out-algorithm}
 \endgroup
 
+The analysis of the data is a chronological scan of all work weeks for a specific user.
 The algorithm inspects every week work pattern of a given interval, which has been set to a year for this analysis.
-At the beginning, a new \emph{prototype} is tried to be found.
-This is performed in the function \inlinecode{find\_prototype} in Listing~\ref{lst:miss-out-algorithm}.
+At the beginning, the algorithm tries to find a new \emph{prototype}.
 A prototype is a representative week work pattern, which resembles the average work day pattern of the next weeks.
+This is performed in the function \inlinecode{find\_prototype} in Listing~\ref{lst:miss-out-algorithm}.
 
 
 \begin{minted}[linenos]{python}
