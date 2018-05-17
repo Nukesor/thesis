@@ -101,7 +101,7 @@ In the following I will explain those approaches in detail.
 
 
     \item[Github Repository]\label{github-repo-scan} \hfill \\
-        To tackle the problem of missing metadata in~\ref{stand-alone-repository-scan}, I used the Github \ac{api} to get some of the missing metadata.
+        To tackle the problem of missing metadata in the previous approach, I used the Github \ac{api} to get some of the missing metadata.
         The general approach is the same as in the previous scan method.
         At first the repository is cloned and locally scanned.
         However, a request is issued to Github every time an email is found, that is not already linked to a contributor.
@@ -115,7 +115,7 @@ In the following I will explain those approaches in detail.
         While trying to get all repositories of a specific user, a new functionality has been added, which highly utilizes the Github \ac{api}.
         At first several requests are issued to get all repositories of the specified user, as well as all starred repositories of this user.
         During the repository exploration, every relevant repository is added to a shared queue, lets call it ``repo-queue'', which is then processed by a multiprocessing pool of workers.
-        Each worker process continuously pops entries from the ``repo-queue'' and scans each single repository as described in~\ref{github-repo-scan}.
+        Each worker process continuously pops entries from the ``repo-queue'' and scans each single repository as described in the previous approach.
 
 
     \item[Connected users and organizations]\label{github-repo-scan} \hfill \\
@@ -124,7 +124,7 @@ In the following I will explain those approaches in detail.
         For this task two different worker pools are utilized.
         The user discovery pool is initialized with a shared queue, lets call it ``user-queue'', with all users we need to look at.
         This worker pool simply searches for relevant repositories of each user and passes the repository \ac{url} to the second shared queue.
-        The second pool then processes this ``repo-queue'' as described in~\ref{github-repo-scan}.
+        The second pool then processes this ``repo-queue'' as described in the previous approach.
 
         For organizations it is nearly the same approach.
         Initially all repositories, which are owned by the organization, are added to the ``repo-queue''.
@@ -139,7 +139,7 @@ The first considerable slowdown occurred after reaching about 12~\acp{gb} of dat
 At this stage the database write and read operations took longer than the actual aggregation process and the whole machine started to become unresponsive because of high I/O load.
 
 The performance of the database then needed to be continuously tweaked in several steps.
-The first countermeasure was the reduction of commits using deduplication by using the features of the \ac{sha1} hash as stated in Section~\ref{database-design}
+The first countermeasure was the reduction of commits using deduplication by using the features of the \ac{sha1} hash as stated in Section~\ref{gitalizer-database}
 The ignoring of forked repositories reduced the amount of entries in the relation table between commits and repositories by another 26\%.
 
 The next performance boosts were achieved by disabling or loosening several fail-safe mechanisms of PostgreSQL, namely `synchronous commit' and `write ahead' parameter, which are designed to save data on a system crash.
@@ -172,7 +172,7 @@ These are discovered by performing a breadth first search until no new commits c
 \caption{Gitalizer database relationships.}\label{fig:gitalizer-relationship}
 \end{figure}
 
-As explained in Section~\ref{more-git-features} it is possible to rewrite commits and force push them.
+As explained in Section~\ref{git-features} it is possible to rewrite commits and force push them.
 This scenario needs to be explicitly handled, since force pushes can completely alter the history of a Git repository, which can subsequently lead to a split in the Git history and leave dangling commits.
 As the complete history of a repository is stored inside the database, Gitalizer needs to detect a force push by walking down the Git history tree until it finds known commits.
 If any of these commits has children, which are not in the newly scanned commits, a force push took place and the old commit history has to be flagged as such, since it is now outdated and irrelevant.

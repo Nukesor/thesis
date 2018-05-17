@@ -1,4 +1,4 @@
-\section{Sleep Rhythm and Working hours}
+\section{Sleep Rhythm and Working hours}\label{punchcard-implementation}
 
 The next attack aims to extract information about the working hour behaviour of a target.
 This should be achieved by displaying the pattern of the target in form of a weighted scatter plot and by comparing those patterns between several targets.
@@ -28,7 +28,7 @@ def preprocess(commits):
 \captionof{listing}{Data preprocessing}\label{lst:puchcard-preprocessing}
 \endgroup
 
-The data transformation is achieved, by incrementing the field of the respective weekday and hour by one, for each commit, as can be seen in~\ref{lst:puchcard-preprocessing}.
+The data transformation is achieved, by incrementing the field of the respective weekday and hour by one, for each commit, as can be seen in Listing~\ref{lst:puchcard-preprocessing}.
 The resulting punchcard vector is then stored in the database for faster and easier analysis in the next steps.
 
 \begin{figure}[H]
@@ -73,7 +73,7 @@ As it is difficult to debug 168-dimensional space, I decided that a profound ana
 \end{figure}
 
 \subsubsection{DBSCAN}
-The \ac{dbscan} clustering algorithm operates by creating clusters of transitively connectable data points within a specific maximal acceptable distance between adjacent points.~\ref{inproceedings:dbscan}.
+The \ac{dbscan} clustering algorithm operates by creating clusters of transitively connectable data points within a specific maximal acceptable distance between adjacent points~\cite{inproceedings:dbscan}.
 It is highly scalable and performant, even for large data sets, which made it my first choice.
 Unfortunately it produces very similar results to the mean shift clustering algorithm~\ref{mean-shift}, since it finds a super cluster very similar to Figure~\ref{fig:mean-shift-super-cluster}.
 

@@ -39,7 +39,7 @@ With this methodology it is possible to work with many people or teams on the sa
 
 Another important feature of Git is the possibility to set up a \emph{remote}.
 A remote often acts as a centralized repository developers can \emph{push} their changes to or \emph{pull} changes from other developers.
-This principle is called a \ac{cvcs} and is supported by many \acp{vcs}~\ref{version-control}.
+This principle is called a \ac{cvcs} and is supported by many \acp{vcs}~\cite{version-control}.
 It can for example be a distinct server, which is attached to some kind of network accessible by the developers.
 This feature allows developers to remotely contribute to a project, as long as they have access to the remote's network.
 Git also supports several protocols such as \ac{http} or \ac{ssh} to connect to a remote and thereby provide a simple user management layer.
@@ -70,7 +70,7 @@ The \ac{sha1} hashing for unique file identifier might seem unsafe at first, but
 In 2017 Google managed to force a collision in an controlled environment, but it is really unlikely to encounter such a collision under normal circumstances~\cite{techreport:sha-collision}.
 This characteristic of \ac{sha1} hashing will become quite important in the design of the database later on.
 
-As mentioned in the introduction~\ref{git-introduction} Git is used to store the state of a specific directory of an actual \ac{fs}.
+As mentioned in the Section~\ref{git-introduction} Git is used to store the state of a specific directory of an actual \ac{fs}.
 To represent a \ac{fs} or to simply bundle multiple Git blob objects together, Git uses the tree object.
 
 A tree object is a file, which has a \ac{sha1} hash reference to all underlying blob and tree objects as well as their names and their \ac{fs} permissions.
@@ -103,7 +103,7 @@ Just as blob objects, the tree and commit files are also stored in the \inlineco
 \captionof{listing}{A commit file example\label{lst:raw-commit}.}
 \endgroup
 
-As you can see in listing~\ref{lst:raw-commit}, the commit is just another kind of file utilized by Git, which contains some metadata about a repository version:
+As you can see in Listing~\ref{lst:raw-commit}, the commit is just another kind of file utilized by Git, which contains some metadata about a repository version:
 
 \begin{itemize}
     \item The reference to a tree object, which represents the root directory of the commit's version of the project.
@@ -117,8 +117,8 @@ As you can see in listing~\ref{lst:raw-commit}, the commit is just another kind 
 The commit is the most important object for this thesis.
 It contains crucial information such as the date of the commit as well as the email, which is needed to identify a contributor across several commits.
 
-\subsection{Relevant Features}
-Git provides a collection of high level abstraction tools to work with its underlying \ac{git-fs}.
+\subsection{Relevant Features}~\label{git-features}
+Git provides a collection of high level abstraction tools to work with its underlying \emph{git-fs}.
 In the following the most important features for data aggregation will be listed and briefly explained.
 
 \begin{description}

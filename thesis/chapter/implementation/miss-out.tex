@@ -8,12 +8,6 @@ It must have the ability to adjust to a changing work pattern, but at the same t
 The input for this analysis is the intersection between all commits from the considered repositories and all commits from the considered contributors.
 The commits' metadata used for this analysis are timestamps as well as additions and deletions in lines of code.
 
-\begin{figure}[H]
-    \includegraphics[scale=0.20]{./graphs/analysis/work-time-analysis}
-    \centering
-    \caption{The work time analysis of an employee.}\label{fig:missing-time}
-\end{figure}
-
 It is really difficult to measure productivity in lines of code or in the number of commits made by a person, as they do not necessarily display the amount of work, which has been put into this code.
 As a result I decided, that a day counts as a work day as long as at least a single commit is created during the day.
 Before performing the actual analysis, the data is preprocessed into an easier to handle format.
