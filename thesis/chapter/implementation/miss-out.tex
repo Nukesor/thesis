@@ -1,18 +1,18 @@
 \section{Holiday and Sick Leave Detection}
 
-The goal of this attack is to detect miss-out by looking for anomalies in the work day patterns of a developer.
+The goal of this attack is to detect miss-out by looking for anomalies in the workday patterns of a developer.
 
-Due to possible fluctuations or changes in work routine, one requirement to this algorithm is the flexible detection of regular work patterns.
-It must have the ability to adjust to a changing work pattern, but at the same time it needs to be capable of detecting anomalies in this pattern.
+Due to possible fluctuations or changes in the work routine, one requirement to this algorithm is the flexible detection of regular work patterns.
+It must have the ability to adjust to a changing work pattern, but at the same time, it needs to be capable of detecting anomalies in this pattern.
 
 The input for this analysis is the intersection between all commits from the considered repositories and all commits from the considered contributors.
 The commits' metadata used for this analysis are timestamps as well as additions and deletions in lines of code.
 
 It is really difficult to measure productivity in lines of code or in the number of commits made by a person, as they do not necessarily display the amount of work, which has been put into this code.
-As a result I decided, that a day counts as a work day as long as at least a single commit is created during the day.
+As a result, I decided, that a day counts as a work day as long as at least a single commit is created during the day.
 Before performing the actual analysis, the data is preprocessed into an easier to handle format.
-For each week of the last year a vector representing the weekdays is created.
-Afterwards each day, a commit has been made on, is marked as a working day.
+For each week of the last year, a vector representing the weekdays is created.
+Afterward each day, a commit has been made on, is marked as a working day.
 The preprocessed data is thereby equivalent to which days a contributor worked on, ordered by the week of the year.
 
 \begin{minted}[linenos]{python}
@@ -24,7 +24,7 @@ def analyse(weeks):
             # Check whether there is a prototype in the next few weeks.
             prototype = find_prototype(next_six_weeks)
 
-            # Check if this specific week is a anomaly
+            # Check if this specific week is an anomaly
             check_anomaly(prototype, week)
 
             continue
@@ -55,8 +55,8 @@ def check_anomaly(prototype, week):
 
 The analysis of the data is a chronological scan of all work weeks for a specific user.
 The algorithm inspects every week work pattern of a given interval, which has been set to a year for this analysis.
-At the beginning, the algorithm tries to find a new \emph{prototype}.
-A prototype is a representative week work pattern, which resembles the average work day pattern of the next weeks.
+In the beginning, the algorithm tries to find a new \emph{prototype}.
+A prototype is a representative week work pattern, which resembles the average workday pattern of the next weeks.
 This is performed in the function \inlinecode{find\_prototype} in Listing~\ref{lst:miss-out-algorithm}.
 
 
@@ -99,15 +99,15 @@ def find_prototype(self, weeks, threshold):
 \captionof{listing}{Miss-out analysis algorithm.}\label{lst:prototype-detection}
 \endgroup
 
-This function, which can be seen in Listing~\ref{lst:prototype-detection}, performs a simple iteration over a fix amount of future weeks, to find a work day pattern occurring more often than a given threshold.
+This function, which can be seen in Listing~\ref{lst:prototype-detection}, performs a simple iteration over a fixed amount of future weeks, to find a workday pattern occurring more often than a given threshold.
 If a prototype is found, we are capable of identifying anomalies that deviate from this pattern.
 
-For each following week it is then firstly checked if this week is a anomaly in regards to the current prototype.
-Anomalies are simply detected by comparing the amount of working days of the prototype and the considered week.
+For each following week, it is then firstly checked if this week is an anomaly in regards to the current prototype.
+Anomalies are simply detected by comparing the number of working days of the prototype and the considered week.
 The difference in the working patterns is not suitable for this analysis, as it produces too many false positives for employees with flexible work time.
 
-Secondly it is checked if a week identical to the prototype exists in the near future.
+Secondly, it is checked if a week identical to the prototype exists in the near future.
 If there is no such week, the current prototype is reset and a new prototype needs to be found again.
 
 In case no prototype can be found, anomalies cannot be easily identified, as there exists no pattern to check against.
-Only obvious anomalies, namely weeks without a single work day, will then be marked as such.
+Only obvious anomalies, namely weeks without a single workday, will then be marked as such.
