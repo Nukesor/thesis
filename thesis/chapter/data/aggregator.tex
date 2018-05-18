@@ -40,7 +40,7 @@ PostgreSQL provides excellent tools to ensure a high consistency in your databas
 The \ac{sql} database is used in combination with the \ac{orm} library \emph{SQLAlchemy}.
 
 The basic schema created for the purpose of this thesis consists of five \ac{orm} models.
-A model for commits, emails, repositories, contributors and organizations has been created.
+A model for commits, emails, repositories, contributors, and organizations has been created.
 The latter is only important to validate results and is not actually used for knowledge discovery, as this is Github specific data.
 
 \begin{figure}[H]
@@ -106,7 +106,7 @@ In the following, I will explain those approaches in detail.
         At first, the repository is cloned and locally scanned.
         However, a request is issued to Github every time an email is found, that is not already linked to a contributor.
         Github allows linking multiple email addresses with a single user account and automatically references the respective user in their own \ac{api} commit representation.
-        With this additional metadata we gain ground truth about the identity of an author or committer.
+        With this additional metadata, we gain ground truth about the identity of an author or committer.
 
         Anyway, this approach does not work if the user of a commit removes the email, which has been used for the commit, from their account or if the user completely deletes their account.
         If this happens and the email contributor relationship has not already been created in a previous scan, there is nothing that can be done and those commits need to be handled later on during the preprocessing of the data.
@@ -124,7 +124,7 @@ In the following, I will explain those approaches in detail.
         For this task, two different worker pools are utilized.
         The user discovery pool is initialized with a shared queue, called ``user-queue'', with all users we need to look at.
         This worker pool simply searches for relevant repositories of each user and passes the repository \ac{url} to the second shared queue.
-        The second worker pool then processes the ``repo-queue'' as described in the approach for github repositories.
+        The second worker pool then processes the ``repo-queue'' as described in the approach for Github repositories.
 
         For organizations, it is nearly the same approach.
         Initially, all repositories, which are owned by the organization, are added to the ``repo-queue''.
@@ -142,7 +142,7 @@ The performance of the database then needed to be continuously tweaked in severa
 The first countermeasure was the reduction of commits using deduplication by using the features of the \ac{sha1} hash as stated in Section~\ref{gitalizer-database}
 Ignoring forked repositories reduced the number of entries in the relation table between commits and repositories by another 26\%.
 
-Other performance boosts were achieved by disabling or loosening several fail-safe mechanisms of PostgreSQL, namely `synchronous commit' and `write ahead' parameter, which are designed to save data on a system crash.
+Other performance boosts were achieved by disabling or loosening several fail-safe mechanisms of PostgreSQL, namely `synchronous commit' and `write-ahead' parameter, which are designed to save data on a system crash.
 As there is no important or critical data handled, it was acceptable to pass on these mechanisms and to trade safety for performance.
 
 \begin{figure}[H]
@@ -164,7 +164,7 @@ To ensure a constantly up to date database, Gitalizer needed to be capable of fa
 The initial scan of a repository always includes cloning, scanning the whole repository and writing it into the database.
 After a repository is scanned completely at least once, it is marked as such and will never by completely scanned again.
 All following runs then only clone the repository and scan the newest unknown commits.
-These are discovered by performing a breadth first search until no new commits can be found.
+These are discovered by performing a breadth-first search until no new commits can be found.
 
 \begin{figure}[H]
 \includegraphics[scale=0.3]{./graphs/git-history-rewrite}
