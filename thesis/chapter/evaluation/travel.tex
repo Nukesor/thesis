@@ -9,15 +9,21 @@ and \emph{Mac Os}, but they are not enabled by default.
 It is also available for Linux, for instance with the \emph{tzupdate} package~\footnote{`Set the system timezone based on IP geolocation', github.com, https://github.com/cdown/tzupdate (accessed, 24.04.2018)}, but it needs to be manually installed and activated.
 
 \begin{figure}[H]
-    \includegraphics[scale=0.38]{./graphs/analysis/timezone-user-distribution}
+    \includegraphics[scale=0.38]{./graphs/analysis/timezone-switch-distribution}
     \centering
     \caption{Distribution of users according to the amount of timezone switches detected by the algorithm.
-    The major part of all contributors does not have any detectable timezone changes.}\label{fig:timezone-distribution}
+    The major part of all contributors does not have any detectable timezone changes.}\label{fig:timezone-switch-distribution}
 \end{figure}
 
-Figure~\ref{fig:timezone-distribution} shows the number of contributors in relation to the number of detected timezone switches.
+Figure~\ref{fig:timezone-switch-distribution} shows the number of contributors in relation to the number of detected timezone switches.
 On about 70\% of considered contributors, only a single timezone has been detected, looking at the last year.
 These 70\% do either not commit if they travel, their \acp{os} do not synchronize the timezone accordingly to their location or they simply did not travel in the last two years.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.38]{./graphs/analysis/timezone-distribution}
+    \centering
+    \caption{Distribution of users according to the amount of the different timezones detected by the algorithm.}\label{fig:timezone-distribution}
+\end{figure}
 
 \begin{figure}[H]
     \includegraphics[scale=0.10]{./graphs/analysis/author-home-location}
@@ -48,31 +54,31 @@ The assignment of the contributors home location was correct in about 82\% of th
 \begin{landscape}
     \begin{table}[]
         \centering
-        \begin{tabular}{lllll}
+        \begin{tabular}{llllll}
             \toprule
-            Query string & Expected timezone string & Considered & Correct & Timezone strings after DST & Timezone strings before DST  \\
+            Query string & Expected timezone string & Considered & Correct & Timezone strings after DST & Before DST  \\
             \midrule
-            & & & & \\
-            San Francisco        & US/Pacific           & 772        & 639     & 12.07   &        \\
-            NYC, NY, New York    & America/New\_York    & 485        & 366     & 23.60   &        \\
-            India                & Asia/Colombo         & 148        & 127     & 4.01    &        \\
-            UK, United Kingdom   & Europe/London        & 667        & 510     & 13.14   &        \\
-            France               & Europe/Paris         & 490        & 421     & 31.59   &        \\
-            New Zealand          & Pacific/Auckland     & 59         & 52      & 4.76    &        \\
-            Germany, Deutschland & Europe/Berlin        & 976        & 846     & 31.48   &        \\
-            Poland               & Europe/Warsaw        & 180        & 154     & 31.56   &        \\
-            Italy                & Europe/Rome          & 130        & 112     & 31.39   &        \\
-            Tokyo                & Pacific/Palau        & 61         & 48      & 8.51    &        \\
-            Spain                & Europe/Madrid        & 129        & 116     & 32.83   &        \\
-            Los Angeles          & America/Los\_Angeles & 86         & 76      & 12.24   &        \\
-            Adelaide             & Australia/Adelaide   & 2          & 2       & 4.00    &        \\
-            Mexico               & Mexico/General       & 13         & 7       & 11.62   &        \\
+            & & & & & \\
+            San Francisco        & US/Pacific           & 772        & 639     & 12.07   &  18     \\
+            NYC, NY, New York    & America/New\_York    & 485        & 366     & 23.60   &  52     \\
+            India                & Asia/Colombo         & 148        & 127     & 4       &  4      \\
+            UK, United Kingdom   & Europe/London        & 667        & 510     & 13.14   &  22     \\
+            France               & Europe/Paris         & 490        & 421     & 31.59   &  40     \\
+            New Zealand          & Pacific/Auckland     & 59         & 52      & 4.76    &  9      \\
+            Germany, Deutschland & Europe/Berlin        & 976        & 846     & 31.48   &  38     \\
+            Poland               & Europe/Warsaw        & 180        & 154     & 31.56   &  40     \\
+            Italy                & Europe/Rome          & 130        & 112     & 31.39   &  41     \\
+            Tokyo                & Pacific/Palau        & 61         & 48      & 8.51    &  12     \\
+            Spain                & Europe/Madrid        & 129        & 116     & 32.83   &  40     \\
+            Los Angeles          & America/Los\_Angeles & 86         & 76      & 12.24   &  18     \\
+            Adelaide             & Australia/Adelaide   & 2          & 2       & 4.00    &  4      \\
+            Mexico               & Mexico/General       & 13         & 7       & 11.62   &  39     \\
             \bottomrule
         \end{tabular}
         \caption{Results of the home location evaluation.
         The first column shows the comma separated strings by which contributors are selected depending on their location.
         The second column is the timezone that is expected to be in the remaining home location timezone string set.
-    }\label{home-location-table}
+        }\label{home-location-table}
     \end{table}
 \end{landscape}
 
