@@ -1,12 +1,12 @@
 \section{Sleep Rhythm and Working Hours}
 
 \subsection{Sleep Rythm}
-To evaluate the significance of the punchcard in terms of sleep rhythm analysis, a small survey in a closed community has been made.
+To evaluate the significance of the punch card in terms of sleep rhythm analysis, a small survey in a closed community has been made.
 A selected group of ten people, who know each other well, has been selected for this purpose.
 Furthermore, a subset of four people has been chosen which were going to be evaluated.
 The data gathered for the test group only contained their leisure time contributions, as their work repositories were not open source.
-All ten people then needed to assign the punchcard of those four persons to a specific person.
-The specific task given to test group was to assign each punchcard to a specific person based on their knowledge about their sleep rhythm and leisure time behavior.
+All ten people then needed to assign the punch card of those four persons to a specific person.
+The specific task given to test group was to assign each punch card to a specific person based on their knowledge about their sleep rhythm and leisure time behavior.
 
 To this end, three quite similar patterns, where one contributor has a very regular sleep rhythm (Subfigure 2 in Figure~\ref{fig:punchcard-survey}) and one pattern of a practically inexistent sleep rhythm (Subfigure 1 in Figure~\ref{fig:punchcard-survey}) have been selected.
 
@@ -14,17 +14,17 @@ For the three similar graphs, no significant results could be assessed, as the a
 The contributor with the irregular sleep rhythm, on the other hand, got correctly assigned in all cases.
 
 Sadly, as such a survey needs very specific targeting and a long lead time for data collection, it could only be executed on a small set of subjects.
-Anyhow the result of this survey indicates, that there exists a correlation between the structure of the punchcard and the sleep and leisure time commit behavior of a contributor, even if it can only be accurately assigned in extreme cases.
+Anyhow the result of this survey indicates, that there exists a correlation between the structure of the punch card and the sleep and leisure time commit behavior of a contributor, even if it can only be accurately assigned in extreme cases.
 
 
 \begin{figure}[H]
     \includegraphics[scale=0.16]{./graphs/analysis/survey_combined}
     \centering
-    \caption{The four punchcards used in the survey.}\label{fig:punchcard-survey}
+    \caption{The punch cards created and used for the test group in the survey.}\label{fig:punchcard-survey}
 \end{figure}
 
 \subsection{Employee or Open-Source Contributor}
-To determine whether a punchcard could be used to distinguish between an employee or an open-source volunteer, the results of the clustering described in Section~\ref{punchcard-implementation} has been utilized.
+To determine whether a punch card could be used to distinguish between an employee or an open-source volunteer, the results of the clustering described in Section~\ref{punchcard-implementation} has been utilized.
 For this approach, two assumptions have been made.
 A usual employee works between Monday and Friday during the day and only as an exception at the weekend, an example cluster can be seen in Figure~\ref{fig:normal-office-hours}.
 An open-source volunteer works outside of the usual work shifts, which means early and late during weekdays and at the weekend, an example cluster can be seen in Figure~\ref{fig:leisure-time-hours}.
@@ -32,7 +32,7 @@ An open-source volunteer works outside of the usual work shifts, which means ear
 \begin{figure}[H]
     \includegraphics[scale=0.32]{./graphs/analysis-affinity/28}
     \centering
-    \caption{Punchcard of an example from an affinity propagation cluster with normal work shifts.}\label{fig:normal-office-hours}
+    \caption{Punch card of an example from an affinity propagation cluster of contributors with normal work shifts. A clear tendency to regular office working hours can be seen (Monday to Friday between 7:00 and 18:00 o'clock}\label{fig:normal-office-hours}
 \end{figure}
 
 For each assumption, two representative clusters have been chosen and ten random persons have been selected from each cluster.
@@ -53,7 +53,7 @@ It provides a good overview of the usual weekday work pattern over the last year
 \begin{figure}[H]
     \includegraphics[scale=0.32]{./graphs/analysis-affinity/204}
     \centering
-    \caption{Punchcard of an example from an affinity propagation cluster with a weekend tendency.}\label{fig:leisure-time-hours}
+    \caption{Punch card of an example from an affinity propagation cluster of leisure time contributors. A clear tendency to contributions out of regular working hours and at the weekend.}\label{fig:leisure-time-hours}
 \end{figure}
 
 The representatives for the usual five-day week commit behavior were surprisingly accurate.
@@ -74,12 +74,12 @@ As it is not trivial to link the employee of a contributor to all their funded p
 
 \subsection{Bot Detection}
 Another possible attack, that opened up during the creation of the clusters, was the detection of automatically committing programs, so-called \emph{bots}.
-Several clusters showed a very consistent commit behavior around a specific hour, such a punchcard can be seen in Figure~\ref{fig:bot-punchcard}.
+Several clusters showed a very consistent commit behavior around a specific hour, such a punch card can be seen in Figure~\ref{fig:bot-punchcard}.
 
 \begin{figure}[H]
     \includegraphics[scale=0.32]{./graphs/analysis/bot-punchcard}
     \centering
-    \caption{Punchcard with an extraordinary commit pattern around midnight.}\label{fig:bot-punchcard}
+    \caption{A punch card with an extraordinary commit pattern around midnight. This might indicate a regularly automatically committing program, a so-called \emph{bot}}\label{fig:bot-punchcard}
 \end{figure}
 
 In the following, I implemented an algorithm, which simply detected centroids with an extremely equally distributed pattern or patterns with a spike at a specific hour.
@@ -99,13 +99,13 @@ This attack soon proved to be unfeasible, as the pattern of a contributor signif
 \begin{figure}[H]
     \includegraphics[scale=0.32]{./graphs/analysis/october-punchcard}
     \centering
-    \caption{Punchcard of the author from October 2017.}\label{fig:october-punchcard}
+    \caption{The author\s punch card from October 2017.}\label{fig:october-punchcard}
 \end{figure}
 
 \begin{figure}[H]
     \includegraphics[scale=0.32]{./graphs/analysis/november-punchcard}
     \centering
-    \caption{Punchcard of the author from November 2017.}\label{fig:november-punchcard}
+    \caption{The author\s punch card from November 2017.}\label{fig:november-punchcard}
 \end{figure}
 
 If the interval of a year is considered and the compared interval is shifted by a single month, the occurring changes are not that drastic, but still too different to see a consistent pattern over a longer time.

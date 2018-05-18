@@ -50,7 +50,7 @@ def check_anomaly(prototype, week):
 
 \end{minted}
 \begingroup
-\captionof{listing}{Miss-out analysis algorithm.}\label{lst:miss-out-algorithm}
+\captionof{listing}{The algorithm implemented for detecting miss-out written in python.}\label{lst:miss-out-algorithm}
 \endgroup
 
 The analysis of the data is a chronological scan of all work weeks for a specific user.
@@ -96,7 +96,7 @@ def find_prototype(self, weeks, threshold):
     return prototype
 \end{minted}
 \begingroup
-\captionof{listing}{Miss-out analysis algorithm.}\label{lst:prototype-detection}
+\captionof{listing}{The code used for detecting a prototype in the work pattern on a weekly basis written in python.}\label{lst:prototype-detection}
 \endgroup
 
 This function, which can be seen in Listing~\ref{lst:prototype-detection}, performs a simple iteration over a fixed amount of future weeks, to find a workday pattern occurring more often than a given threshold.

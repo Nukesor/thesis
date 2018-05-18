@@ -7,7 +7,12 @@ For better verification and evaluation of the results, a scatter plot with the a
 \begin{figure}[H]
     \includegraphics[scale=0.20]{./graphs/analysis/work-time-analysis}
     \centering
-    \caption{The work time analysis of an employee.}\label{fig:missing-time}
+    \caption{
+        The work time analysis of an employee.
+        Blue sections are time spans in which the target has a consistent reoccurring week work pattern.
+        Yellow sections show irregularities in their week work pattern.
+        Red blocks are miss-out anomalies detected by the algorithm, which indicate holiday or sick leave.
+    }\label{fig:missing-time}
 \end{figure}
 
 The evaluation of this algorithm turned out to be quite difficult, as there is no publicly available information about sick leave or holiday.
@@ -35,7 +40,7 @@ In the two other cases, there were a few inconsistencies the developer could not
 \begin{figure}[H]
     \includegraphics[scale=0.20]{./graphs/analysis/work-time-analysis-comparison}
     \centering
-    \caption{The miss-out analysis graphs of four employees from the survey.}\label{fig:miss-out-comparison}
+    \caption{The miss-out analysis graphs of the four employees from the survey.}\label{fig:miss-out-comparison}
 \end{figure}
 
 In Figure~\ref{fig:miss-out-comparison} the comparison between multiple employees can be seen.

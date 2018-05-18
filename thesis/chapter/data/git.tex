@@ -25,7 +25,7 @@ Git provides the feature to name branches, whereas the main branch is per defaul
 \begin{figure}[H]
     \includegraphics[scale=0.35]{./graphs/git-history-branch}
     \centering
-    \caption{A Git commit history tree.}\label{fig:git-commit-tree}
+    \caption{A Git commit history tree that shows a history graph with two feature branches and a bug fix that is merged into the master branch.}\label{fig:git-commit-tree}
 \end{figure}
 
 As shown in figure~\ref{fig:git-commit-tree} two developers can, for example, create their own branch on which they can work unimpeded.
@@ -54,7 +54,7 @@ This is important to keep track of the original author of the changes.
 
 If one looks at the case of an author contributing code to a project in an email with an attached patch file.
 If a maintainer of the project now applies the patch file and commits without setting the author, the information about the original author would be lost.
-Collected data indicates that in about 89\% the author and the committer are the same person.
+The collected data of 49 million commits, indicate that in about 89\% the author and the committer are the same person.
 
 
 \subsection{Internal Representation}~\label{git-internal-representation}
@@ -84,7 +84,7 @@ With these tools, Git manages to build its own basic representation of a \ac{fs}
     040000 tree 8aaf336db307bdcab2f082bd710b31ddb5f9ebd4  thesis
 \end{minted}
 \begingroup
-\captionof{listing}{A tree file example\label{lst:raw-commit}.}
+\captionof{listing}{An example of a Git tree file\label{lst:raw-commit}.}
 \endgroup
 
 As stated before the commit is utilized to provide an exact representation of a state of the repository's files and directories.
@@ -100,7 +100,7 @@ Just as blob objects, the tree and commit files are also stored in the \inlineco
     Chapter 2, acronyms
 \end{minted}
 \begingroup
-\captionof{listing}{A commit file example\label{lst:raw-commit}.}
+\captionof{listing}{An example of a Git commit file\label{lst:raw-commit}.}
 \endgroup
 
 As you can see in Listing~\ref{lst:raw-commit}, the commit is just another kind of file utilized by Git, which contains some metadata about a repository version:

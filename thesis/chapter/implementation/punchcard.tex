@@ -11,7 +11,7 @@ This reduced the number of considered contributors from 175.000 to about 10.300.
 The data used for this analysis are the commit timestamps of the target, as well as the Github employee information for verification.
 These commit timestamps are then converted into a different format, which represents the occurrences of commits per hour per weekday over the last year.
 This results in a simple vector with length 168, which corresponds to seven days with 24 hours each.
-I will refer to this representation hereafter as a \emph{punchcard}.
+I will refer to this representation hereafter as a \emph{punch card}.
 
 \begin{minted}[linenos]{python}
 def preprocess(commits):
@@ -25,25 +25,29 @@ def preprocess(commits):
 
 \end{minted}
 \begingroup
-\captionof{listing}{Data preprocessing}\label{lst:puchcard-preprocessing}
+\captionof{listing}{The preprocessing code used to simplify all commits into a usable format of a vector with length 168.}\label{lst:puchcard-preprocessing}
 \endgroup
 
 The data transformation is achieved, by incrementing the field of the respective weekday and hour by one, for each commit, as can be seen in Listing~\ref{lst:punchcard-preprocessing}.
-The resulting punchcard vector is then stored in the database for faster and easier analysis in the next steps.
+The resulting punch card vector is then stored in the database for faster and easier analysis in the next steps.
 
 \begin{figure}[H]
     \includegraphics[scale=0.32]{./graphs/analysis/ordered-punchcard}
     \centering
-    \caption{Punchcard of the author.}\label{fig:working-hour-rhythm-author}
+    \caption{Punch card of the author.}\label{fig:working-hour-rhythm-author}
 \end{figure}
 
+Figure~\ref{fig:working-hour-rhythm-author} shows the punch card of the author.
+The y-axis represents the days of a week, while the x-axis defines the hour of a day.
+The weight on the dots of the scatter plot corresponds to the number of all commits which were contributed at this specific hour in respect to all number of all commits in the considered time span.
 
-\subsection{Punchcard Clustering}
+
+\subsection{Punch card Clustering}
 
 To find common work patterns, several cluster algorithms have been applied to the aggregated data.
 The Python \emph{scikit} framework has been used for this purpose, as it features nine different clustering methods and provides good documentation and abstraction from the underlying clustering logic~\footnote{`Clustering' scikit-learn.org, http://scikit-learn.org/stable/modules/clustering.html (accessed, 24.04.2018)}.
 
-For the task of finding similar punchcard patterns in the data, a clustering algorithm that can operate on a high-dimensional dataset with an unknown amount of clusters is required.
+For the task of finding similar punch card patterns in the data, a clustering algorithm that can operate on a high-dimensional dataset with an unknown amount of clusters is required.
 Scikit provides three different clustering algorithms, which can handle an unknown amount of clusters.
 
 \subsubsection{Mean Shift}\label{mean-shift}
@@ -54,7 +58,7 @@ Unfortunately, this methodology proves to be too aggressive for the current data
 \begin{figure}[H]
     \includegraphics[scale=0.32]{./graphs/analysis-mean-shift/supercluster}
     \centering
-    \caption{Super cluster centroid found by mean-shift clustering.}\label{fig:mean-shift-super-cluster}
+    \caption{Punch card of the super cluster centroid found by mean-shift clustering.}\label{fig:mean-shift-super-cluster}
 \end{figure}
 
 Despite trying a wide range of values for the bandwidth, which is the measure of distance used for detecting adjacent points, this algorithm always created a supercluster, which contains more than 89\% of all data points.
@@ -69,7 +73,7 @@ As it is difficult to debug 168-dimensional space, I decided that a profound ana
 \begin{figure}[H]
     \includegraphics[scale=0.32]{./graphs/analysis-mean-shift/outlier}
     \centering
-    \caption{Extreme outlier centroid found by mean-shift clustering.}\label{fig:mean-shift-outlier}
+    \caption{Punch card of an extreme outlier centroid found by mean-shift clustering.}\label{fig:mean-shift-outlier}
 \end{figure}
 
 \subsubsection{DBSCAN}

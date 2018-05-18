@@ -46,7 +46,7 @@ The latter is only important to validate results and is not actually used for kn
 \begin{figure}[H]
 \includegraphics[scale=0.3]{./graphs/gitalizer-data-structure}
 \centering
-\caption{Gitalizer database relationships.}\label{fig:gitalizer-relationship}
+\caption{The relationships between Gitalizer's most important database objects in Crow's foot notation.}\label{fig:gitalizer-relationship}
 \end{figure}
 
 Every commit of each repository is saved in the database along with its \ac{sha1} hash and the two email addresses as in Listing~\ref{lst:raw-commit}.
@@ -148,7 +148,11 @@ As there is no important or critical data handled, it was acceptable to pass on 
 \begin{figure}[H]
 \includegraphics[scale=0.22]{./graphs/server-graphs/query-refactoring}
 \centering
-\caption{The CPU load of the aggregation server during optimization.}\label{fig:cpu-load}
+\caption{The \ac{cpu} load of the aggregation server before and after query and cache optimization.
+The light blue area represents the \ac{cpu} percentage actually used for computation.
+The dark blue area represents the amount of \ac{cpu} idle time due to \ac{io} load.
+At the beginning of the graph the server was partly unresponsive due to high \ac{io} wait.
+At the right side of the graph the \ac{io} load is significantly reduced after some optimizations.}\label{fig:cpu-load}
 \end{figure}
 
 After renting a root server and deploying Gitalizer onto it, the aggregation process worked really well, until the database size hit about 25~\ac{gb}.
@@ -169,14 +173,14 @@ These are discovered by performing a breadth-first search until no new commits c
 \begin{figure}[H]
 \includegraphics[scale=0.3]{./graphs/git-history-rewrite}
 \centering
-\caption{Gitalizer database relationships.}\label{fig:gitalizer-relationship}
+\caption{This figure shows an example of a Git history tree which master branch's history has been rewritten by a force push.}\label{fig:truncated-git-history}
 \end{figure}
 
 As explained in Section~\ref{git-features} it is possible to rewrite commits and force push them.
 This scenario needs to be explicitly handled since force pushes can completely alter the history of a Git repository, which can subsequently lead to a split in the Git history and leave dangling commits.
 As the complete history of a repository is stored in the database, Gitalizer needs to detect a force push by walking down the Git history tree until it finds known commits.
 If any of these commits have children, which are not in the newly scanned commits, a force push took place and the old commit history has to be flagged as such since it is now outdated and irrelevant.
-An example scenario can be seen in Figure~\ref{fig:gitalizer-relationship}, where all red commits represent the old commit history, which needs to be truncated.
+An example scenario can be seen in Figure~\ref{fig:truncated-git-history}, where all red commits represent the old commit history, which needs to be truncated.
 
 
 \subsection{Problems}

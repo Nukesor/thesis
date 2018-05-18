@@ -9,9 +9,10 @@ and \emph{Mac Os}, but they are not enabled by default.
 It is also available for Linux, for instance with the \emph{tzupdate} package~\footnote{`Set the system timezone based on IP geolocation', github.com, https://github.com/cdown/tzupdate (accessed, 24.04.2018)}, but it needs to be manually installed and activated.
 
 \begin{figure}[H]
-    \includegraphics[scale=0.40]{./graphs/analysis/timezone-user-distribution}
+    \includegraphics[scale=0.38]{./graphs/analysis/timezone-user-distribution}
     \centering
-    \caption{Distribution of users according to the amount of timezone switches.}\label{fig:timezone-distribution}
+    \caption{Distribution of users according to the amount of timezone switches detected by the algorithm.
+    The major part of all contributors does not have any detectable timezone changes.}\label{fig:timezone-distribution}
 \end{figure}
 
 Figure~\ref{fig:timezone-distribution} shows the number of contributors in relation to the number of detected timezone switches.
@@ -21,7 +22,9 @@ These 70\% do either not commit if they travel, their \acp{os} do not synchroniz
 \begin{figure}[H]
     \includegraphics[scale=0.10]{./graphs/analysis/author-home-location}
     \centering
-    \caption{Home location analysis of the author.}\label{fig:author-home-location}
+    \caption{The visualized home location analysis of the author.
+    The light green indicates the timezone the target is probably in.
+    The dark green color shows the remaining countries after considering \ac{dst} switches.}\label{fig:author-home-location}
 \end{figure}
 
 In Figure~\ref{fig:author-home-location} the visualized home location analysis of the author can be seen.
@@ -42,28 +45,36 @@ For instance, every home location of a contributor, that contained \emph{Germany
 I created 14 such rules and was thus able to validate the home location of about 4200 contributors.
 The assignment of the contributors home location was correct in about 82\% of the considered contributors.
 
-\begin{table}[]
-    \centering
-    \begin{tabular}{lllll}
-        Strings query        & Considered & Expected timezone    & Correct & Mean subset size \\
-        & & & & \\
-        San Francisco        & 772        & US/Pacific           & 639     & 12.07  \\
-        NYC, NY, New York    & 485        & America/New\_York    & 366     & 23.60  \\
-        India                & 148        & Asia/Colombo         & 127     & 4.01   \\
-        UK, United Kingdom   & 667        & Europe/London        & 510     & 13.14  \\
-        France               & 490        & Europe/Paris         & 421     & 31.59  \\
-        New Zealand          & 59         & Pacific/Auckland     & 52      & 4.76   \\
-        Germany, Deutschland & 976        & Europe/Berlin        & 846     & 31.48  \\
-        Poland               & 180        & Europe/Warsaw        & 154     & 31.56  \\
-        Italy                & 130        & Europe/Rome          & 112     & 31.39  \\
-        Tokyo                & 61         & Pacific/Palau        & 48      & 8.51   \\
-        Spain                & 129        & Europe/Madrid        & 116     & 32.83  \\
-        Los Angeles          & 86         & America/Los\_Angeles & 76      & 12.24  \\
-        Adelaide             & 2          & Australia/Adelaide   & 2       & 4.00   \\
-        Mexico               & 13         & Mexico/General       & 7       & 11.62
-    \end{tabular}
-    \caption{Results of the home location evaluation}\label{home-location-table}
-\end{table}
+\begin{landscape}
+    \begin{table}[]
+        \centering
+        \begin{tabular}{lllll}
+            \toprule
+            Query string & Expected timezone string & Considered & Correct & Timezone strings after DST & Timezone strings before DST  \\
+            \midrule
+            & & & & \\
+            San Francisco        & US/Pacific           & 772        & 639     & 12.07   &        \\
+            NYC, NY, New York    & America/New\_York    & 485        & 366     & 23.60   &        \\
+            India                & Asia/Colombo         & 148        & 127     & 4.01    &        \\
+            UK, United Kingdom   & Europe/London        & 667        & 510     & 13.14   &        \\
+            France               & Europe/Paris         & 490        & 421     & 31.59   &        \\
+            New Zealand          & Pacific/Auckland     & 59         & 52      & 4.76    &        \\
+            Germany, Deutschland & Europe/Berlin        & 976        & 846     & 31.48   &        \\
+            Poland               & Europe/Warsaw        & 180        & 154     & 31.56   &        \\
+            Italy                & Europe/Rome          & 130        & 112     & 31.39   &        \\
+            Tokyo                & Pacific/Palau        & 61         & 48      & 8.51    &        \\
+            Spain                & Europe/Madrid        & 129        & 116     & 32.83   &        \\
+            Los Angeles          & America/Los\_Angeles & 86         & 76      & 12.24   &        \\
+            Adelaide             & Australia/Adelaide   & 2          & 2       & 4.00    &        \\
+            Mexico               & Mexico/General       & 13         & 7       & 11.62   &        \\
+            \bottomrule
+        \end{tabular}
+        \caption{Results of the home location evaluation.
+        The first column shows the comma separated strings by which contributors are selected depending on their location.
+        The second column is the timezone that is expected to be in the remaining home location timezone string set.
+    }\label{home-location-table}
+    \end{table}
+\end{landscape}
 
 It needs to be noted, that the accuracy of this result is quite certainly deteriorated by location strings, which contain ambiguous information.
 On manual review of the location strings, there were, for instance, strings such as \inlinecode{I love NYC}, which belongs to a developer living in Germany.
