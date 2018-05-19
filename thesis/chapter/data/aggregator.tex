@@ -142,7 +142,7 @@ The performance of the database then needed to be continuously tweaked in severa
 The first countermeasure was the reduction of commits using deduplication by using the features of the \ac{sha1} hash as stated in Section~\ref{gitalizer-database}
 Ignoring forked repositories reduced the number of entries in the relation table between commits and repositories by another 26\%.
 
-Other performance boosts were achieved by disabling or loosening several fail-safe mechanisms of PostgreSQL, namely `synchronous commit' and `write-ahead' parameter, which are designed to save data on a system crash.
+Other performance boosts were achieved by disabling or loosening several fail-safe mechanisms of PostgreSQL, namely `synchronous commit' and `write-ahead' parameter, which are designed to prevent data loss on a system crash.
 As there is no important or critical data handled, it was acceptable to pass on these mechanisms and to trade safety for performance.
 
 \begin{figure}[H]
@@ -185,7 +185,7 @@ An example scenario can be seen in Figure~\ref{fig:truncated-git-history}, where
 
 \subsection{Problems}
 During the development of the data aggregator, I experienced a few problems and edge cases that needed to be handled.
-The earliest and most delaying problem was the rate limit of the Github \ac{api}, which limits to 5000 requests per hour.
+The earliest and most delaying problem was the rate limit of the Github \ac{api}, which is limited to 5000 requests per hour.
 Beside this rate limiting, there also is an abuse detection mechanism, that triggers if too many requests are fired in a short amount of time.
 The solution for this problem resulted in various workarounds, which include random wait times to detain those mechanisms from triggering.
 

@@ -11,18 +11,18 @@ A number of possible valuable information about a target, which might be obtaina
 
 \begin{description}
     \item[The Employer] \hfill \\
-        This attack model deals with the scenario of an employer, which wants to monitor their employees.
+        This attack model deals with the scenario of an employer who wants to monitor their employees.
         The attacker's motivation is to spot irregularities in working behavior and thereby unmotivated or unproductive employees.
         Information gained by this attack, such as productivity metrics of employees, compliance with working hours and sick leave, could be used to surveil employees without their consensus.
 
     \item[The Individual] \hfill \\
         This scenario describes a single person, which wants to harm, monitor or gain information about an open-source developer.
 
-        A possible goal of the attacker could be to either stalk the victim, harm them in any way or manipulate them or one of their acquaintances.
+        A possible goal of the attacker could be to either stalk the victim, cause harm in any way or manipulate it or one of their acquaintances.
         The motivation of this attacker is mostly personal and on an emotional level.
         For this purpose, the attacker could use information about the target such as relationships to other developers, sleeping rhythm, and daily routines.
 
-        Another nonemotional attacker motive could be a robber trying to find the perfect time window to rob a house or the tracking of a high profile target.
+        Another nonemotional attacker motive could be a robber trying to find the perfect time window to rob a house.
         Information about the geographic location of the target at a specific time or knowledge about when the target is at work could be used for this purpose.
 
         A third attacker motive could be a headhunter, that tries to get information about the skills and reliability of a developer.
@@ -52,7 +52,7 @@ It needs to be noted, that only a few these listed attacks will be actually perf
         In~\cite[p.~43]{article:measuring-programming-quality} the author recommends to also consider the number of removed defects from the code.
         The authors of~\cite[p.~257]{article:software-productivity} also include code style quality measurements such as \emph{cyclomatic complexity}, \emph{coupling} and lack of cohesion of methods.
 
-        The gained information by this attack could, for instance, be used to compare the productivity of several employees and with the intent to dismiss all employees that do not perform well enough in relation to their coworkers.
+        The gained information by this attack could, for instance, be used to compare the productivity of several employees with the intent to dismiss all employees that do not perform well enough in relation to their coworkers.
         Another possible use case could be the revelation of developers with a specific skill set for headhunters.
         The data needed for this attack are the additions and deletions of all commits as well as all commit timestamps and the full patches of each commit.
 
@@ -83,7 +83,7 @@ It needs to be noted, that only a few these listed attacks will be actually perf
     \item[Sick Leave and Holiday] \hfill \\
         The aim of this attack is to detect anomalies in the typical work behavior.
         The detection of anomalies in the regular work pattern can be a valuable information for several parties.
-        Usually, only a few parties know about the holiday or sick leave times of a person.
+        Usually, only a few of parties know about the holiday or sick leave times of a person.
         To know if a person tends to become sick more often or for long times is a dangerous intrusion into a person's privacy.
         For instance, this could be abused by headhunters or personnel managers to cull possible employees with too high sick leave rates and thereby reduce the job prospects of the target.
 
@@ -100,7 +100,7 @@ It needs to be noted, that only a few these listed attacks will be actually perf
     \item[Geographic Location]~\label{attack:geographic-location} \hfill \\
         This attack aims to detect the location of a target at a given time.
         The goal is to detect the home country of the developer or at least to narrow the location down to a timezone or to a set of countries.
-        Another goal is to log all significant detectable changes in the developer's location.
+        Another goal is to identify all significant detectable changes in the developer's location.
 
         For instance, this information might be critical for an individual that wants to be as anonymous as possible.
         Revealing the home location of the target can suggest further information, such as the cultural origin and religious orientation.

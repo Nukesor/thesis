@@ -6,7 +6,7 @@ Furthermore, some functionalities of Github will be explained and a brief overvi
 
 
 \subsection{Requirements}\label{requirements}
-The data source had to satisfy as many requirements as possible, as specified in Chapter~\ref{attack-goals}.
+The data source had to satisfy as many requirements as possible, as specified in Section~\ref{attack-goals}.
 
 To accomplish a meaningful analysis one needs a sufficient amount of commits.
 For instance, it is necessary to have a few commits per weekday over a timespan of at least a month for a simple sleep rhythm analysis.
@@ -36,7 +36,7 @@ Ideally, there should also be a list of all company members for evaluation purpo
 
 
 \subsection{Github}\label{github}
-I decided to use Github as a data source, for it is not only convenient to find \acp{url} for cloning repositories but also provides solutions for most of the other requirements.
+I decided to use Github as a data source, as it is not only convenient to find \acp{url} for cloning repositories but also provides solutions for most of the other requirements.
 It hosts one of the biggest collections of open source projects~\cite{techreport:how-github-conquered} with 64 million repositories, 24 million users and 1,5 million organizations~\cite{article:github-statistics}.
 Github also provides a well-documented \ac{api} for querying its metadata and there are libraries for most major languages, which provide an abstraction layer for this \ac{api}.
 This \ac{api} is publicly available and can be used by anyone registered on Github.
@@ -47,8 +47,8 @@ Gitlab does not provide detailed usage statistics, but they state that they only
 On the other hand, one of the downsides of using Github is, that we do not have access to all metadata.
 For example, the full list of members for organizations is often inaccessible, as users need to actively opt-in to be publicly displayed as a member of the organization.
 The internal team structures of organizations are not visible at all, as one needs to be a member of the organization to access those.
-Another problem is dangling email addresses, which are not related to any account anymore.
-All commits made with this email address cannot be used any more for any analyses that require a user to commit relationship.
+Another problem are dangling email addresses, which are not related to any account anymore.
+All commits made with such an email address cannot be used any more for any analyses that require a user to commit relationship.
 But even though some ground truth is missing, I decided to use this approach as it still was the most promising way to gather as much data and real-world noise as possible, compared to other open source hosting services.
 
 \begin{figure}[H]
@@ -72,7 +72,7 @@ Github offers some features, which, for example, are convenient to finding repos
 
     \item[Follower] \hfill \\
         Another important feature is \emph{following}.
-        Every user can follow any other user to get informed, if they do specific things, like creating new repositories or starring repositories or to simply show interest in or respect for their work.
+        Every user can follow any other user to get informed, when they do specific things, like creating new repositories or starring repositories or to simply show interest in or respect for their work.
         By getting all followed or following users, one might catch some friends of the user.
         It is also possible that a user follows the owner of a repository he contributed to.
         By using this feature it is thereby possible to get some additional repositories they contributed to, as well as some friends of the user.

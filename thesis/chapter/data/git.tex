@@ -52,13 +52,13 @@ The author of a commit is the person which actually contributed the changes in t
 The committer is the person, which created the Git commit.
 This is important to keep track of the original author of the changes.
 
-If one looks at the case of an author contributing code to a project in an email with an attached patch file.
+If one looks at the case of an author contributing code to a project via an email with an attached patch file.
 If a maintainer of the project now applies the patch file and commits without setting the author, the information about the original author would be lost.
 The collected data of 49 million commits, indicate that in about 89\% the author and the committer are the same person.
 
 
 \subsection{Internal Representation}~\label{git-internal-representation}
-Git's underlying storage and management solution for files is commonly described as an mini \ac{fs}~\cite[p.~9]{book:pro-git}
+Git's underlying storage and management solution for files is commonly described as a mini \ac{fs}~\cite[p.~9]{book:pro-git}
 In the following I will thereby refer to its file management layer as \emph{git-fs} and explain the most important aspects of it.
 
 The representation of a single file in Git is called a \emph{blob} object~\cite[p.~56]{book:pro-git}.
@@ -125,11 +125,11 @@ In the following, the most important features for data aggregation will be liste
     \item[checkout] \hfill \\
         Git allows jumping between different project versions with the \emph{checkout} command.
         Calling \inlinecode{git checkout \$IDENTIFIER} jumps to the commit specified by the variable \inlinecode{\$IDENTIFIER}.
-        The identifier, for instance, be can be a partial or full \ac{sha1} hash of commit, a branch name or a tag.
+        The identifier, for instance, can be a partial or full \ac{sha1} hash of commit, a branch name or a tag.
 
     \item[HEAD] \hfill \\
         To mark the current checkout of a repository, Git utilizes a special marker called \emph{HEAD}.
-        Due to this feature, it is, for instance, possible to jump to the previous commit in history with \inlinecode{git checkout HEAD~1}.
+        Due to this feature, it is, for instance, possible to jump to the previous commit in history with \inlinecode{git checkout HEAD\textasciitilde1}.
 
     \item[diff] \hfill \\
         The \emph{diff} is a tool to compare the state of two different commits in a repository.
