@@ -48,6 +48,9 @@
 
 \input{./chapter/002_quote.tex}
 
+% Set table of contents depth
+\setcounter{secnumdepth}{1}
+\setcounter{tocdepth}{1}
 {\small \tableofcontents}
 
 \input{./chapter/003_acronyms.tex}
@@ -80,10 +83,11 @@ The possible applications for the gained knowledge will be stated and the implem
 
 \input{./chapter/implementation/punchcard.tex}
 
+\clearpage
 \input{./chapter/implementation/travel.tex}
 
 \chapter{Evaluation and Interpretation}\label{evaluation}
-In the last chapter, I showed the implementation of several possible attacks, which could be performed on the gathered data.
+In the previous chapter, the implementation of several possible attacks which could be performed on the gathered data has been shown.
 This chapter will now attend to the evaluation of all results gained from these attacks.
 I will present the extracted information from each algorithm and compare it to the real-world ground truth.
 This information will be then be explained and audited in terms of precision and reliability.

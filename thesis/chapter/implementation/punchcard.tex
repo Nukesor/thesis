@@ -31,7 +31,7 @@ def preprocess(commits):
 The data transformation is achieved, by incrementing the field of the respective weekday and hour by one, for each commit, as can be seen in Listing~\ref{lst:punchcard-preprocessing}.
 The resulting punch card vector is then stored in the database for faster and easier analysis in the next steps.
 
-\begin{figure}[H]
+\begin{figure}[h]
     \includegraphics[scale=0.32]{./graphs/analysis/ordered-punchcard}
     \centering
     \caption{Punch card of the author.}\label{fig:working-hour-rhythm-author}
@@ -55,7 +55,7 @@ Mean shift is a clustering method which performs an operation similar to a gradi
 The goal of this algorithm is to find a representative centroid for each cluster and to assign each data point to a cluster.
 Unfortunately, this methodology proves to be too aggressive for the current data.
 
-\begin{figure}[H]
+\begin{figure}[h]
     \includegraphics[scale=0.32]{./graphs/analysis-mean-shift/supercluster}
     \centering
     \caption{Punch card of the super cluster centroid found by mean-shift clustering.}\label{fig:mean-shift-super-cluster}
@@ -70,7 +70,7 @@ My assumption is, that the density of data points is too high and that they are 
 Thereby all those data points are slowly shifted to this single centroid.
 As it is difficult to debug 168-dimensional space, I decided that a profound analysis would be too time-consuming and to try the next solution.
 
-\begin{figure}[H]
+\begin{figure}[h]
     \includegraphics[scale=0.32]{./graphs/analysis-mean-shift/outlier}
     \centering
     \caption{Punch card of an extreme outlier centroid found by mean-shift clustering.}\label{fig:mean-shift-outlier}
