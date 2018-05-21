@@ -1,12 +1,12 @@
 \section{Geographic Location}
 
-First of all, it needs to be clarified, that parts of this attack only works under specific circumstances.
+First of all, it needs to be clarified that parts of this attack only works under specific circumstances.
 Git commit timestamps are created by taking the current local time of the underlying \ac{os}.
 If one wants to show the travel path of a target, the target's \ac{os} needs to automatically adjust the \ac{utc} offset accordingly to the current geographic location of the device.
 
 This feature is available for newer versions of popular \acp{os}, such as \emph{Windows}~\footnote{Ivan Jenic, `Your Time Zone Can Now Switch Automatically in Windows 10', windowsreport.com, https://windowsreport.com/time-zone-automatic-switch-windows-10 (accessed, 24.04.2018)}
 and \emph{Mac Os}, but they are not enabled by default.
-It is also available for Linux, for instance with the \emph{tzupdate} package~\footnote{`Set the system timezone based on IP geolocation', github.com, https://github.com/cdown/tzupdate (accessed, 24.04.2018)}, but it needs to be manually installed and activated.
+It is also available for Linux, for instance, with the \emph{tzupdate} package~\footnote{`Set the system timezone based on IP geolocation', github.com, https://github.com/cdown/tzupdate (accessed, 24.04.2018)}, but it needs to be manually installed and activated.
 
 \begin{figure}[H]
     \includegraphics[scale=0.38]{./graphs/analysis/timezone-switch-distribution}
@@ -17,7 +17,7 @@ It is also available for Linux, for instance with the \emph{tzupdate} package~\f
 
 Figure~\ref{fig:timezone-switch-distribution} shows the number of contributors in relation to the number of detected timezone switches.
 On about 70\% of considered contributors, only a single timezone has been detected, looking at the last year.
-These 70\% do either not commit if they travel, their \acp{os} do not synchronize the timezone accordingly to their location or they simply did not travel in the last two years.
+These 70\% do either not commit when they travel, their \acp{os} do not synchronize the timezone accordingly to their location or they simply did not travel in the last two years.
 
 \begin{figure}[h]
     \includegraphics[scale=0.38]{./graphs/analysis/timezone-distribution}
@@ -41,26 +41,26 @@ This misassignment only happens during the visualization process of the results 
 \end{figure}
 
 To evaluate the overall precision of the geographic location results, the correctness of the determined home locations are checked.
-Github allows users to specify a string for their current home location, which is collected during the aggregation process.
+Github allows users to specify a string for their current home location, which is also collected during the data aggregation process.
 Unfortunately, there are no conventions on how this string has to look like.
-Initially, I tried to pass these strings to OpenStreetMap, but this resulted in too many wrongly assigned locations.
-The data provided by the users was obviously too arbitrary and full of mistakes for the OpenStreetMap \ac{api} to handle.
+Initially, I tried to pass these strings to the OpenStreetMap \ac{api}, but this resulted in too many wrongly assigned locations.
+The data provided by the users was obviously too arbitrary and full of mistakes for OpenStreetMap to handle.
 
 As a result, I decided to manually choose a subset of locations by looking for distinct identifiers in the location strings.
 For instance, every home location of a contributor, that contained \emph{Germany} or \emph{Deutschland} in their location string, should be in the timezone \inlinecode{Europe/Berlin}, which switches between \ac{cet} and \ac{cest}.
 I created 14 such rules and was thus able to validate the home location of about 4200 contributors.
 The assignment of the contributors home location was correct in about 82\% of the considered contributors.
 
-It needs to be noted, that the accuracy of this result is quite certainly deteriorated by location strings, which contain ambiguous information.
-On manual review of the location strings, there were, for instance, strings such as \inlinecode{I love NYC}, which belongs to a developer living in Germany.
-The result might also be deteriorated by contributors, which moved to another country in the last year, as we cannot detect those for sure.
+It needs to be noted, that the accuracy of this result is quite certainly deteriorated by location strings which contain ambiguous information.
+On manual review of the location strings there were strings such as \inlinecode{I love NYC} which belongs to a developer living in Germany.
+The result might also be deteriorated by contributors who moved to another country in the last year, as we cannot detect those for sure.
 
-It also needs to be noted, that the \ac{iana} database has not always exact mapping for countries to their timezone.
+It also needs to be noted, that the \ac{iana} database does not always have exact mappings for countries to their timezone.
 For many countries or states, the current or an old capital city is used.
-Some countries do not have an own timezone, for instance, Japan which falls into \inlinecode{Pacific/Palau}.
+Some countries do not have an own timezone, such as Japan, which is included in \inlinecode{Pacific/Palau}.
 The \ac{iana} database is the currently best viable approach, but for better results and a more fine-grained resolution, a specific mapping between countries, states and time zones would be necessary.
 
-Nevertheless, an accuracy of 76\% clearly shows, that it is possible to narrow down the location of a contributor to a timezone and even to a subset of countries, see the last column in Table~\ref{home-location-table} for reference, by simply looking at their git commit timestamps.
+Nevertheless, an accuracy of 76\% clearly shows, that it is possible to narrow down the location of a contributor to a timezone and even to a subset of countries, see Table~\ref{home-location-table} for reference, by simply looking at their git commit timestamps.
 
 \begin{landscape}
     \begin{table}[h]

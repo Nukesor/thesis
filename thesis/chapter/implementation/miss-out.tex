@@ -3,7 +3,7 @@
 The goal of this attack is to detect miss-out by looking for anomalies in the workday patterns of a developer.
 
 Due to possible fluctuations or changes in the work routine, one requirement to this algorithm is the flexible detection of regular work patterns.
-It must have the ability to adjust to a changing work pattern, but at the same time, it needs to be capable of detecting anomalies in this pattern.
+It must have the ability to adjust to a changing work pattern, but at the same time it needs to be capable of detecting anomalies in this pattern.
 
 The input for this analysis is the intersection between all commits from the considered repositories and all commits from the considered contributors.
 The commits' metadata used for this analysis are timestamps as well as additions and deletions in lines of code.
@@ -12,7 +12,7 @@ It is really difficult to measure productivity in lines of code or in the number
 As a result, I decided, that a day counts as a work day as long as at least a single commit is created during the day.
 Before performing the actual analysis, the data is preprocessed into an easier to handle format.
 For each week of the last year, a vector representing the weekdays is created.
-Afterward each day, a commit has been made on, is marked as a working day.
+Afterward, each day a commit has been made on is marked as a working day.
 The preprocessed data is thereby equivalent to which days a contributor worked on, ordered by the week of the year.
 
 \begin{minted}[linenos]{python}
@@ -56,7 +56,7 @@ def check_anomaly(prototype, week):
 The analysis of the data is a chronological scan of all work weeks for a specific user.
 The algorithm inspects every week work pattern of a given interval, which has been set to a year for this analysis.
 In the beginning, the algorithm tries to find a new \emph{prototype}.
-A prototype is a representative week work pattern, which resembles the average workday pattern of the next weeks.
+A prototype is a representative week work pattern which resembles the average workday pattern of the next weeks.
 This is performed in the function \inlinecode{find\_prototype} in Listing~\ref{lst:miss-out-algorithm}.
 
 
@@ -99,7 +99,7 @@ def find_prototype(self, weeks, threshold):
 \captionof{listing}{The code used for detecting a prototype in the work pattern on a weekly basis written in python.}\label{lst:prototype-detection}
 \endgroup
 
-This function, which can be seen in Listing~\ref{lst:prototype-detection}, performs a simple iteration over a fixed amount of future weeks, to find a workday pattern occurring more often than a given threshold.
+This function, which can be seen in Listing~\ref{lst:prototype-detection}, performs a simple iteration over a fixed amount of future weeks to find a workday pattern occurring more often than a given threshold.
 If a prototype is found, we are capable of identifying anomalies that deviate from this pattern.
 
 For each following week, it is then firstly checked if this week is an anomaly in regards to the current prototype.

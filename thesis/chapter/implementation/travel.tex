@@ -1,7 +1,7 @@
 \section{Geographic Location}~\label{timezone-implementation}
 
 This attack aims to extract information about the geographic location of a target.
-The algorithm tries to determine the exact timezone of the target and to exclude any countries or states, which do not match the observed timestamps.
+The algorithm tries to determine the exact timezone of the target and to exclude any countries or states that do not match the observed timestamps.
 
 The data used for this analysis are the commit timestamps of the target, as well as the target's Github location for verification.
 In the following, I will explain the algorithm used to detect different time zones and to narrow down the home location of a contributor.
@@ -13,7 +13,7 @@ Several external data sources have been used to accomplish this:
     It also provides the exact \ac{utc} offset and offset switches for all time zones.
 
     \item[Natural Earth] \hfill \\
-    The Natural Earth organization provides extremely detailed free-to-use and up-to-date geological data with timezones, countries and even states on a resolution down to 1:10m.
+    The Natural Earth organization provides detailed free-to-use and up-to-date geological data with timezones, countries and even states on a resolution down to 1:10m.
     This data is used for visualization in combination with the Python \emph{cartopy} library.
 
     \item[Pycountry] \hfill \\
@@ -21,14 +21,14 @@ Several external data sources have been used to accomplish this:
     To match non-assignable timezones to their respective country on the map, the library \emph{pycountry} was added.
 
     \item[OpenStreetMap and geocoders] \hfill \\
-    OpenStreetMap is a collaborative project, which provides a free map of the world.
+    OpenStreetMap is a collaborative project that provides a free map of the world.
     Since there are some time zones that cannot be assigned to a country with the help of the \emph{pycountry} library, another solution for getting the relation between timezone and state or country was necessary.
     To match non-assignable timezone strings to their respective state or country, Gitalizer occasionally issues requests to the \emph{OpenStreetMap} \ac{api} with help of the Python \emph{geocoder} library.
 
 \end{description}
 
 To assign \ac{utc} offsets to their possible timezones a special reverse mapping of the existing \ac{iana} database was necessary.
-The python library \emph{tzinfo} provides interaction with the \ac{iana} database, but this adapter is only capable of resolving timezones to their respective \ac{utc} offset.
+The Python library \emph{tzinfo} provides interaction with the \ac{iana} database, but this adapter is only capable of resolving timezones to their respective \ac{utc} offset.
 
 As a result, I wrote a custom adapter that extracts the data from \ac{iana} with help of \emph{tzinfo} and saves it into the Gitalizer database.
 The database model is named \emph{TimezoneInterval} and contains the timezone identifier, the \ac{utc} offset and the exact start and end of this specific timezone interval.

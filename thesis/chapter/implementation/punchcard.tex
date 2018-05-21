@@ -2,7 +2,7 @@
 
 The next attack aims to extract information about the working hour behavior of a target.
 This should be achieved by displaying the pattern of the target in form of a weighted scatter plot and by comparing those patterns between several targets.
-Additionally, the detection of anomalies, such as automated programs that contribute to a project on a regular basis, will be conducted.
+Additionally, a detection of anomalies, such as automated programs that contribute to a project on a regular basis, will be conducted.
 
 A clustering will be performed to find common patterns, anomalies and to evaluate the results of this analysis.
 As we are only interested in contributors with a representative amount of commits, all contributors with less than one hundred commits in the last year have been excluded.
@@ -10,7 +10,7 @@ This reduced the number of considered contributors from 175.000 to about 10.300.
 
 The data used for this analysis are the commit timestamps of the target, as well as the Github employee information for verification.
 These commit timestamps are then converted into a different format, which represents the occurrences of commits per hour per weekday over the last year.
-This results in a simple vector with length 168, which corresponds to seven days with 24 hours each.
+This results in a simple vector with length 168 which corresponds to seven days with 24 hours each.
 I will refer to this representation hereafter as a \emph{punch card}.
 
 \begin{minted}[linenos]{python}
@@ -28,7 +28,7 @@ def preprocess(commits):
 \captionof{listing}{The preprocessing code used to simplify all commits into a usable format of a vector with length 168.}\label{lst:puchcard-preprocessing}
 \endgroup
 
-The data transformation is achieved, by incrementing the field of the respective weekday and hour by one, for each commit, as can be seen in Listing~\ref{lst:punchcard-preprocessing}.
+The data transformation is achieved by incrementing the field of the respective weekday and hour by one for each commit, as can be seen in Listing~\ref{lst:punchcard-preprocessing}.
 The resulting punch card vector is then stored in the database for faster and easier analysis in the next steps.
 
 \begin{figure}[h]
@@ -38,8 +38,8 @@ The resulting punch card vector is then stored in the database for faster and ea
 \end{figure}
 
 Figure~\ref{fig:working-hour-rhythm-author} shows the punch card of the author.
-The y-axis represents the days of a week, while the x-axis defines the hour of a day.
-The weight on the dots of the scatter plot corresponds to the number of all commits which were contributed at this specific hour in respect to all number of all commits in the considered time span.
+The y-axis represents the days of a week, the x-axis defines the hour of a day.
+The weight on the dots of the scatter plot corresponds to the number of commits contributed at this specific hour in respect to the number of all commits in the considered time span.
 
 
 \subsection{Punch card Clustering}
@@ -83,7 +83,7 @@ Unfortunately, it produces very similar results to the mean shift clustering alg
 
 I assume that this algorithm suffers from similar problems as the mean shift approach, which are high density and equal distribution of data points without clear borders.
 Thereby the algorithm manages to reach the most part of all data points transitively from a single starting point.
-When supplied with smaller values for the maximal acceptable distance between data points, it creates huge amounts of mini clusters, just as expected.
+When supplied with smaller values for the maximal acceptable distance between data points it creates huge amounts of mini clusters, just as expected.
 
 This algorithm also manages to find extreme outlier clusters, but it is not suitable for the purpose of this thesis, due to the extremely low granularity on the data inside the supercluster.
 

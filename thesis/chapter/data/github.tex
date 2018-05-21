@@ -14,7 +14,7 @@ If there are only 20 commits for a user over the past month there is probably no
 To gather as many commits as possible I had to get access to as many repositories, to which the targeted users contributed to, as possible.
 Thereby the data source has to provide a way to dynamically explore repositories around a single user or company.
 
-For analysis of companioned persons as described in Section~\ref{attack:industrial-spy} it is crucial to find users, which are likely to know each other.
+For analysis of companioned persons as described in Section~\ref{attack:industrial-spy} it is crucial to find users, who are likely to know each other.
 Optimally the data source provides a functionality for users to actively mark other users as their friends or colleagues.
 
 To attack a company or to spy on company members, as described in Section~\ref{attack:employer-monitoring}, the best case scenario would be to have full access to all repositories owned by the company.
@@ -37,7 +37,7 @@ Ideally, there should also be a list of all company members for evaluation purpo
 
 \subsection{Github}\label{github}
 I decided to use Github as a data source, as it is not only convenient to find \acp{url} for cloning repositories but also provides solutions for most of the other requirements.
-It hosts one of the biggest collections of open source projects~\cite{techreport:how-github-conquered} with 64 million repositories, 24 million users and 1,5 million organizations~\cite{article:github-statistics}.
+It hosts one of the biggest collections of open-source projects~\cite{techreport:how-github-conquered} with 64 million repositories, 24 million users and 1,5 million organizations~\cite{article:github-statistics}.
 Github also provides a well-documented \ac{api} for querying its metadata and there are libraries for most major languages, which provide an abstraction layer for this \ac{api}.
 This \ac{api} is publicly available and can be used by anyone registered on Github.
 
@@ -49,7 +49,7 @@ For example, the full list of members for organizations is often inaccessible, a
 The internal team structures of organizations are not visible at all, as one needs to be a member of the organization to access those.
 Another problem are dangling email addresses, which are not related to any account anymore.
 All commits made with such an email address cannot be used any more for any analyses that require a user to commit relationship.
-But even though some ground truth is missing, I decided to use this approach as it still was the most promising way to gather as much data and real-world noise as possible, compared to other open source hosting services.
+But even though some ground truth is missing, I decided to use this approach as it still was the most promising way to gather as much data and real-world noise as possible, compared to other open-source hosting services.
 
 \begin{figure}[H]
 \includegraphics[scale=0.27]{./graphs/github-data-structure}
@@ -59,7 +59,7 @@ But even though some ground truth is missing, I decided to use this approach as 
 
 \subsection{Github's Features}\label{github-features}
 In the following I will explain some of the features provided by Github, that cover the requirements listed in Section~\ref{requirements}.
-Github offers some features, which, for example, are convenient to finding repositories a specific user contributed to or to find contributors which likely personally know each other.
+Github offers some features, which, for example, are convenient to finding repositories a specific user contributed to or to find contributors hwo likely personally know each other.
 
 \begin{description}
     \item[Stars] \hfill \\
