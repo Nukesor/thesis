@@ -18,20 +18,18 @@
 \usepackage{minted}
 \usepackage{siunitx}
 \usepackage{subfig}
-% \usepackage{tabularx}
-% \usepackage{setspace}
 \usepackage[customcolors]{hf-tikz}
-% \usepackage{url}
-% \usepackage{csquotes}
 \usepackage{booktabs}
-% \usepackage[T1]{fontenc}
-% \usepackage[alldates=long]{biblatex}
 \graphicspath{{images/}}
 \pgfplotsset{compat=1.12}
 
-\title[Der Title]
-{Das eine ding}
-\subtitle{\textit{Or:} Die kleine variante?}
+% Due to bug in subfig
+\makeatletter
+\let\@@magyar@captionfix\relax
+\makeatother
+
+\title[Privacy Implications of Exposing Git Metadata]
+{Privacy Implications of Exposing Git Meta Data}
 \author[Beer]{Arne Beer \\ \footnotesize Matriculation number: 6489196}
 \institute[University of Hamburg]{
     Department of Computer Science\\
@@ -56,6 +54,7 @@
 \begin{frame}
     \frametitle{Topic}
     \begin{block}{Main topic of the thesis}
+        Is there a way to use public Git metadata maliciously?
     \end{block}
 \end{frame}
 
@@ -63,7 +62,8 @@
 \begin{frame}
     \frametitle{Motivation}
     \begin{itemize}
-        \item
+        \item Git is used nearly everywhere in Information Technology
+        \item It is deemed safe.
     \end{itemize}
 \end{frame}
 
@@ -71,7 +71,16 @@
 \begin{frame}
     \frametitle{Leading Question and Goals}
     \begin{itemize}
-        \item
+        \item Find out how feasible it is to track data of various Git repositories on a small and large scale.
+    \end{itemize}
+\end{frame}
+
+\section{Aggregation}
+\begin{frame}
+    \frametitle{Why Github?}
+    \begin{itemize}
+        \item Largest accumulation of open-source and public company Git repositories
+        \item Great kj
     \end{itemize}
 \end{frame}
 

@@ -1,5 +1,6 @@
 .PHONY: default all watch show clean
 DEPS = thesis.tex thesis.bib thesis.cls
+PRESENTATION_DEPS = presentation.tex
 
 default: thesis clean show
 
@@ -9,8 +10,15 @@ watch:
 	evince thesis.pdf &
 	while true; do inotifywait -e close_write,moved_to,create */**/*.tex $(DEPS); make thesis; make clean; done;
 
+watch-presentation:
+	evince presentation.pdf &
+	while true; do inotifywait -e close_write,moved_to,create $(PRESENTATION_DEPS); make presentation; make clean; done;
+
 thesis:
 	rubber --unsafe --pdf thesis.tex
+
+presentation:
+	rubber --unsafe --pdf presentation.tex
 
 show:
 	evince thesis.pdf &
