@@ -1,78 +1,72 @@
-% ===============================================================================
-% = LaTeX Beamer Template des Arbeitsbereichs Sicherheit in verteilten Systemem
-% = (c) 2016 Prof. Dr. Hannes Federrath, Uni Hamburg, Fachbereich Informatik
-% = https://svs.informatik.uni-hamburg.de
-% =
-% = Weitgehend in Übereinstimmung mit dem Corporate Design 2016 der UHH:
-% = https://www.uni-hamburg.de/beschaeftigtenportal/services/oeffentlichkeitsarbeit/corporate-design.html
-% =
-% ===============================================================================
-%
-\documentclass[t]{beamer}
-% Option t              Place text of slides at the (vertical) top of the slides.
-% Option handout        Ein PDF ohne Pausen und Overlayeffekte erzeugen.
-% Option aspectratio=43 169 => 16:9, 1610 => 16:10, 43 => 4:3
+\documentclass{beamer}
+
+\usepackage{lipsum}
 \usepackage[utf8]{inputenc}
-\usepackage[ngerman]{babel}
-\usepackage{graphicx,xcolor}
+\usepackage[ngerman,english]{babel}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{lmodern}
+\usepackage{float}
+\usepackage{sidecap}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{tabularcalc}
+\usepackage{todonotes}
+\usepackage{hyperref}
 \usepackage{minted}
-\usepackage[T1]{fontenc} % 8-Bit-Zeichen; ermöglicht korrektes Kopieren von Umlauten aus dem pdf
-\usepackage[absolute,overlay]{textpos}
-  \setlength{\TPHorizModule}{1mm}
-  \setlength{\TPVertModule}{1mm}
+\usepackage{siunitx}
+\usepackage{subfig}
+\usepackage[customcolors]{hf-tikz}
+\usepackage{booktabs}
 \graphicspath{{graphs/}}
+\pgfplotsset{compat=1.12}
 
-\setcounter{tocdepth}{1}
-
-% SVS-Theme benutzen
-\usetheme{svs2016}
-
-
-% =============================
-% = Ab hier Inhalte ändern...
-% =============================
+% Due to bug in subfig
+\makeatletter
+\let\@@magyar@captionfix\relax
+\makeatother
 
 \title[Privacy Implications of Exposing Git Metadata]
 {Privacy Implications of Exposing Git Meta Data}
 \author[Beer]{Arne Beer \\ \footnotesize Matriculation number: 6489196}
+\institute[University of Hamburg]{
+    Department of Computer Science\\
+    University of Hamburg
+}
 \subject{Computer Science}
 
+\usetheme{Szeged}
+\usecolortheme{seagull}
+
 \begin{document}
-
-\begin{frame}[plain]
-    \maketitle
-\end{frame}
-
+\frame{\titlepage}
 \begin{frame}
     \frametitle{Table of Contents}
-	% Die Gliederung erscheit nach erneutem Übersetzen korrekt.
-	\tableofcontents
+    \footnotesize
+    \tableofcontents
 \end{frame}
+
+\section{Introduction}
 
 \subsection{Topic}
 \begin{frame}
     \frametitle{Topic}
-    \begin{center}
-        \vspace{1cm}
-        \begin{block}{Main topic of the thesis}
-            Can Git metadata be used maliciously?
-        \end{block}
-    \end{center}
+    \begin{block}{Main topic of the thesis}
+        Can Git metadata be used maliciously?
+    \end{block}
 \end{frame}
 
 \subsection{Motivation}
 \begin{frame}
     \frametitle{Motivation}
-    \vspace{5mm}
-    \begin{center}
-        \includegraphics[scale=0.15]{./pic/git-logo.png}
-    \end{center}
     \begin{itemize}
-        \item Used in most projects for source control
+        \item Used in nearly every project
         \pause{}
         \item No obvious leak of personal information
         \pause{}
-        \item Leaked information could be used maliciously
+        \item Possible workplace/contributor surveillance
     \end{itemize}
 \end{frame}
 
@@ -82,46 +76,21 @@
     \begin{itemize}
         \item Feasibility of scanning repositories on different scales
         \item Possible extraction of interesting information
-        \item Analyse Possible attack goals
+        \item Possible attack vectors
     \end{itemize}
 \end{frame}
 
 \section{Aggregation}
 
-\subsection{Data Structure}
-\begin{frame}[fragile]
-    \frametitle{Git Metadata}
-    \begin{minted}{text}
-tree      cd7d001b696db430b898b75c633686067e6f0b76
-parent    c19b969705e5eae0ccca2cde1d8a98be1a1eab4d
-author    Arne Beer <contact@arne.beer> 1513434723 +0100
-committer Arne Beer <contact@arne.beer> 1513434723 +0100
-
-Chapter 2, acronyms
-    \end{minted}
-
-    \begin{itemize}
-        \item Parent commit file reference
-        \item Tree file reference
-        \item Name and Email
-        \item Commit timestamp with UTC Offset
-    \end{itemize}
-\end{frame}
-
 \subsection{Data Source}
 \begin{frame}
     \frametitle{Why Github?}
-    \vspace{5mm}
-    \begin{center}
-        \includegraphics[scale=0.13]{./pic/github-logo.png}
-    \end{center}
-
     \begin{itemize}
         \item Largest accumulation of open-source Git repositories
         \pause{}
         \item Great API
         \pause{}
-        \item Allows exploration for collecting user repositories.
+        \item Allows exploration
     \end{itemize}
 \end{frame}
 
@@ -215,7 +184,7 @@ Chapter 2, acronyms
 \begin{frame}
     \frametitle{Example}
     \begin{figure}[H]
-        \includegraphics[scale=0.22]{analysis/ordered-punchcard}
+        \includegraphics[scale=0.22]{analysis-affinity/152}
         \centering
         \caption{Regular working hour cluster}
     \end{figure}
@@ -312,5 +281,4 @@ Chapter 2, acronyms
     \frametitle{Fin}
     Thank you for your attention.
 \end{frame}
-
 \end{document}
