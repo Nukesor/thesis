@@ -166,6 +166,17 @@ Chapter 2, acronyms
 \end{frame}
 
 \begin{frame}
+    \frametitle{Methodology}
+    \vspace{1cm}
+    \begin{itemize}
+        \item All commits of one contributor
+        \item Find regular work pattern
+        \item Detect unregular work pattern
+        \item Detect anomalies
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
     \frametitle{Example}
     \begin{figure}[H]
         \includegraphics[scale=0.115]{analysis/work-time-analysis}
@@ -206,7 +217,7 @@ Chapter 2, acronyms
     \begin{figure}[H]
         \includegraphics[scale=0.22]{analysis/ordered-punchcard}
         \centering
-        \caption{Regular working hour cluster}
+        \caption{Regular sleep rhythm}
     \end{figure}
 \end{frame}
 
@@ -221,6 +232,16 @@ Chapter 2, acronyms
 \end{frame}
 
 \begin{frame}
+    \frametitle{Example}
+    \vspace{1cm}
+    \begin{figure}[H]
+        \includegraphics[scale=0.22]{analysis-affinity/28}
+        \centering
+        \caption{Normal working hour punchcard}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
     \frametitle{Results}
     \vspace{1cm}
     \begin{itemize}
@@ -228,7 +249,7 @@ Chapter 2, acronyms
         \pause{}
         \item Sleep rhythm rather accurate
         \pause{}
-        \item Allows to detect working behaviour
+        \item Allows to guess working behaviour
     \end{itemize}
 \end{frame}
 
@@ -252,10 +273,21 @@ Chapter 2, acronyms
 \end{frame}
 
 \begin{frame}
+    \frametitle{Methodology}
+    \vspace{1cm}
+    \begin{itemize}
+        \item All commits of one contributor
+        \item Possible timezones/countries for offset
+        \item Daylight Savings Time
+        \item Detect timezone switches
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
     \frametitle{Results}
     \vspace{1cm}
     \begin{itemize}
-        \item Good detection of home country
+        \item Good detection of home country (82\%)
         \pause{}
         \item Holiday not checked
         \pause{}
@@ -272,7 +304,7 @@ Chapter 2, acronyms
         \pause{}
         \item It is possible to extract further personal information
         \pause{}
-        \item Scanning on small to middle scale
+        \item Simple goals, but already offers possibly sensitive information
     \end{itemize}
 \end{frame}
 
