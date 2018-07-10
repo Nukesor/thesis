@@ -13,7 +13,7 @@
 % Option handout        Ein PDF ohne Pausen und Overlayeffekte erzeugen.
 % Option aspectratio=43 169 => 16:9, 1610 => 16:10, 43 => 4:3
 \usepackage[utf8]{inputenc}
-\usepackage[ngerman]{babel}
+\usepackage[english]{babel}
 \usepackage{graphicx,xcolor}
 \usepackage{minted}
 \usepackage[T1]{fontenc} % 8-Bit-Zeichen; ermöglicht korrektes Kopieren von Umlauten aus dem pdf
@@ -33,7 +33,7 @@
 % =============================
 
 \title[Privacy Implications of Exposing Git Metadata]
-{Privacy Implications of Exposing Git Meta Data}
+{Privacy Implications of Exposing Git Metadata}
 \author[Beer]{Arne Beer \\ \footnotesize Matriculation number: 6489196}
 \subject{Computer Science}
 
@@ -49,6 +49,7 @@
 	\tableofcontents
 \end{frame}
 
+\section{Introduction}
 \begin{frame}
     \frametitle{Topic}
     \begin{center}
@@ -66,7 +67,7 @@
         \includegraphics[scale=0.15]{./pic/git-logo.png}
     \end{center}
     \begin{itemize}
-        \item Used in most projects for source control
+        \item Used in most projects for version control
         \pause{}
         \item No obvious leak of personal information
         \pause{}
@@ -76,14 +77,15 @@
 
 \begin{frame}
     \frametitle{Leading Question and Goals}
+    \vspace{1cm}
     \begin{itemize}
-        \item Feasibility of scanning repositories on different scales
+        \item Feasibility of scanning repositories
         \item Possible extraction of interesting information
         \item Analyse possible attack goals
     \end{itemize}
 \end{frame}
 
-\section{Aggregation}
+\section{Data}
 
 \begin{frame}[fragile]
     \frametitle{Git Metadata}
@@ -126,14 +128,6 @@ Chapter 2, acronyms
 \end{frame}
 
 \begin{frame}
-    \frametitle{Github Data Structure}
-    \vspace{5mm}
-    \begin{center}
-        \includegraphics[scale=0.19]{github-data-structure.png}
-    \end{center}
-\end{frame}
-
-\begin{frame}
     \frametitle{Gitalizer}
     \begin{center}
         \includegraphics[scale=0.30]{./pic/gitalizer-github.png}
@@ -166,6 +160,8 @@ Chapter 2, acronyms
         \item Detect holiday or sick leave
         \pause{}
         \item Detect other anomalies
+        \pause{}
+        \item Good visualization
     \end{itemize}
 \end{frame}
 
@@ -186,18 +182,21 @@ Chapter 2, acronyms
         \pause{}
         \item Accurate holiday detection
         \pause{}
+        \item Some false positives
+        \pause{}
         \item Other anomaly detection needs interpretation
     \end{itemize}
 \end{frame}
 
 \begin{frame}
     \frametitle{Sleep Rhythm and Working Hours: Goals}
+    \vspace{1cm}
     \begin{itemize}
         \item Good visualization
         \pause{}
-        \item Detect sleep rhythm
+        \item Check visibility of sleep rhythm
         \pause{}
-        \item Detect working behavior
+        \item Check link to working behavior
     \end{itemize}
 \end{frame}
 
@@ -223,6 +222,7 @@ Chapter 2, acronyms
 
 \begin{frame}
     \frametitle{Results}
+    \vspace{1cm}
     \begin{itemize}
         \item Tested for correctness in small test group
         \pause{}
@@ -270,6 +270,8 @@ Chapter 2, acronyms
     \begin{itemize}
         \item Recall the goal: Is it possible to extract personal information
         \pause{}
+        \item It is possible to extract further personal information
+        \pause{}
         \item Scanning on small to middle scale
     \end{itemize}
 \end{frame}
@@ -278,9 +280,9 @@ Chapter 2, acronyms
     \frametitle{Outlook}
     \vspace{1cm}
     \begin{itemize}
-        \item It can become a problem
+        \item Many more complex and promising attacks
         \pause{}
-        \item Many more complex and promising attack vectors
+        \item It could become a problem
         \pause{}
         \item Methodologies to obfuscate data
     \end{itemize}
